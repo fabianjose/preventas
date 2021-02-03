@@ -1,0 +1,88 @@
+
+ <%- include ('partials/header')  %>
+
+
+
+
+<div class="row mt-5">
+
+
+    <div class="col-7">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <th>#</th>
+                <th>id</th>
+                <th>Nombre</th>
+                <th>contraseña</th>
+                                   
+                <th>Delete</th>
+                <th>Update</th>
+
+            </thead>
+
+            <tbody>
+                <% if (data) { %>     
+                    <% for(var i=0; i<data.length;i++) { %> 
+                         
+                        <tr>
+                            <td> <%=(i+1) %> </td>
+                            <td> <%= data[i].id %> </td>
+                            <td> <%= data[i].nombre %> </td>
+                            <td> <%= data[i].password %> </td>
+                         
+                            
+                            <td> <a href="/delete/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
+                            <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
+                                
+                        </tr>
+                        
+                                                   <% } %> 
+                <% } %>     
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+    <div class="col-5">
+       
+        <div class="card">
+            <div class="card-body">
+                <form action="/add" method="post">
+
+                    <div class="form-group">
+                        <input type="text" name="nombre" id="" placeholder="nombre" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="" placeholder="contraseña" class="form-control">
+                    </div>
+                  
+                    
+        
+                        
+                        <button type="submit" class="btn btn-success">
+                            guardar datos
+                        </button>
+            
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include('partials/footer') %>
