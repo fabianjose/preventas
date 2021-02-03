@@ -7,21 +7,12 @@ const passport = require("passport")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const PassportLocal = require("passport-local").Strategy;
-const mysql = require('mysql')
-const myConecction = require('express-myconnection')
 
 const route = require('./Routes/index.js');
 
 const app = express();
 
 //CONEXION A BDD
-app.use(myConecction(mysql,{
-    host:'localhost',
-    user: 'root',
-    password: '',
-    port: 3306,
-    database:'crm'
-}, 'single'))
 
 app.use(cors());
 app.use(morgan('tiny'));

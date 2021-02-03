@@ -2,6 +2,9 @@ const express = require('express');
 const PassportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
+const myConecction = require('express-myconnection')
+const pool = require('../database')
+
 
 
 
@@ -34,8 +37,8 @@ router.get("/usuarios",(req, res, next)=>{
 	res.redirect('login')
 }, (req, res)=>{
 
-    req.getConnection((err, conn)=>{
-            conn.query('SELECT * FROM usuarios', (err, usuarios)=>{
+    
+           pool.query('SELECT * FROM usuarios', (err, usuarios)=>{
                 if(err){
                     res.json(err);                    
                 }
@@ -45,7 +48,7 @@ router.get("/usuarios",(req, res, next)=>{
                     data:usuarios
                 })
             })
-	})
+	
 })
 	
 
@@ -73,11 +76,10 @@ router.get('/logout', function(req, res){
 
   const datos = req.body;
   console.log(req.body);
-req.getConnection((err,conn)=>{
-conn.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
+pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 		  res.redirect('usuarios')
 		  console.log(usuarioss);
-    })})})  
+    })})  
 
 
 
@@ -92,8 +94,7 @@ conn.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 
 		const id=req.params.id;
 	   
-	req.getConnection((err, conn)=>{
-		conn.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
+		pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
 			console.log(usuarios);
 			res.render('editUsuario',{
 				
@@ -102,28 +103,23 @@ conn.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 		})
 	})
 	
-	})
-	
 	router.post ('/update/:id', (req, res)=>{
 	
 		const id=req.params.id;		
 		const nuevoUsuario = req.body;
 		console.log(nuevoUsuario);
-	req.getConnection((err, conn)=>{
-		console.log("conexion abierta 1");
+
+	
 		
-		conn.query('UPDATE usuarios set ? WHERE id= ? ',[nuevoUsuario,id],(err,rows)=>{
+		pool.query('UPDATE usuarios set ? WHERE id= ? ',[nuevoUsuario,id],(err,rows)=>{
 			if(err){
 				console.log(err);
 			}
-			console.log("conexion abierta 2");
-			console.log(rows);
-			console.log("conexion abierta 3 despues de mostrar filas de BD");
-			console.log("conexion abierta 4 Mandando a renderizar");
+		
 
 			res.redirect('/usuarios')
 			})
-		})	
+	
 	})
 	
 
@@ -132,25 +128,41 @@ const id=req.params.id;
 
 
 
-req.getConnection((err, conn)=>{
-conn.query('DELETE FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
+
+pool.query('DELETE FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
 res.redirect('/usuarios')
-})
+
 })
 						  })
 
 
 
+			  
 passport.use(new PassportLocal(function(username, password, done){
+	//			
+	
+var nombre =username
+var clave = password
+	pool.query('SELECT * FROM usuarios WHERE nombre= ?',[nombre],(err,usuarios)=>{
+		
+			console.log("entre con nombre");
+			console.log(usuarios.length);
+			if(usuarios.length>0){
+				console.log(usuarios[0]);
+				if (usuarios[0].password==clave){
+					console.log("comprobando clave");
+					return done(null, {id:usuarios[0].id, name:usuarios[0].nombre})
+				}
+					done(null, false, )
+			}
 
-	//			conn.query('SELECT * FROM usuarios WHERE nombre= ? WHERE password= ?  ',[nombre, clave ],(err,rows)=>{
 
 	
-	
-	if(username=="fabian" && password == "1") 
-	return done(null, {id:1, name:"jose"})
+			
+		})
 
-	done(null, false, )
+	
+
 }))
 
 
