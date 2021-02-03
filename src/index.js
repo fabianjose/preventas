@@ -11,7 +11,7 @@ const PassportLocal = require("passport-local").Strategy;
 const route = require('./Routes/index.js');
 
 const app = express();
-
+var perfil
 //CONEXION A BDD
 
 app.use(cors());
@@ -43,6 +43,13 @@ app.use(session({
 
 app.use(passport.initialize()) //ESTA #$%#$ VA SEGUNDO
 app.use(passport.session()) //ESTA #$%#$ VA TERCERO
+app.use((req,res,next)=>{
+    
+
+    app.locals.user = req.user
+    next()
+
+})
 
 
 app.use('/', route);

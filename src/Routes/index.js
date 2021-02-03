@@ -145,13 +145,12 @@ var nombre =username
 var clave = password
 	pool.query('SELECT * FROM usuarios WHERE nombre= ?',[nombre],(err,usuarios)=>{
 		
-			console.log("entre con nombre");
 			console.log(usuarios.length);
 			if(usuarios.length>0){
 				console.log(usuarios[0]);
 				if (usuarios[0].password==clave){
-					console.log("comprobando clave");
-					return done(null, {id:usuarios[0].id, name:usuarios[0].nombre})
+					var user=usuarios[0]
+					return done(null, user)
 				}
 					
 			}
@@ -171,7 +170,6 @@ var clave = password
 
 passport.serializeUser(function(user, done){
 	done(null, user.id)
-	console.log("serializando");
 
 	console.log(user.id);
 
@@ -179,13 +177,12 @@ passport.serializeUser(function(user, done){
 
 //deserializar
 passport.deserializeUser(function(id,done){
-console.log("deserializando");
 	pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuario)=>{
 	
-		console.log(usuario);
+		
 		done(null, usuario)	
-		console.log("deserializando con exito");	
-
+		
+		perfil=usuario
 		})
 	
 	
