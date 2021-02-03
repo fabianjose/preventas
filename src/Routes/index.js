@@ -153,8 +153,9 @@ var clave = password
 					console.log("comprobando clave");
 					return done(null, {id:usuarios[0].id, name:usuarios[0].nombre})
 				}
-					done(null, false, )
+					
 			}
+			done(null, false, )
 
 
 	
@@ -170,10 +171,23 @@ var clave = password
 
 passport.serializeUser(function(user, done){
 	done(null, user.id)
+	console.log("serializando");
+
+	console.log(user.id);
+
 })
 
 //deserializar
 passport.deserializeUser(function(id,done){
-	done(null, {id:1 , name:"jose"})
+console.log("deserializando");
+	pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuario)=>{
+	
+		console.log(usuario);
+		done(null, usuario)	
+		console.log("deserializando con exito");	
+
+		})
+	
+	
 })
 module.exports = router;
