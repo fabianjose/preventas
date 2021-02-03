@@ -1,32 +1,96 @@
 
- <%- include ('partials/header')  %>
- <%console.log("--mostrando datos--")  %>
-   <h1> <%= console.log(user[0].nombre); %> </h1> 
-   <h1> <%= user[0].nombre %> </h1> 
+ <%if(user[0].rol!=1){%>
+    <%- include ('partials/header')  %>
+    <% }%>
+    <%if(user[0].rol==1){%>
+        <%- include ('partials/header2')  %>
+        <% }%>
+  
+
+  
+
 
 
 
  
- 
- 
-     <div class="col-5">
+ <div class="col-5">
+       
+    <div class="card">
+        <h1>Crear una oferta</h1>
+        <div class="card-body">
+            <form action="/crearOferta" method="post">
+
+                <div class="form-group">
+                          
+
+                    <input type="text" name="nombre" id="" placeholder="nombre" class="form-control">
+                    <input  type="hidden" name="usuario_ID" id=""  value="<%= user[0].id %> " class="form-control">
+                </div>
+              
+              
+                
+    
+                    
+                    <button type="submit" class="btn btn-success">
+                        guardar datos
+                    </button>
         
-         <div class="card">
-             <div class="card-body">
-                 <form action="/logout" method="get">               
-                     
-         <h1>estamos en el perfil</h1>
-                         
-                         <button type="submit" class="btn btn-success">
-                             deslogear
-                         </button>
-             
-                 </form>
-             </div>
-         </div>
+            </form>
+        </div>
+    </div>
+
+</div>
  
-     </div>
+ 
+    
  </div>
+
+ 
+
+            
+ <table class="table table-bordered table-hover">
+    <thead>
+        <th>#</th>
+        <th>id</th>
+        <th>Nombre</th>
+             
+             
+        
+            <%if(user[0].rol==1){%>
+                <th>Delete</th>
+                <th>Update</th>
+          
+                <% }%>
+
+    </thead>
+
+    <tbody>
+        <% if (data) { %>     
+            <% for(var i=0; i<data.length;i++) { %> 
+                 
+                <tr>
+                    <td> <%=(i+1) %> </td>
+                    <td> <%= data[i].id %> </td>
+                    <td> <%= data[i].nombre %> </td>
+             
+                  
+                   
+                    <%if(user[0].rol==1){%>
+                      
+                    <td> <a href="/delete/oferta/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
+                    <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
+                     
+                  
+                        <% }%>
+        
+                 
+                      
+                </tr>
+                
+                                           <% } %> 
+        <% } %>     
+    </tbody>
+</table>
  
  
  

@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const myConecction = require('express-myconnection')
 const pool = require('../database')
-
+var idLogin
 
 
 
@@ -22,17 +22,28 @@ const router = express.Router();
 
 
 router.get("/",(req, res, next)=>{
-	console.log(req.isAuthenticated());
 	if(req.isAuthenticated()) return next()
 	res.redirect('login')
 }, (req,res)=>{
-    	res.render('perfil')
+
+	
+	pool.query('SELECT * FROM libros WHERE usuario_ID= ?',[idLogin], (err, libros)=>{
+		if(err){
+			res.json(err);                    
+		}
+
+		res.render('perfil',{
+			data:libros
+		})
+	})
+
 })
+    	
+
 
 
 
 router.get("/usuarios",(req, res, next)=>{
-	console.log(req.isAuthenticated());
 	if(req.isAuthenticated()) return next()
 	res.redirect('login')
 }, (req, res)=>{
@@ -43,7 +54,6 @@ router.get("/usuarios",(req, res, next)=>{
                     res.json(err);                    
                 }
 
-                console.log(usuarios);
                 res.render('usuarios',{
                     data:usuarios
                 })
@@ -70,16 +80,33 @@ router.get('/logout', function(req, res){
   });
 
 
+  router.get("/verOfertas",(req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
 
+    
+           pool.query('SELECT * FROM libros', (err, libros)=>{
+                if(err){
+                    res.json(err);                    
+                }
+
+                res.render('todasOfertas',{
+                    data:libros
+                })
+            })
+	
+})
+	
 
   router.post('/add',  (req, res)=>{
 
   const datos = req.body;
-  console.log(req.body);
-pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
+  pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 		  res.redirect('usuarios')
-		  console.log(usuarioss);
-    })})  
+	})
+
+})  
 
 
 
@@ -87,7 +114,6 @@ pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 
 
 	router.get('/update/:id',(req, res, next)=>{
-		console.log(req.isAuthenticated());
 		if(req.isAuthenticated()) return next()
 		res.redirect('login')
 	}, (req, res)=>{
@@ -95,7 +121,6 @@ pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 		const id=req.params.id;
 	   
 		pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
-			console.log(usuarios);
 			res.render('editUsuario',{
 				
 				data:usuarios[0]
@@ -107,7 +132,6 @@ pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 	
 		const id=req.params.id;		
 		const nuevoUsuario = req.body;
-		console.log(nuevoUsuario);
 
 	
 		
@@ -126,14 +150,42 @@ pool.query('INSERT INTO usuarios set ?', [datos],(err,usuarioss)=>{
 router.get( '/delete/:id',  (req, res)=>{
 const id=req.params.id;
 
-
-
-
 pool.query('DELETE FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
 res.redirect('/usuarios')
 
 })
 						  })
+
+
+
+
+router.get( '/delete/oferta/:id',  (req, res)=>{
+const id=req.params.id;
+console.log(id);
+pool.query('DELETE FROM libros WHERE id= ?',[id],(err,usuarios)=>{
+res.redirect('/')
+
+})
+							})
+
+
+
+
+
+
+
+	 
+ 
+	 router.post('/crearOferta',  (req, res)=>{
+
+		const datosOferta = req.body;
+	  pool.query('INSERT INTO libros set ?', [datosOferta],(err,libros)=>{
+				res.redirect('/')
+		  })
+	  
+	  }) 
+	  
+  
 
 
 
@@ -145,11 +197,10 @@ var nombre =username
 var clave = password
 	pool.query('SELECT * FROM usuarios WHERE nombre= ?',[nombre],(err,usuarios)=>{
 		
-			console.log(usuarios.length);
 			if(usuarios.length>0){
-				console.log(usuarios[0]);
 				if (usuarios[0].password==clave){
 					var user=usuarios[0]
+					idLogin=user.id
 					return done(null, user)
 				}
 					
@@ -171,7 +222,6 @@ var clave = password
 passport.serializeUser(function(user, done){
 	done(null, user.id)
 
-	console.log(user.id);
 
 })
 
