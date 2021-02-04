@@ -27,13 +27,13 @@ router.get("/",(req, res, next)=>{
 }, (req,res)=>{
 
 	
-	pool.query('SELECT * FROM libros WHERE usuario_ID= ?',[idLogin], (err, libros)=>{
+	pool.query('SELECT * FROM preventa WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
 		if(err){
 			res.json(err);                    
 		}
 
 		res.render('perfil',{
-			data:libros
+			data:preventa
 		})
 	})
 
@@ -86,13 +86,18 @@ router.get('/logout', function(req, res){
 }, (req, res)=>{
 
     
-           pool.query('SELECT * FROM libros', (err, libros)=>{
+           pool.query('SELECT * FROM preventa INNER JOIN  usuarios ON preventa.usuario_ID = usuarios.id ', (err, preventa)=>{
+
+		
+			console.log(preventa);
                 if(err){
                     res.json(err);                    
-                }
+				}
+				
+
 
                 res.render('todasOfertas',{
-                    data:libros
+                    data:preventa
                 })
             })
 	
@@ -162,7 +167,7 @@ res.redirect('/usuarios')
 router.get( '/delete/oferta/:id',  (req, res)=>{
 const id=req.params.id;
 console.log(id);
-pool.query('DELETE FROM libros WHERE id= ?',[id],(err,usuarios)=>{
+pool.query('DELETE FROM preventa WHERE id= ?',[id],(err,usuarios)=>{
 res.redirect('/')
 
 })
@@ -179,7 +184,9 @@ res.redirect('/')
 	 router.post('/crearOferta',  (req, res)=>{
 
 		const datosOferta = req.body;
-	  pool.query('INSERT INTO libros set ?', [datosOferta],(err,libros)=>{
+		console.log(datosOferta);
+	  pool.query('INSERT INTO preventa set ?', [datosOferta],(err,preventa)=>{
+		  		console.log(preventa);
 				res.redirect('/')
 		  })
 	  

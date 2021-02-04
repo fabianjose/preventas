@@ -13,19 +13,138 @@
 
 
  
- <div class="col-5">
+ 
        
-    <div class="card">
+    
         <h1>Crear una oferta</h1>
-        <div class="card-body">
+     
+
+
+            <h1>INFORMACION DEL SUSCRIPTOR</h1>
             <form action="/crearOferta" method="post">
 
-                <div class="form-group">
-                          
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Nombre Completo suscriptor <br><br> </b> </p></label>
+                                <input type="text" name="nombre_completo" id="" placeholder="Nombre Completo Suscriptor" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Selecciona un tipo <br> de documento</b> </p></label>
+                                <select class="form-select" name="tipo_documento" aria-label="Default select example">
+                                    <option selected>Selecciona un tipo de documento</option>
+                                    <option value="Cedula Ciudadania">Cedula Ciudadania</option>
+                                    <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
+                                    <option value="NIT">NIT</option>
+                                    <option value="OTRA">OTRA</option>
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Ingresa el Numero <br> de documento</b> </p></label>
+    
+                                <input type="text" name="numero_documento" id="" placeholder="Numero de documento" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Ingresa la fecha de<br> expedicion del documento</b> </p></label>
+    
+                                <input type="text" name="fecha_expedicion" id="" placeholder="Fecha de Expedicion" class="form-control">
+                            </div>
+                        </div>
 
-                    <input type="text" name="nombre" id="" placeholder="nombre" class="form-control">
-                    <input  type="hidden" name="usuario_ID" id=""  value="<%= user[0].id %> " class="form-control">
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Numero de telefono Celular <br><br> </b> </p></label>
+                                <input type="text" name="telefono_celular" id="" placeholder="ingrese celular" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Numero de telefono fijo <br><br> </b> </p></label>
+                                <input type="text" name="telefono_fijo" id="" placeholder="ingrese telefono fijo" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Selecciona un tipo <br> de estrato</b> </p></label>
+                                <select class="form-select" name="estrato" aria-label="Default select example">
+                                    <option selected>Selecciona un tipo de documento</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="2">5</option>
+                                    <option value="3">6</option>
+                                    <option value="No Residencial">No Residencial</option>
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                             </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Ingrese Correo <br><br> </b> </p></label>
+                                <input type="text" name="correo" id="" placeholder="ingrese correo " class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Ciudad <br><br> </b> </p></label>
+                                <input type="text" name="ciudad" id="" placeholder="ingrese la ciudad" class="form-control">
+                            </div>
+                        </div>
+                      
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Municipio <br><br> </b> </p></label>
+                                <input type="text" name="municipio" id="" placeholder="ingrese el municipio" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Direccion Cliente <br><br> </b> </p></label>
+                                <input type="text" name="direccion" id="" placeholder="ingrese la Direccion" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+
                 </div>
+
+               
+
+                <input  type="hidden" name="usuario_ID" id=""  value="<%= user[0].id %> " class="form-control">
+
               
               
                 
@@ -36,10 +155,10 @@
                     </button>
         
             </form>
-        </div>
-    </div>
+       
+   
 
-</div>
+
  
  
     
@@ -52,7 +171,7 @@
     <thead>
         <th>#</th>
         <th>id</th>
-        <th>Nombre</th>
+        <th>titulo</th>
              
              
         
@@ -71,7 +190,7 @@
                 <tr>
                     <td> <%=(i+1) %> </td>
                     <td> <%= data[i].id %> </td>
-                    <td> <%= data[i].nombre %> </td>
+                    <td> <%= data[i].titulo %> </td>
              
                   
                    
