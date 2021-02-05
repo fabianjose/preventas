@@ -1,0 +1,48 @@
+
+ <%- include ('partials/header')  %>
+
+
+
+ <span> <%= dato.id %> </span>
+ <span> <%=console.log(dato) %> </span>
+ 
+
+ <div class="row mt-5">
+ 
+  
+ 
+     <div class="col-5">
+        
+         <div class="card">
+             <div class="card-body">
+                 <form action="//<%=dato.id%>" method="POST">
+ 
+                     <div class="form-group">
+                         <input type="text" name="nombre" id="" value="<%= dato.nombre %>" class="form-control">
+                     </div>
+                     <div class="form-group">
+                         <input type="text" name="password" id="" value="<%= dato.password %>"  class="form-control">
+                     </div>
+                         <button type="submit" class="btn btn-success">
+                             Actualizar datos
+                         </button>
+             
+                 </form>
+             </div>
+         </div>
+ 
+     </div>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <%- include('partials/footer') %>

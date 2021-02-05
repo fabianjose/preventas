@@ -10,7 +10,9 @@
 
 
 
-      <h1> <%=data.usuario_ID %> </h1>      
+      <h1> <%= data[0].usuario_ID %> </h1>     
+      <h1> <%= data[0].id %> </h1>     
+    
 
 
 <%= console.log(user[0].rol); %>
@@ -23,14 +25,26 @@
 
         <table class="table table-bordered table-hover">
             <thead>
-                <th>#</th>
-                <th>id</th>
-                <th>titulo</th>
-                <th>creado por</th>
+                 
+                <th>id preventa</th>
+                <th>id de usuario</th>        
+                <th>Cliente</th>
+                <th>tipo de documento</th>
+                <th>cedula</th>
+                <th>correo</th>
+                <th>Tipo de Servicio</th>
+                <th>Asesor</th>
+        
+        
+                     
+                     
                 
-                                   
-                <th>Delete</th>
-                <th>Update</th>
+                    <%if(user[0].rol==1){%>
+                        <th>Delete</th>
+                        <th>Update</th>
+                        <th>Ver Detalles</th>
+                  
+                        <% }%>
 
             </thead>
 
@@ -39,21 +53,34 @@
                     <% for(var i=0; i<data.length;i++) { %> 
                          
                         <tr>
-                            <td> <%=(i+1) %> </td>
-                            <td> <%= data[i].id %> </td>
-                            <td> <%= data[i].titulo %> </td>
-                            <td> <%= data[i].nombre %> </td>
-
+                            <td> <%= data[i].id  %> </td>
+                            <td> <%= data[i].usuario_ID  %> </td>
+                            <td> <%= data[i].nombre_completo %> </td>
+                            <td> <%= data[i].tipo_documento %> </td>
+                            <td> <%= data[i].numero_documento %> </td>
+                            <td> <%= data[i].correo %> </td>
+                            <td> <%= data[i].tipo_servicio %> </td>
+                            <td> <%= data[i].asesor %> </td>
+                     
+                          
                            
-                           
+                            <%if(user[0].rol==1){%>
+                              
+                            <td> <a href="/delete/oferta/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
+                            <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
+                            <td> <a href="/detalles/<%=data[i].id%>" class="btn btn-success">DETALLES</a> </td>
+        
+                             
+                          
+                                <% }%>
+                
+                         
+                              
+                        </tr>
                                 
                                 
                          
-                            
-                            <td> <a href="/delete/oferta/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
-                            <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
-                                
-                        </tr>
+                       
                         
                                                    <% } %> 
                 <% } %>     
@@ -80,6 +107,104 @@
 
 
 
+<%if(user[0].rol!=1){%>
+    <%- include ('partials/header')  %>
+    <% }%>
+    <%if(user[0].rol==1){%>
+        <%- include ('partials/header2')  %>
+        <% }%>
+  
+
+  
+
+
+
+
+ 
+ 
+       
+    
+        <h1>Mis ofertas</h1>
+  
+
+
+ 
+ 
+    
+ 
+
+ 
+
+            
+ <table class="table table-bordered table-hover">
+    <thead>
+        <th>#</th>       
+        <th>Cliente</th>
+        <th>tipo de documento</th>
+        <th>cedula</th>
+        <th>correo</th>
+        <th>Tipo de Servicio</th>
+        <th>Asesor</th>
+
+
+             
+             
+        
+            <%if(user[0].rol==1){%>
+                <th>Delete</th>
+                <th>Update</th>
+                <th>Ver Detalles</th>
+          
+                <% }%>
+
+    </thead>
+
+    <tbody>
+        <% if (data) { %>     
+            <% for(var i=0; i<data.length;i++) { %> 
+                 
+                <tr>
+                    <td> <%=(i+1) %> </td>
+                    <td> <%= data[i].nombre_completo %> </td>
+                    <td> <%= data[i].tipo_documento %> </td>
+                    <td> <%= data[i].numero_documento %> </td>
+                    <td> <%= data[i].correo %> </td>
+                    <td> <%= data[i].tipo_servicio %> </td>
+                    <td> <%= data[i].asesor %> </td>
+             
+                  
+                   
+                    <%if(user[0].rol==1){%>
+                      
+                    <td> <a href="/delete/oferta/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
+                    <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
+                    <td> <a href="/detalles/<%=data[i].id%>" class="btn btn-success">DETALLES</a> </td>
+
+                     
+                  
+                        <% }%>
+        
+                 
+                      
+                </tr>
+                
+                                           <% } %> 
+        <% } %>     
+    </tbody>
+</table>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<%- include('partials/modal') %>
+ 
+ <%- include('partials/footer') %>
 
 
 <%- include('partials/footer') %>

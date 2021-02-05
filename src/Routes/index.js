@@ -38,6 +38,8 @@ router.get("/",(req, res, next)=>{
 	})
 
 })
+
+
     	
 
 
@@ -193,9 +195,43 @@ res.redirect('/')
 	  }) 
 	  
   
+	  router.get("/ofertasRegistradas",(req, res, next)=>{
+		if(req.isAuthenticated()) return next()
+		res.redirect('login')
+	}, (req,res)=>{
+	
+		
+		pool.query('SELECT * FROM preventa WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
+			if(err){
+				res.json(err);                    
+			}
+	
+			res.render('ofertasRegistradas',{
+				data:preventa
+			})
+		})
+	
+	})
 
 
+	router.get('/detalles/:id',(req, res, next)=>{
+		if(req.isAuthenticated()) return next()
+		res.redirect('login')
+	}, (req, res)=>{
 
+		const id=req.params.id;
+		console.log("aca el id de detalles");
+		console.log(id);
+	   
+		pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa)=>{
+			console.log(preventa[0]);
+			if(err)console.log(err);
+			res.render('detalles',{
+				
+				dato:preventa[0]
+			})
+		})
+	})
 			  
 passport.use(new PassportLocal(function(username, password, done){
 	//			
