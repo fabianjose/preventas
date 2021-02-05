@@ -29,7 +29,7 @@
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Nombre Completo suscriptor <br><br> </b> </p></label>
-                                <input type="text" name="nombre_completo" id="" placeholder="Nombre Completo Suscriptor" class="form-control">
+                                <input required  type="text" name="nombre_completo" id="" placeholder="Nombre Completo Suscriptor" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 text-center">
@@ -50,7 +50,7 @@
                             <div class="form-group card">
                                 <label for=""><p> <b>Ingresa el Numero <br> de documento</b> </p></label>
     
-                                <input type="text" name="numero_documento" id="" placeholder="Numero de documento" class="form-control">
+                                <input required type="text" name="numero_documento" id="" placeholder="Numero de documento" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 text-center">
@@ -58,7 +58,7 @@
                             <div class="form-group card">
                                 <label for=""><p> <b>Ingresa la fecha de<br> expedicion del documento</b> </p></label>
     
-                                <input type="text" name="fecha_expedicion" id="" placeholder="Fecha de Expedicion" class="form-control">
+                                <input required type="text" name="fecha_expedicion" id="fechas" placeholder="Fecha de Expedicion" class="form-control">
                             </div>
                         </div>
 
@@ -69,14 +69,14 @@
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Numero de telefono Celular <br><br> </b> </p></label>
-                                <input type="text" name="telefono_celular" id="" placeholder="ingrese celular" class="form-control">
+                                <input required type="text" name="telefono_celular" id="" placeholder="ingrese celular" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 text-center">
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Numero de telefono fijo <br><br> </b> </p></label>
-                                <input type="text" name="telefono_fijo" id="" placeholder="ingrese telefono fijo" class="form-control">
+                                <input required type="text" name="telefono_fijo" id="" placeholder="ingrese telefono fijo" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 text-center">
@@ -109,14 +109,14 @@
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Ingrese Correo <br><br> </b> </p></label>
-                                <input type="text" name="correo" id="" placeholder="ingrese correo " class="form-control">
+                                <input required type="text" name="correo" id="" placeholder="ingrese correo " class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3 text-center">
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Ciudad <br><br> </b> </p></label>
-                                <input type="text" name="ciudad" id="" placeholder="ingrese la ciudad" class="form-control">
+                                <input required type="text" name="ciudad" id="" placeholder="ingrese la ciudad" class="form-control">
                             </div>
                         </div>
                       
@@ -124,7 +124,7 @@
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Municipio <br><br> </b> </p></label>
-                                <input type="text" name="municipio" id="" placeholder="ingrese el municipio" class="form-control">
+                                <input required type="text" name="municipio" id="" placeholder="ingrese el municipio" class="form-control">
                             </div>
                         </div>
 
@@ -132,12 +132,240 @@
                             <br>
                             <div class="form-group card">
                                 <label for=""><p> <b>Direccion Cliente <br><br> </b> </p></label>
-                                <input type="text" name="direccion" id="" placeholder="ingrese la Direccion" class="form-control">
+                                <input required type="text" name="direccion" id="" placeholder="ingrese la Direccion" class="form-control">
                             </div>
                         </div>
 
                     </div>
                     <br><br>
+
+
+                        
+                     <h1>INFORMACION DEL CONTACTO</h1>
+                     <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Nombre Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="nombre_contacto" id="" placeholder="Nombre Contacto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Cedula Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="cedula_contacto" id="" placeholder="Cedula Contacto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Telefono fijo Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="telefono_fijo_contacto" id="" placeholder="Telefono fijo" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Telefono movil Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="telefono_movil_contacto" id="" placeholder="Telefono movil" class="form-control">
+                            </div>
+                        </div>
+                     
+
+                    </div>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Autoriza <br> compartir datos? </b> </p></label>
+                                <select class="form-select" name="autoriza" aria-label="Default select example">
+                                    <option selected value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                  
+                                  </select>                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Correo Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="correo_contacto" id="" placeholder="Correo Contacto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-5 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Direccion Contacto <br><br> </b> </p></label>
+                                <input required type="text" name="direccion_contacto" id="" placeholder="Direccion Contacto" class="form-control">
+                            </div>
+                        </div>
+                       
+                         
+                        </div>
+                        <div class="col-12 col-sm-1 text-center">
+                            <br>
+                         
+                        </div>
+
+                    </div>
+                    <br><br>
+
+
+                    <h1>CONDICIONES COMERCIALES</h1>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Nombre de Asesor <br><br> </b> </p></label>
+                                <input required type="text" name="asesor" id="" placeholder="nombre de asesor" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Tipo de <br> Servicio</b> </p></label>
+                                <select class="form-select" name="tipo_servicio" aria-label="Default select example">
+                                    <option selected>tipo de servicio</option>
+                                    <option value="Oferta Comercial">Oferta Comercial</option>
+                                    <option value="Oferta Residencial">Oferta Residencial</option>                                  
+                                    <option value="No Residencial">No Residencial</option>
+                                  </select>
+                            </div>
+                        </div>
+                      
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Tipo de <br> Tecnologia</b> </p></label>
+                                <select class="form-select" name="tecnologia" aria-label="Default select example">
+                                    <option selected>tipo de Tecnologia</option>
+                                    <option value="Cobre">Cobre</option>
+                                    <option value="Fibra">Fibra</option>                                  
+                                    <option value="FTTC">FTTC</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Tipo de Instalacion <br><br> </b> </p></label>
+                                <select class="form-select"  name="tipo_instalacion" aria-label="Default select example">
+                                    <option selected>tipo de Instalacion</option>
+                                    <option value="1 play">1 play</option>
+                                    <option value="2 play">2 play</option>                                  
+                                    <option value="3 play">3 play</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+
+                    <div class="row"
+                    
+                    
+                    >  <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Caracteristicas <br> del Plan</b> </p></label>
+                                <select class="form-select" name="plan_caracteristicas" aria-label="Default select example">
+                                    <option selected>tipo de servicio</option>
+                                    <option value="Linea Nueva (Dúo Nuevo)">Linea Nueva (Dúo Nuevo)</option>
+                                    <option value="Linea Existente + BA">Linea Existente + BA</option>
+                                    <option value="Línea Nueva (Trío Nuevo)">Línea Nueva (Trío Nuevo)</option>
+                                    <option value="Línea Existente">Línea Existente</option>
+                                    <option value="Linea + Internet Existente (Migración Dúo)">Linea + Internet Existente (Migración Dúo)</option>
+                                    <option value="Trío Nuevo">Trío Nuevo</option>
+                                    <option value="Línea Migrada + BA + TV">Línea Migrada + BA + TV</option>
+                                    <option value="Línea + BA Migrada + TV">Línea + BA Migrada + TV</option>
+                                    <option value="+ TV">+ TV</option>
+                
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Linea Telefonica <br><br> </b> </p></label>
+                                <input required type="text" name="linea_telefonica" id="" placeholder="Line Telefonica" class="form-control">
+                            </div>
+                        </div>
+                      
+                      
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Velocidad <br><br> </b> </p></label>
+                                <input required type="text" name="Velocidad" id="" placeholder="Velocidad" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Tarifa <br><br> </b> </p></label>
+                                <input required type="text" name="tarifa" id="" placeholder="Velocidad" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+
+
+
+                    <div class="row"
+                    
+                    
+                    >  <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Fecha de  <br> Agendamiento</b> </p></label>
+                                <input required type="text" name="fecha_agenda" id="" placeholder="fecha agendamiento" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Direccion Final <br><br> </b> </p></label>
+                                <input required type="text" name="direccion_final" id="" placeholder="Direccion Final" class="form-control">
+                            </div>
+                        </div>
+                      
+                      
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                            <div class="form-group card">
+                                <label for=""><p> <b>Estrato Final <br><br> </b> </p></label>
+                                <select class="form-select" name="estrato_final" aria-label="Default select example">
+                                   
+                                    <option selected value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="2">5</option>
+                                    <option value="3">6</option>
+                                    <option value="No Residencial">No Residencial</option>
+                                  </select>                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-3 text-center">
+                            <br>
+                           
+                        </div>
+
+                    </div>
+                    <br><br>
+
+
+                
+
 
                 </div>
 
@@ -162,7 +390,7 @@
  
  
     
- </div>
+ 
 
  
 
