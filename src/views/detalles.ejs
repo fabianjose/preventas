@@ -3,30 +3,53 @@
 
 
 
- <span> <h1>  <%= dato[0].id%></h1> </span>
- <span> <h1>  <%= dato[0].titulo%></h1> </span>
- <span> <h1>  </h1> </span>
- <span> <h1>  <%= dato[0].id%></h1> </span>
- <span> <h1>  <%= dato[0].id%></h1> </span>
- 
-
  <div class="row mt-5">
- 
-  
+ <div class="row">
+        <div class="col">
+                <h1>INFORMACION PREVENTA</h1>                   
+            </div>
+            <div class="col">
+                <div class="row mt-5 text-center"> 
+                    <h1>ESTATUS</h1>
+                                <div class="col"></div>
+                                <div class="col"> <% if(dato[0].estatus == 0) {  %>
+                                       
+                                    <td> <button class="btn btn-info"> AGENDADA</button>  </td>       
+                                       <%  }  %>
+                                    <% if(dato[0].estatus == 1) {  %>
+                                       <td> <button class="btn btn-warning"> PENDIENTE</button>     </td>
+                                        <%  }  %>
+                                        <% if(dato[0].estatus == 2) {  %>
+                                           <td> <button class="btn btn-primary"> INSTALADA</button>     </td>
+                                            <%  }  %>
+                                            <% if(dato[0].estatus == 3) {  %>
+                                              <td>  <button class="btn btn-success"> COMPLETADA</button>     </td>
+                                                <%  }  %>
+                                                <% if(dato[0].estatus == 4) {  %>
+                                                   
+                                                 <td>   <button class="btn btn-danger"> DECLINADA</button> </td>
+                                                    <%  }  %></div>
+                                <div class="col"></div>
+                </div>
+            </div>
+                   
+ </div>
+         
 
       <table class="table">
           <h1>INFORMACION DEL SUSCRIPTOR</h1>
         <thead class="thead-dark">
           <tr>
+       
+           
             <th scope="col">Nombre Cliente</th>
-            <th scope="col">tipo de  documento</th>
-            <th scope="col"># de documento</th>
-            <th scope="col">Fecha de expedicion</th>
-            <th scope="col">telefono celular</th>
-            <th scope="col">telefono fijo</th>
-            <th scope="col">estrato</th>
-            <th scope="col">Correo</th>
-            
+                <th scope="col">tipo de  documento</th>
+                <th scope="col"># de documento</th>
+                <th scope="col">Fecha de expedicion</th>
+                <th scope="col">telefono celular</th>
+                <th scope="col">telefono fijo</th>
+                <th scope="col">estrato</th>
+                <th scope="col">Correo</th>
 
           </tr>
         </thead>
@@ -47,14 +70,13 @@
       <table class="table">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Nombre Cliente</th>
-                <th scope="col">tipo de  documento</th>
-                <th scope="col"># de documento</th>
-                <th scope="col">Fecha de expedicion</th>
+                
+                <th scope="col">Nombre Contacto</th>
+                <th scope="col">Cedula Contacto</th>
                 <th scope="col">telefono celular</th>
                 <th scope="col">telefono fijo</th>
-                <th scope="col">estrato</th>
-                <th scope="col">Correo</th>
+                <th scope="col">Autoriza Datos?</th>
+                <th scope="col">Direccion </th>
                 
     
               </tr>
@@ -62,46 +84,45 @@
         <tbody>
             <tbody>
                 <tr>
-                  <th scope="row"><%= dato[0].nombre_completo%></th>
-                  <td><%= dato[0].tipo_documento%></td>
-                  <td><%= dato[0].numero_documento%></td>
-                  <td><%= dato[0].fecha_expedicion%></td>
-                  <td><%= dato[0].telefono_celular%></td>
-                  <td><%= dato[0].telefono_fijo%></td>
-                  <td><%= dato[0].estrato%></td>            
-                  <td><%= dato[0].correo%></td>            
+                  <th scope="row"><%= dato[0].nombre_contacto%></th>
+                  <td><%= dato[0].cedula_contacto%></td>
+                  <td><%= dato[0].telefono_fijo_contacto%></td>
+                  <td><%= dato[0].telefono_movil_contacto%></td>
+                  <td><%= dato[0].autoriza%></td>
+                  <td><%= dato[0].direccion%></td>
                
               </tbody>
         
         </tbody>
       </table>
 
-      
+      <h1>Condiciones Comerciales</h1>
+
     <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Nombre Cliente</th>
-            <th scope="col">tipo de  documento</th>
-            <th scope="col"># de documento</th>
-            <th scope="col">Fecha de expedicion</th>
-            <th scope="col">telefono celular</th>
-            <th scope="col">telefono fijo</th>
-            <th scope="col">estrato</th>
-            <th scope="col">Correo</th>
+            <th scope="col">Nombre Asesor</th>
+            <th scope="col">tipo de Servicio</th>
+            <th scope="col">tipo de Tecnologia</th>
+            <th scope="col">Tipo de Instalacion</th>
+            <th scope="col">Caracteristicas del plan</th>
+            <th scope="col">Linea Telefonica</th>
+            <th scope="col">Velocidad</th>
+            <th scope="col">Tarifa</th>
             
 
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row"><%= dato[0].nombre_completo%></th>
-            <td><%= dato[0].tipo_documento%></td>
-            <td><%= dato[0].numero_documento%></td>
-            <td><%= dato[0].fecha_expedicion%></td>
-            <td><%= dato[0].telefono_celular%></td>
-            <td><%= dato[0].telefono_fijo%></td>
-            <td><%= dato[0].estrato%></td>            
-            <td><%= dato[0].correo%></td>            
+            <th scope="row"><%= dato[0].asesor%></th>
+            <td><%= dato[0].tipo_servicio%></td>
+            <td><%= dato[0].tecnologia%></td>
+            <td><%= dato[0].tipo_instalacion%></td>
+            <td><%= dato[0].plan_caracteristicas%></td>
+            <td><%= dato[0].linea_telefonica%></td>            
+            <td><%= dato[0].velocidad%></td>      
+            <td><%= dato[0].tarifa%></td>        
          
         </tbody>
       </table>
@@ -109,14 +130,10 @@
       <table class="table">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Nombre Cliente</th>
-                <th scope="col">tipo de  documento</th>
-                <th scope="col"># de documento</th>
-                <th scope="col">Fecha de expedicion</th>
-                <th scope="col">telefono celular</th>
-                <th scope="col">telefono fijo</th>
-                <th scope="col">estrato</th>
-                <th scope="col">Correo</th>
+                <th scope="col">fecha de Agendamiento</th>
+                <th scope="col">direccion Final</th>
+                <th scope="col">estrato Final</th>
+               
                 
     
               </tr>
@@ -124,14 +141,11 @@
         <tbody>
             <tbody>
                 <tr>
-                  <th scope="row"><%= dato[0].nombre_completo%></th>
-                  <td><%= dato[0].tipo_documento%></td>
-                  <td><%= dato[0].numero_documento%></td>
-                  <td><%= dato[0].fecha_expedicion%></td>
-                  <td><%= dato[0].telefono_celular%></td>
-                  <td><%= dato[0].telefono_fijo%></td>
-                  <td><%= dato[0].estrato%></td>            
-                  <td><%= dato[0].correo%></td>            
+                  <td><%= dato[0].fecha_agenda%></td>
+                  <td><%= dato[0].direccion_final%></td>
+                  <td><%= dato[0].estrato_final%></td>
+                        
+                       
                
               </tbody>
         

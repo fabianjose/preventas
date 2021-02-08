@@ -19,7 +19,7 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <th>#</th>
-                <th>id</th>
+              
                 <th>Nombre</th>
                 <th>contraseña</th>
                 <th>ROL</th>
@@ -35,7 +35,7 @@
                          
                         <tr>
                             <td> <%=(i+1) %> </td>
-                            <td> <%= data[i].id %> </td>
+                           
                             <td> <%= data[i].nombre %> </td>
                             <td> <%= data[i].password %> </td>
                             <% if(data[i].rol!=1){ %> 
@@ -65,7 +65,8 @@
 
     <div class="col-5">
        
-        <div class="card">
+        <div class="card text-center">
+            <h1>crear nuevo  usuario</h1>
             <div class="card-body">
                 <form action="/add" method="post">
 

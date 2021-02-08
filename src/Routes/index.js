@@ -91,12 +91,11 @@ router.get('/logout', function(req, res){
            pool.query('SELECT preventa.* , usuarios.nombre FROM preventa INNER JOIN  usuarios ON preventa.usuario_ID = usuarios.id', (err, preventa)=>{
 
 			
-			console.log(preventa);
                 if(err){
                     res.json(err);                    
 				}
 				
-
+					console.log(preventa);
 
                 res.render('todasOfertas',{
                     data:preventa
@@ -168,7 +167,6 @@ res.redirect('/usuarios')
 
 router.get( '/delete/oferta/:id',  (req, res)=>{
 const id=req.params.id;
-console.log(id);
 pool.query('DELETE FROM preventa WHERE id= ?',[id],(err,usuarios)=>{
 res.redirect('/')
 
@@ -186,9 +184,7 @@ res.redirect('/')
 	 router.post('/crearOferta',  (req, res)=>{
 
 		const datosOferta = req.body;
-		console.log(datosOferta);
 	  pool.query('INSERT INTO preventa set ?', [datosOferta],(err,preventa)=>{
-		  		console.log(preventa);
 				res.redirect('/')
 		  })
 	  
@@ -198,15 +194,15 @@ res.redirect('/')
 	  router.get("/ofertasRegistradas",(req, res, next)=>{
 		if(req.isAuthenticated()) return next()
 		res.redirect('login')
-	}, (req,res)=>{
+	}, async (req,res)=>{
 	
 		
-		pool.query('SELECT * FROM preventa WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
+	 await		pool.query('SELECT * FROM preventa WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
 			if(err){
 				res.json(err);                    
 			}
 	
-			res.render('ofertasRegistradas',{
+		res.render('ofertasRegistradas',{
 				data:preventa
 			})
 		})
@@ -220,18 +216,76 @@ res.redirect('/')
 	}, (req, res)=>{
 
 		const id=req.params.id;
-		console.log("aca el id de detalles");
-		console.log(id);
 	   
-		pool.query('SELECT * FROM preventa WHERE id= ?',id,(err,preventa)=>{
-			console.log(preventa);
+		pool.query('SELECT * FROM preventa WHERE id= ?  ',id,(err,preventa)=>{
 			if(err)console.log(err);
+			console.log(preventa);
 			res.render('detalles',{
 				
 				dato:preventa
 			})
 		})
 	})
+
+
+
+	router.get('/ofertasupdate/:id',(req, res, next)=>{
+		if(req.isAuthenticated()) return next()
+		res.redirect('login')
+	}, (req, res)=>{
+
+		const id=req.params.id;
+	   console.log(id);
+		pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa)=>{
+			console.log(preventa);
+			res.render('actualizaroferta',{
+					
+				data:preventa
+			})
+		})
+	})
+
+	router.post ('/ofertasupdate/:id', (req, res, next)=>{
+		if(req.isAuthenticated()) return next()
+		res.redirect('login')
+	}, async (req, res)=>{
+	
+		const id=req.params.id;		
+		const nuevaPreventa = req.body;
+
+		
+		
+	await	pool.query('UPDATE preventa set ? WHERE id= ? ',[nuevaPreventa,id],(err,rows)=>{
+			if(err){
+				console.log(err);
+			}
+
+	
+				
+			res.redirect('/')
+			})
+	
+	})
+	
+
+router.get('/prueba', (req, res)=>{
+
+	pool.query('SELECT * FROM preventa P JOIN bitacora B ON P.bitacora_id = B.preventa_ID ', (err, bitacora)=>{
+
+	//pool.query('SELECT * FROM preventa', (err, bitacora)=>{
+
+			
+		if(err){
+			res.json(err);                    
+		}
+		
+			console.log(bitacora);
+
+		res.render('bitacora',{
+			data:bitacora
+		})
+	})
+})
 			  
 passport.use(new PassportLocal(function(username, password, done){
 	//			
