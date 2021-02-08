@@ -88,9 +88,9 @@ router.get('/logout', function(req, res){
 }, (req, res)=>{
 
     
-           pool.query('SELECT * FROM preventa INNER JOIN  usuarios ON preventa.usuario_ID = usuarios.id ', (err, preventa)=>{
+           pool.query('SELECT preventa.* , usuarios.nombre FROM preventa INNER JOIN  usuarios ON preventa.usuario_ID = usuarios.id', (err, preventa)=>{
 
-		
+			
 			console.log(preventa);
                 if(err){
                     res.json(err);                    
@@ -223,12 +223,12 @@ res.redirect('/')
 		console.log("aca el id de detalles");
 		console.log(id);
 	   
-		pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa)=>{
-			console.log(preventa[0]);
+		pool.query('SELECT * FROM preventa WHERE id= ?',id,(err,preventa)=>{
+			console.log(preventa);
 			if(err)console.log(err);
 			res.render('detalles',{
 				
-				dato:preventa[0]
+				dato:preventa
 			})
 		})
 	})
