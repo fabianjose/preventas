@@ -21,7 +21,7 @@
                 <th>#</th>
               
                 <th>Nombre</th>
-                <th>contraseña</th>
+                
                 <th>ROL</th>
                                    
                 <th>Delete</th>
@@ -37,7 +37,7 @@
                             <td> <%=(i+1) %> </td>
                            
                             <td> <%= data[i].nombre %> </td>
-                            <td> <%= data[i].password %> </td>
+                          
                             <% if(data[i].rol!=1){ %> 
                                 <td> Comercial </td>
                                  <% } %> 
@@ -107,3 +107,5 @@
 
 
 <%- include('partials/footer') %>
+
+
