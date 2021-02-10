@@ -1,11 +1,14 @@
 
  <%if(user[0].rol!=1){%>
+   
     <%- include ('partials/header')  %>
     <% }%>
     <%if(user[0].rol==1){%>
         <%- include ('partials/header2')  %>
         <% }%>
-  
+        <script src="https://smtpjs.com/v3/smtp.js">
+
+        </script> 
 
   
 
@@ -406,13 +409,41 @@
                 
     
                     <div class="row text-center">
-                          <button type="submit" class="btn btn-success btn-lg">
+                          <button type="submit" onclick="correo1()" class="btn btn-success btn-lg">
                         guardar datos
                     </button>
                     </div>
                   
         
             </form>
+
+
+            <script >
+          
+            
+          function correo1(){
+console.log("entrando al correo")
+
+Email.send({
+    Host : "teledisca.com",
+    Username : "fabian.espejo@teledisca.com",
+    Password : "fabianjose",
+          To : ['fabian.espejo@teledisca.com','fabian2@teledisca.com'],         
+          From : "fabian.espejo@teledisca.com",
+          Subject : "Nuevo Cliente CREADO",
+          Body : "El Nuevo Cliente Fue Creado por   <%=user[0].nombre%> " 
+}).then(
+ alert("enviado")
+);
+               
+      
+      
+
+          
+             
+              
+              } 
+            </script>
        
    
 

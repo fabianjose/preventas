@@ -93,9 +93,7 @@ router.get('/logout', function(req, res){
 			
                 if(err){
                     res.json(err);                    
-				}
-				
-				
+				}		
 
                 res.render('todasOfertas',{
                     data:preventa
@@ -242,27 +240,57 @@ router.get('/logout', function(req, res){
 
 
 
-	router.get('/ofertasupdate/:id',(req, res, next)=>{
+  	router.get('/ofertasupdate/:id',(req, res, next)=>{
 		if(req.isAuthenticated()) return next()
 		res.redirect('login')
 	}, (req, res)=>{
 
 		const id=req.params.id;
-
+		const id2=req.params.id;
+		console.log(id)
 		
 		var bitacora;
-		pool.query('SELECT * FROM bitacora WHERE bitacora.preventa_id = ?',id, (err, info)=>{
+		var usuario;
+		var a;
+		var b;
+		 pool.query('SELECT * FROM bitacora WHERE bitacora.preventa_id = ?',id, (err, info)=>{
 			
 			bitacora=info
-	}) 
-		pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa)=>{
-			res.render('actualizaroferta',{
+			}) 
+			/* pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa1)=>{
+			
+				a=preventa1
+				console.log("console de a")
+				console.log(a)
+				b= a[0].usuario_ID
+				console.log("console de b")
+				console.log(b)
+				pool.query('SELECT * FROM usuarios WHERE id= ?',[b],(err,usuario)=>{
+					console.log("usuario")
+					console.log(usuario[0])
+	
 					
-				data:preventa,
-				bitacora:bitacora
-			})
-		})
-	})
+					}) 
+	
+				
+				}) */
+
+
+
+
+		
+					 pool.query('SELECT * FROM preventa WHERE id= ?',[id2],(err,preventa)=>{
+							res.render('actualizaroferta',{
+									
+								data:preventa,
+								bitacora:bitacora,
+								
+								
+							})
+						
+						})
+						
+					})
 
 	router.post ('/ofertasupdate/:id', (req, res, next)=>{
 		if(req.isAuthenticated()) return next()
@@ -287,21 +315,23 @@ router.get('/logout', function(req, res){
 	})
 	
 
-	router.post('/addbitacora/:id',(req,res)=>{
-		console.log("lo que debveria ser el id ")
-			
-		console.log(req.params.id)
-		const id = req.params.id;
-		console.log("acavoy ")
-		const nuevaBitacora = [[ req.body.detalle , id] ]
-		console.log(req.body)
-		
+router.post('/addbitacora/:id',(req,res)=>{
+    console.log("lo que debveria ser el id ")
+      
+    console.log(req.params.id)
+    const id = req.params.id;
+    console.log("acavoy ")
+    const nuevaBitacora = [[ req.body.detalle , id] ]
+    console.log(req.body)
+    
+      console.log(nuevaBitacora)
+    pool.query('insert into bitacora (detalle, preventa_id)  values ?  ', [nuevaBitacora],(err,ff)=>{
+          if (err) throw err;
+	console.log("Number of records inserted: " + ff.affectedRows);      })
 	
-	  pool.query('insert into bitacora values ?  ', nuevaBitacora,(err,nuevaBitacora)=>{
-				res.redirect('/verOfertas')
-		  })
-	  
-	})
+	res.redirect('/verOfertas')
+    
+  })
 			  
 passport.use(new PassportLocal(function(username, password, done){
 	//			
@@ -309,7 +339,7 @@ passport.use(new PassportLocal(function(username, password, done){
 var nombre =username
 var clave = password
 	pool.query('SELECT * FROM usuarios WHERE nombre= ?',[nombre],(err,usuarios)=>{
-		
+			if(err){req . flash ( 'mensaje' , 'datos incorrectos' ) }
 			if(usuarios.length>0){
 				if (usuarios[0].password==clave){
 					var user=usuarios[0]

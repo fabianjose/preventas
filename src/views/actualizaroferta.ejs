@@ -12,11 +12,17 @@
         <%- include ('partials/header2')  %>
         <% }%>
   
+        <script src="https://smtpjs.com/v3/smtp.js">
 
+        </script> 
   
 
 
         <h1><%=  data[0].id %></h1>
+        
+     
+
+        
 
  
  
@@ -535,6 +541,32 @@
  </div>
  
 
+ <script >
+          
+            
+    function correo1(){
+console.log("entrando al correo")
+
+Email.send({
+Host : "teledisca.com",
+Username : "fabian.espejo@teledisca.com",
+Password : "fabianjose",
+    To : ['fabian.espejo@teledisca.com',' <%=user[0].correo%>'],         
+    From : "fabian.espejo@teledisca.com",
+    Subject : "Nuevo Cliente CREADO",
+    Body : "Se ha Actualizado un elemento de tu oferta   " 
+}).then(
+alert("enviado")
+);
+         
+
+
+
+    
+       
+        
+        } 
+      </script>
  
  <style>
    /*

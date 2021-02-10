@@ -7,11 +7,14 @@ const passport = require("passport")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const PassportLocal = require("passport-local").Strategy;
+const flash= require("connect-flash")
 
-const route = require('./Routes/index.js');
+const route = require('./src/Routes/index');
 
 const app = express();
 var perfil
+
+app.use(flash())
 //CONEXION A BDD
 
 app.use(cors());
@@ -22,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //motor de vistas
 
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, './src/views'))
 app.use(express.static(path.join(__dirname,'public')))
 
 
@@ -56,6 +59,7 @@ app.use((req,res,next)=>{
 app.use('/', route);
 
 
+    
 
 
 
