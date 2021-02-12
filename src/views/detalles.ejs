@@ -1,6 +1,14 @@
 
- <%- include ('partials/header')  %>
-
+  
+    <%if(user[0].rol==0){%>
+      <%- include ('partials/header')  %>
+      <% }%>
+      <%if(user[0].rol==1){%>
+          <%- include ('partials/header1')  %>
+          <% }%>
+          <%if(user[0].rol==2){%>
+              <%- include ('partials/header2')  %>
+              <% }%>
 
 
  <div class="row mt-5">

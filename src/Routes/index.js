@@ -72,7 +72,7 @@ router.get("/login",(req,res)=>{
 
 
 router.post("/login",passport.authenticate('local',{
-	successRedirect:"/usuarios",
+	successRedirect:"/",
 	failureRedirect:"/login"
 }))
 
@@ -153,6 +153,8 @@ router.get('/logout', function(req, res){
 
 	router.get( '/delete/:id',  (req, res)=>{
 		const id=req.params.id;
+
+			
 
 		pool.query('DELETE FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
 		res.redirect('/usuarios')

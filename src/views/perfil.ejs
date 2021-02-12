@@ -1,11 +1,15 @@
 
- <%if(user[0].rol!=1){%>
-   
-    <%- include ('partials/header')  %>
-    <% }%>
-    <%if(user[0].rol==1){%>
-        <%- include ('partials/header2')  %>
+  
+    <%if(user[0].rol==0){%>
+        <%- include ('partials/header')  %>
         <% }%>
+        <%if(user[0].rol==1){%>
+            <%- include ('partials/header1')  %>
+            <% }%>
+            <%if(user[0].rol==2){%>
+                <%- include ('partials/header2')  %>
+                <% }%>
+
         <script src="https://smtpjs.com/v3/smtp.js">
 
         </script> 

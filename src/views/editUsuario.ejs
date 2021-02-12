@@ -1,6 +1,14 @@
 
- <%- include ('partials/header')  %>
-
+  
+    <%if(user[0].rol==0){%>
+        <%- include ('partials/header')  %>
+        <% }%>
+        <%if(user[0].rol==1){%>
+            <%- include ('partials/header1')  %>
+            <% }%>
+            <%if(user[0].rol==2){%>
+                <%- include ('partials/header2')  %>
+                <% }%>
 
 
  <span> <%= data.id %> </span>
@@ -25,6 +33,17 @@
                      </div>
                      <div class="form-group">
                         <input type="text" name="password" id="" value="<%= data.password %>"  class="form-control">
+                    </div>
+                    <div class="form-group card">
+                        <label for=""><p> <b>Selecciona un tipo <br> ROL</b> </p></label>
+                        <select class="form-select" name="rol" aria-label="Default select example">
+                            <option selected value="<%= data.rol %>"><%= data.rol %></option>
+                            <option value="0">Comercial</option>
+                            <option value="1">Supervisor</option>
+                            <option value="2">Administrador</option>
+                      
+                            <option value="No Residencial">No Residencial</option>
+                          </select>
                     </div>
                          <button type="submit" class="btn btn-success">
                              Actualizar datos

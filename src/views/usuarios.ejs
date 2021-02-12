@@ -1,15 +1,17 @@
 
  
- <%if(user[0].rol!=1){%>
+ <%if(user[0].rol==0){%>
     <%- include ('partials/header')  %>
     <% }%>
     <%if(user[0].rol==1){%>
-        <%- include ('partials/header2')  %>
+        <%- include ('partials/header1')  %>
         <% }%>
+        <%if(user[0].rol==2){%>
+            <%- include ('partials/header2')  %>
+            <% }%>
  
 
-<%= console.log(user[0].rol); %>
- <%if(user[0].rol==1){%>
+ <%if(user[0].rol==2){%>
 
 <div class="row mt-5">
 
@@ -48,11 +50,29 @@
                                      <% } %> 
                                 
                                 
-                         
-                            
-                            <td> <a href="/delete/<%=data[i].id%>" class="btn btn-danger">Borrar</a> </td>
+                             <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
                             <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
-                                
+                            
+
+                            <div class="modal fade" id="exampleModal<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel<%i%>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel<%=i%>">Seguro que quiere Borrarlo?</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      si borra no se podra recuperar
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+                                       <a href="/delete/<%=data[i].id%>" class="btn btn-danger">Borrar</a>  <h1><%=data[i].id%></h1>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    
                         </tr>
                         
                                                    <% } %> 
@@ -74,12 +94,22 @@
 
                     <div class="form-group">
                         <input type="text" name="nombre" id="" placeholder="nombre" class="form-control">
-                    </div>
+                    </div>   <br>
                     <div class="form-group">
                         <input type="text" name="correo" id="" placeholder="correo electronico" class="form-control">
-                    </div>
+                    </div>  <br>
                     <div class="form-group">
                         <input type="password" name="password" id="" placeholder="contraseña" class="form-control">
+                    </div> <br>
+                    <div class="form-group card">
+                        <label for=""><p> <b>Dale un Rol </b> </b> </p></label>
+                            <select class="form-select" name="rol" aria-label="Default select example">
+                            <option value="0">Freelance</option> 
+                            <option value="1">Coordinador</option>
+                            <option value="2">Administrador</option>
+                       
+        
+                          </select>
                     </div>
                   
                     
@@ -96,36 +126,20 @@
     </div>
 </div>
 <%}%>
-<%if(user[0].rol!=1){%>
-<div class="">
-    <a  class="btn btn-lg btn-primary" href="/"><h1>Crear una oferta</h1></a>
-</div>
-<%}%>
+
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
+
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Seguro que quiere Borrarlo?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          si borra no se podra recuperar
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Borrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+ 
+
+  <script>
+    
+      function b (){
+          alert("me has borrado tio")
+      }
+  </script>
 
 <%- include('partials/footer') %>
 
