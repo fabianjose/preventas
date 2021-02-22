@@ -14,7 +14,14 @@
 
 
 
+                <%if(user[0].rol==2||user[0].rol==1){%>
 
+              
+              <div>
+                <h5>descargar todos los reportes en CSV</h5>
+                <a class="btn btn-success" href="/descargar"><p style="font-size: 15px;">descargar reporte general</p></a>
+              </div>
+    <%}%>
 
 
 <%= console.log(user[0].rol); %>
@@ -23,18 +30,16 @@
 <div class="row mt-5">
 
 
-    <div class="col-7">
+    <div class="col">
 
         <table class="table table-bordered table-hover">
-            <thead>
+            <thead class="text-center">
                  
                 <th>id preventa</th>
-                <th>id de usuario</th>        
                 <th>Cliente</th>
-                <th>tipo de documento</th>
-                <th>cedula</th>
-                <th>Tipo de Servicio</th>
                 <th>Asesor</th>
+                <th>Tipo de Servicio</th>
+              
                 <th>estatus</th>
         
         
@@ -42,26 +47,25 @@
                      
                 
                     <%if(user[0].rol==2){%>
-                        <th>Delete</th>
-                        <th>Update</th>
-                        <th>Ver Detalles</th>
+                        <th>Borar</th>
+                        <th>Actualizar</th>
+                        <th>Detalles</th>
+                        <th>Descargar</th>
                   
                         <% }%>
 
             </thead>
 
-            <tbody>
+            <tbody class="text-center">
                 <% if (data) { %>     
                     <% for(var i=0; i<data.length;i++) { %> 
                          
                         <tr>
                             <td> <%= data[i].id  %> </td>
-                            <td> <%= data[i].usuario_ID  %> </td>
                             <td> <%= data[i].nombre_completo %> </td>
-                            <td> <%= data[i].tipo_documento %> </td>
-                            <td> <%= data[i].numero_documento %> </td>
+                            <td> <%= data[i].asesor %> </td>                           
                             <td> <%= data[i].tipo_servicio %> </td>
-                            <td> <%= data[i].asesor %> </td>
+                                      
                               <% if(data[i].estatus == 0) {  %>
                         
                         <td> <button class="btn btn-info"> AGENDADA</button>  </td>       
@@ -91,8 +95,9 @@
                             <%if(user[0].rol==2||user[0].rol==1){%>
                                
                             <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
-                            <td> <a href="/ofertasupdate/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
-                            <td> <a href="/detalles/<%=data[i].id%>" class="btn btn-success">DETALLES</a> </td>
+                            <td> <a href="/ofertasupdate/<%=data[i].id%>" class="btn btn-warning">Actualizar</a> </td>
+                            <td> <a href="/detalles/<%=data[i].id%>" class="btn btn-success">Detalles</a> </td>
+                            <td> <a href="/descargar/<%=data[i].id%>" class="btn btn-info">Descargar</a> </td>
         
                              
                             <div class="modal fade" id="exampleModal<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel<%i%>" aria-hidden="true">
@@ -141,7 +146,9 @@
 
 
 
-
+<style>
+  
+</style>
 
 
 

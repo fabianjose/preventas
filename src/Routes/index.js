@@ -4,6 +4,12 @@ const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const myConecction = require('express-myconnection')
 const pool = require('../database')
+const Json2csvParser = require('json2csv').Parser;
+const multer = require('multer')
+const mimeTypes = require("mime-types")
+
+
+
 var idLogin
 
 
@@ -21,9 +27,28 @@ const router = express.Router();
 
 
 
+
+
+var a,b
+const storage= multer.diskStorage({
+     destination: './src/public/images',
+    filename: function (req, file, next) {
+          a = Date.now()+ "." + mimeTypes.extension(file.mimetype)
+          b=""+a
+         next("",a)
+    }
+})
+
+const upload = multer({
+    
+storage:storage
+})
+
+
+
 router.get("/",(req, res, next)=>{
 	if(req.isAuthenticated()) return next()
-	res.redirect('login')
+	res.redirect('/login')
 }, (req,res)=>{
 
 	
@@ -119,18 +144,26 @@ router.get('/logout', function(req, res){
 
 	router.get('/update/:id',(req, res, next)=>{
 		if(req.isAuthenticated()) return next()
-		res.redirect('login')
-	}, (req, res)=>{
+		res.redirect('/login')
+	},async (req, res)=>{
 
 		const id=req.params.id;
 	   
-		pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
-			res.render('editUsuario',{
+		
+		await		pool.query('SELECT * FROM usuarios WHERE id= ?',[id],(err,usuarios)=>{
+	
+		res.render('editUsuario',{
 				
 				data:usuarios[0]
 			})
-		})
+			
+		}) 
 	})
+
+
+
+
+
 	
 	router.post ('/update/:id', (req, res)=>{
 	
@@ -213,16 +246,16 @@ router.get('/logout', function(req, res){
 	router.get('/detalles/:id',(req, res, next)=>{
 		if(req.isAuthenticated()) return next()
 		res.redirect('login')
-	}, (req, res)=>{
+	}, async (req, res)=>{
 
 		const id=req.params.id;
+		const id2=req.params.id;
 			var bitacora;
-		pool.query('SELECT * FROM bitacora WHERE bitacora.preventa_id = ?',id, (err, info)=>{
-			bitacora=info
+		    	pool.query('SELECT * FROM bitacora WHERE bitacora.preventa_id = ?',id, (err, info)=>{
+	          	bitacora=info
 	}) 
-
-		
-		pool.query('SELECT * FROM preventa WHERE id= ?  ',id,(err,preventa)=>{
+	setTimeout(function(){
+		pool.query('SELECT * FROM preventa WHERE id= ?  ',id2,(err,preventa)=>{
 			if(err)console.log(err);
 
 			res.render('detalles',{
@@ -234,6 +267,10 @@ router.get('/logout', function(req, res){
 			})
 		})
 			
+
+	 }, 500);
+		
+	
 	
 
 	
@@ -249,62 +286,59 @@ router.get('/logout', function(req, res){
 
 		const id=req.params.id;
 		const id2=req.params.id;
+		const id3=req.params.id;
 		console.log(id)
 		
 		var bitacora;
-		var usuario;
-		var a;
-		var b;
+		var ndata
+	
 		 pool.query('SELECT * FROM bitacora WHERE bitacora.preventa_id = ?',id, (err, info)=>{
 			
 			bitacora=info
 			}) 
-			/* pool.query('SELECT * FROM preventa WHERE id= ?',[id],(err,preventa1)=>{
+			setTimeout(function(){
 			
-				a=preventa1
-				console.log("console de a")
-				console.log(a)
-				b= a[0].usuario_ID
-				console.log("console de b")
-				console.log(b)
-				pool.query('SELECT * FROM usuarios WHERE id= ?',[b],(err,usuario)=>{
-					console.log("usuario")
-					console.log(usuario[0])
-	
-					
-					}) 
-	
+		 	pool.query('SELECT preventa.id  , usuarios.correo  FROM preventa inner join usuarios on preventa.usuario_ID = usuarios.id WHERE preventa.id = ? ',[id3],(err,rows)=>{
+				if(err){
+					console.log(err);
+				}
+				console.log(rows);
+				ndata=rows;
 				
-				}) */
+			
+		  }) }, 500);
 
 
 
-
+		  setTimeout(function(){
 		
 					 pool.query('SELECT * FROM preventa WHERE id= ?',[id2],(err,preventa)=>{
 							res.render('actualizaroferta',{
 									
 								data:preventa,
 								bitacora:bitacora,
+								ndata:ndata
 								
 								
 							})
 						
-						})
+						})  }, 500);
 						
-					})
+					})  
 
 	router.post ('/ofertasupdate/:id', (req, res, next)=>{
 		if(req.isAuthenticated()) return next()
 		res.redirect('login')
-	}, async (req, res)=>{
+	},  (req, res)=>{
 	
 		const id=req.params.id;		
 		const nuevaPreventa = req.body;
+	
+			
+	
 
-		
-		
-	await	pool.query('UPDATE preventa set ? WHERE id= ? ',[nuevaPreventa,id],(err,rows)=>{
+
+		pool.query('UPDATE preventa set ? WHERE preventa.id= ? ',[nuevaPreventa,id],(err,rows)=>{
 			if(err){
 				console.log(err);
 			}
@@ -334,6 +368,179 @@ router.post('/addbitacora/:id',(req,res)=>{
 	res.redirect('/verOfertas')
     
   })
+
+
+  router.get('/descargar',(req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, function(req, res) {
+  
+	
+	pool.query('SELECT * FROM preventa', (err, preventas)=>{
+		if(err){
+			res.json(err);                    
+		}
+		const csvFields = ['id'];
+		const json2csvParser = new Json2csvParser({ csvFields });
+		const csvData = json2csvParser.parse(preventas);
+		
+		
+	  
+		// -> Send CSV File to Client
+		res.setHeader('Content-disposition', 'attachment; filename=preventas.csv');
+		res.set('Content-Type', 'text/csv');
+		res.status(200).end(csvData);
+		
+	})
+
+})
+
+router.get('/descargar/:id', (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+},function(req, res) {
+	const id = req.params.id;
+	
+	pool.query('SELECT * FROM preventa WHERE id = ?' ,id, (err, preventas)=>{
+		if(err){
+			res.json(err);                    
+		}
+		const csvFields = ['id'];
+		const json2csvParser = new Json2csvParser({ csvFields });
+		const csvData = json2csvParser.parse(preventas);
+		
+		
+	  
+		// -> Send CSV File to Client
+		res.setHeader('Content-disposition', 'attachment; filename=preventa.csv');
+		res.set('Content-Type', 'text/csv');
+		res.status(200).end(csvData);
+		
+	})
+
+})
+
+
+router.post ('/foto1/:id', upload.single('foto1'), (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
+	
+	const id=req.params.id;	
+	console.log(id);	
+    var url_img=b
+	console.log(url_img);
+    
+
+
+	
+	pool.query('UPDATE preventa set preventa.foto1 = ? WHERE id= ? ',[url_img,id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	
+
+		res.redirect('/detalles/'+id)
+		})
+
+})
+router.post ('/foto2/:id', upload.single('foto2'), (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
+	
+	const id=req.params.id;	
+	console.log(id);	
+    var url_img=b
+	console.log(url_img);
+    
+
+
+	
+	pool.query('UPDATE preventa set preventa.foto2 = ? WHERE id= ? ',[url_img,id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	
+
+		res.redirect('/detalles/'+id)
+		})
+
+})
+router.post ('/foto3/:id', upload.single('foto3'), (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
+	
+	const id=req.params.id;	
+	console.log(id);	
+    var url_img=b
+	console.log(url_img);
+    
+
+
+	
+	pool.query('UPDATE preventa set preventa.foto3 = ? WHERE id= ? ',[url_img,id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	
+
+		res.redirect('/detalles/'+id)
+		})
+
+})
+router.post ('/foto4/:id', upload.single('foto4'), (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
+	
+	const id=req.params.id;	
+	console.log(id);	
+    var url_img=b
+	console.log(url_img);
+    
+
+
+	
+	pool.query('UPDATE preventa set preventa.foto4 = ? WHERE id= ? ',[url_img,id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	
+
+		res.redirect('/detalles/'+id)
+		})
+
+})
+router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('login')
+}, (req, res)=>{
+	
+	const id=req.params.id;	
+	console.log(id);	
+    var url_img=b
+	console.log(url_img);
+    
+
+
+	
+	pool.query('UPDATE preventa set preventa.foto5 = ? WHERE id= ? ',[url_img,id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	
+
+		res.redirect('/detalles/'+id)
+		})
+
+})
+
+
+
+
+
 			  
 passport.use(new PassportLocal(function(username, password, done){
 	//			
@@ -360,6 +567,22 @@ var clave = password
 	
 
 }))
+
+
+router.get('/prueba', function(req, res){
+
+	//'SELECT usuarios.nombre, preventa.tipo_instalacion FROM  usuarios inner join preventa on usuarios.id = preventa.usuario_ID
+	/*pool.query('SELECT preventa.usuario_ID  , usuarios.correo  FROM preventa inner join usuarios on preventa.usuario_ID = usuarios.id WHERE preventa.usuario_ID = ? ',[id],(err,rows)=>{
+		if(err){
+			console.log(err);
+		}
+	console.log(rows);
+	res.render("prueba",{
+		data:rows
+	})
+  })*/
+  res.render("prueba")
+})
 
 
 

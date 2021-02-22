@@ -165,7 +165,116 @@
         </tbody>
       </table>
  </div>
+<section id="imagenes">
+ 
+  <div class="row">
+          <div class="col">
+                   <form action="/foto1/<%=dato[0].id%>" method="post"  enctype="multipart/form-data">
+                  <label for=""><h4> Carga el Anverso de la Cedula <h4> </label>
+            
+                 <input  class="btn btn-warning" class="form-control" type="file" name="foto1" accept=""/>
+            
+                 <div class="card">
+                   <div class="card-body text-center" >
+                     <img src="/images/<%=dato[0].foto1%>" height="100px" alt="imagen"> <br>
+                       <button class="btn btn-primary " type="submit">Cargar</button>
+                   
+                         <a class="btn btn-success " href="/images/<%=dato[0].foto1%>" download="foto_descarga" >Descargar</a>
+              
+                   </div>                  
+                  </div>                
+                </div>
 
+              </form>
+
+
+              <div class="col">
+                <form action="/foto2/<%=dato[0].id%>" method="post"  enctype="multipart/form-data">
+               <label for=""><h4> Carga el Reverso de la Cedula <h4> </label>
+         
+              <input  class="btn btn-warning" class="form-control" type="file" name="foto2" accept=""/>
+         
+              <div class="card">
+                <div class="card-body text-center" >
+                  <img src="/images/<%=dato[0].foto2%>" height="100px" alt="imagen"> <br>
+                    <button class="btn btn-primary" type="submit">Cargar</button>
+                
+                      <a class="btn btn-success " href="/images/<%=dato[0].foto2%>" download="foto_descarga" >Descargar</a>
+           
+                </div>                  
+               </div>                
+             </div>
+
+           </form>
+
+
+           <div class="col">
+            <form action="/foto3/<%=dato[0].id%>" method="post"  enctype="multipart/form-data">
+           <label for=""><h4> Carga el Recibo <h4> </label>
+     
+          <input class="btn btn-warning" class="form-control" type="file" name="foto3" accept=""/>
+     
+          <div class="card">
+            <div class="card-body text-center" >
+              <img src="/images/<%=dato[0].foto3%>" height="100px" alt="imagen"> <br>
+                <button class="btn btn-primary "  type="submit">Cargar</button>
+            
+                  <a class="btn btn-success " href="/images/<%=dato[0].foto3%>" download="foto_descarga" >Descargar</a>
+       
+            </div>                  
+           </div>                
+         </div>
+
+       </form>
+
+       <div class="col">
+        <form action="/foto4/<%=dato[0].id%>" method="post"  enctype="multipart/form-data">
+       <label for=""><h4> Carga Camara de Comercio  <h4> </label>
+ 
+      <input class="btn btn-warning" class="form-control" type="file" name="foto5" accept=""/>
+ 
+      <div class="card">
+        <div class="card-body text-center" >
+          <img src="data:image/png;base64,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"  type="" height="100px" alt=""> <br>
+          <p><%=dato[0].foto5%></p>
+            <button class="btn btn-primary " type="submit">Cargar</button>
+        
+              <a class="btn btn-success " href="/images/<%=dato[0].foto5%>"  >Descargar</a>
+   
+        </div>                  
+       </div>                
+     </div>
+
+   </form>
+
+   
+   <div class="col">
+    <form action="/foto4/<%=dato[0].id%>" method="post"  enctype="multipart/form-data">
+   <label for=""><h4> Carga RUT  <h4> </label>
+
+  <input class="btn btn-warning" class="form-control" type="file" name="foto4" accept=""/>
+
+  <div class="card">
+    <div class="card-body text-center" >
+      <img src="data:image/png;base64,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"  type="" height="100px" alt=""> <br>
+      <p><%=dato[0].foto4%></p>
+        <button class="btn btn-primary " type="submit">Cargar</button>
+    
+          <a class="btn btn-success " href="/images/<%=dato[0].foto4%>"  >Descargar</a>
+
+    </div>                  
+   </div>                
+ </div>
+
+</form>
+ 
+</form>
+  </div>
+
+
+
+  
+</section>
  <div>
   <div class="container py-5">
 

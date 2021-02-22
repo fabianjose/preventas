@@ -42,16 +42,20 @@
                             <td> <%= data[i].nombre %> </td>
                             <td> <%= data[i].correo %> </td>
                           
-                            <% if(data[i].rol!=1){ %> 
-                                <td> Comercial </td>
-                                 <% } %> 
-                                 <% if(data[i].rol==1){ %> 
-                                    <td> Administrador </td>
+                            
+                                 <% if(data[i].rol==0){ %> 
+                                    <td> Freelance </td>
                                      <% } %> 
+                                     <% if(data[i].rol==1){ %> 
+                                        <td> Coordinador </td>
+                                         <% } %> 
+                                         <% if(data[i].rol==2){ %> 
+                                            <td> Administrador </td>
+                                             <% } %> 
                                 
                                 
                              <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
-                            <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Update</a> </td>
+                            <td> <a href="/update/<%=data[i].id%>" class="btn btn-warning">Actualizar</a> </td>
                             
 
                             <div class="modal fade" id="exampleModal<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel<%i%>" aria-hidden="true">
@@ -93,13 +97,13 @@
                 <form action="/add" method="post">
 
                     <div class="form-group">
-                        <input type="text" name="nombre" id="" placeholder="nombre" class="form-control">
+                        <input type="text" required name="nombre" id="" placeholder="USUARIO" class="form-control">
                     </div>   <br>
                     <div class="form-group">
-                        <input type="text" name="correo" id="" placeholder="correo electronico" class="form-control">
+                        <input type="text" required name="correo" id="" placeholder="correo electronico" class="form-control">
                     </div>  <br>
                     <div class="form-group">
-                        <input type="password" name="password" id="" placeholder="contraseña" class="form-control">
+                        <input type="password" required name="password" id="" placeholder="contraseña" class="form-control">
                     </div> <br>
                     <div class="form-group card">
                         <label for=""><p> <b>Dale un Rol </b> </b> </p></label>

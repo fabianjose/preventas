@@ -5,22 +5,25 @@
  
  
  
- <%if(user[0].rol!=1){%>
+ <%if(user[0].rol==0){%>
     <%- include ('partials/header')  %>
     <% }%>
     <%if(user[0].rol==1){%>
-        <%- include ('partials/header2')  %>
+        <%- include ('partials/header1')  %>
         <% }%>
+        <%if(user[0].rol==2){%>
+            <%- include ('partials/header2')  %>
+            <% }%>
+            <%if(user[0].rol==3){%>
+                <%- include ('partials/header3')  %>
+                <% }%>
   
         <script src="https://smtpjs.com/v3/smtp.js">
 
         </script> 
   
 
-
-        <h1><%=  data[0].id %></h1>
-        
-     
+      <h2><%=data[0].id%> </h2> 
 
         
 
@@ -476,14 +479,14 @@
 
                
 
-                <input  type="hidden" name="usuario_ID" id=""  value="<%= user[0].id %> " class="form-control">
+                <input  type="hidden" name="" id=""  value="<%= user[0].id %> " class="form-control">
 
-              
+
               
                 
     
                     <div class="row text-center">
-                          <button type="submit" class="btn btn-success btn-lg">
+                          <button type="submit" onclick="correo1()" class="btn btn-success btn-lg">
                         Actualizar datos
                     </button>
                     </div>
@@ -517,7 +520,7 @@
                         <div class="form-group">
                             <textarea class="form-control" name="detalle" id="exampleFormControlTextarea1" rows="3"></textarea>
                           </div>
-                          <button class="btn btn-success" type="submit">Agregar nota</button>
+                          <button class="btn btn-success" onclick="correo2()" type="submit">Agregar nota</button>
 
                     </li>
                 </form>
@@ -551,20 +554,33 @@ Email.send({
 Host : "teledisca.com",
 Username : "fabian.espejo@teledisca.com",
 Password : "fabianjose",
-    To : ['fabian.espejo@teledisca.com',' <%=user[0].correo%>'],         
+To : ['alejandra.martinez@teledisca.com','carmen.sanchez@teledisca.com','<%=ndata[0].correo%>'], 
     From : "fabian.espejo@teledisca.com",
-    Subject : "Nuevo Cliente CREADO",
-    Body : "Se ha Actualizado un elemento de tu oferta   " 
+    Subject : "Actualizacion",
+    Body : "Se ha Actualizado un elemento de tu oferta    " 
 }).then(
 alert("enviado")
 );
          
-
-
-
+   
+        } 
     
-       
-        
+        function correo2(){
+console.log("entrando al correo")
+
+Email.send({
+Host : "teledisca.com",
+Username : "fabian.espejo@teledisca.com",
+Password : "fabianjose",
+    To : ['alejandra.martinez@teledisca.com','carmen.sanchez@teledisca.com','<%=ndata[0].correo%>'],          
+    From : "fabian.espejo@teledisca.com",
+    Subject : "Actualizacion",
+    Body : "Se ha creado una nota, revisa el subscriptor <%= data[0].nombre_completo %>" 
+}).then(
+alert("enviado")
+);
+         
+   
         } 
       </script>
  

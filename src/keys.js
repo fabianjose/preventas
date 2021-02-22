@@ -6,7 +6,7 @@ module.exports={
         user: 'root',
         password: '',
         port: 3306,
-        database:'crm'
+        database:'remotepc_controletb'
     }
    
     

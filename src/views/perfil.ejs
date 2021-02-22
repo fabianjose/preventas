@@ -282,15 +282,14 @@
                                 <label for=""><p> <b>Caracteristicas <br> del Plan</b> </p></label>
                                 <select class="form-select" name="plan_caracteristicas" aria-label="Default select example">
                                     <option selected>tipo de servicio</option>
-                                    <option value="Linea Nueva (Dúo Nuevo)">Linea Nueva (Dúo Nuevo)</option>
-                                    <option value="Linea Existente + BA">Linea Existente + BA</option>
-                                    <option value="Línea Nueva (Trío Nuevo)">Línea Nueva (Trío Nuevo)</option>
-                                    <option value="Línea Existente">Línea Existente</option>
-                                    <option value="Linea + Internet Existente (Migración Dúo)">Linea + Internet Existente (Migración Dúo)</option>
-                                    <option value="Trío Nuevo">Trío Nuevo</option>
-                                    <option value="Línea Migrada + BA + TV">Línea Migrada + BA + TV</option>
-                                    <option value="Línea + BA Migrada + TV">Línea + BA Migrada + TV</option>
-                                    <option value="+ TV">+ TV</option>
+                                    <option value="INTERNET">INTERNET</option>
+                                    <option value="LINEA + INTERNET">LINEA + INTERNET</option>
+                                    <option value="LINEA + INTERNET + TV">LINEA + INTERNET + TV</option>
+                                    <option value="MIGRACION + INTERNET">MIGRACION + INTERNET</option>
+                                    <option value="MIGRACION + DUO + TV">MIGRACION + DUO + TV</option>
+
+
+                                   
                 
                                   </select>
                             </div>
@@ -371,6 +370,7 @@
                             <select class="form-select" name="sector" aria-label="Default select example">
                                
                                 <option selected value="">Seleccione un Sector</option>
+                                <option value="NINGUNO">NINGUNO</option>
                                 <option value="Antonio Nariño">Antonio Nariño</option>
                                 <option value="Barrios Unidos">Barrios Unidos</option>
                                 <option value="Bosa">Bosa</option>
@@ -411,7 +411,7 @@
 
               
                 
-    
+    <br><br>
                     <div class="row text-center">
                           <button type="submit" onclick="correo1()" class="btn btn-success btn-lg">
                         guardar datos
@@ -432,7 +432,7 @@ Email.send({
     Host : "teledisca.com",
     Username : "fabian.espejo@teledisca.com",
     Password : "fabianjose",
-          To : ['fabian.espejo@teledisca.com','fabian2@teledisca.com'],         
+          To : ['alejandra.martinez@teledisca.com','carmen.sanchez@teledisca.com','telediscahogares.etb@gmail.com'],         
           From : "fabian.espejo@teledisca.com",
           Subject : "Nuevo Cliente CREADO",
           Body : "El Nuevo Cliente Fue Creado por   <%=user[0].nombre%> " 
