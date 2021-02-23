@@ -9,10 +9,18 @@
             <% }%>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+<style>
+  body{
+    background-color: thistle;
+  }
+</style>
 
           <% console.log(usuarios[0].rol); %> 
-              
+          <% var  total=0 %> 
+          <%  var valorGanado=0 %> 
+          <%  var valorPendiente=0 %> 
+          <%  var total=0 %> 
+
 
             <div class="row">
               <div class="col col-sm-6"><canvas id="doughnut-chart" width="800" height="450"></canvas></div>
@@ -22,7 +30,71 @@
             <div class="row">
               <div class="col col-sm-6"><canvas id="myChart" width="400" height="400"></canvas>
               </canvas></div>
-              <div class="col col-sm-6"></div>
+              <div class="col col-sm-6">
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">FreeLance</th>
+                      <th scope="col">Presupuesto</th>
+                      <th scope="col">Valor Ganado</th>
+                      <th scope="col">Valor Pendiente</th>
+                      <th scope="col">Por Cumplir</th>
+                      <th scope="col">Cumplido</th>
+                     
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% for(var i=0; i<usuarios.length; i++){  %> 
+                      <%   valorGanado=0 %> 
+                      <%   valorPendiente=0 %> 
+                      <%   total=0 %> 
+                      <tr>
+
+                        <th> <%=usuarios[i].nombre  %>  </th>
+
+
+                        <% for(var j=0; j<dato.length; j++){  %> 
+
+                          <% if(usuarios[i].id==dato[j].usuario_ID){  %> 
+                        
+                            <% total = total +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%>  
+                          
+                          
+                           <% if(usuarios[i].id==dato[j].usuario_ID && dato[j].estatus==3 ){  %> 
+                        
+                            <% valorGanado = valorGanado +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%> 
+                                                                     
+                           <% if(usuarios[i].id==dato[j].usuario_ID && dato[j].estatus!=3 ){  %> 
+                        
+                            <% valorPendiente = valorPendiente +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%>  
+                                                                     
+
+
+                                                          <%}%>
+
+
+
+                             <th> <%=new Intl.NumberFormat().format(usuarios[i].meta)  %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(valorGanado ) %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(valorPendiente)  %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(usuarios[i].meta-valorGanado ) %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format((valorGanado * 100) / usuarios[i].meta)  %> %    </th>
+
+                                                           
+
+                      </tr>
+   
+                       <%}%>
+                  </tbody>
+                </table>
+
+              </div>
             </div>
 
 
@@ -90,7 +162,7 @@
   var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-          labels:[ 'a', 'b', 'c' ],
+        labels:[<%- usuarios.map(a => "'" + a.nombre + "'") %>],
           datasets: [{
               label: '# of Votes',
               data: [<%=info%>],
@@ -133,7 +205,7 @@
 new Chart(document.getElementById("doughnut-chart"), {
  type: 'pie',
  data: {
-   labels: [ "Preventas Cerradas-Ganadas = "+"<%=pc%>","Preventas Pendientes = "+"<%=pp%>", "TOTAL = "+"<%=pt%>"],
+   labels: [ "Preventas Cerradas-Ganadas = "+"<%=new Intl.NumberFormat().format(pc) %>","Preventas Pendientes = "+"<%=new Intl.NumberFormat().format(pp) %>", "TOTAL = "+"<%=new Intl.NumberFormat().format(pt) %>"],
    datasets: [
      {
        label: "Population (millions)",
@@ -158,7 +230,7 @@ new Chart(document.getElementById("doughnut-chart"), {
   new Chart(document.getElementById("doughnut-chart2"), {
    type: 'doughnut',
    data: {
-     labels: [ "DINERO COMPLETADO = "+"<%=dc%>","DINERO PENDIENTE = "+"<%=dp%>", "DINERO TOTAL = "+"<%=dt%>"],
+     labels: [ "VALOR COMPLETADO = "+"<%=new Intl.NumberFormat().format(dc) %>","VALOR PENDIENTE = "+"<%=new Intl.NumberFormat().format(dp) %>", "VALOR TOTAL = "+"<%=new Intl.NumberFormat().format(dt) %>"],
      datasets: [
        {
          label: "Population (millions)",
