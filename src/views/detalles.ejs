@@ -9,7 +9,13 @@
           <%if(user[0].rol==2){%>
               <%- include ('partials/header2')  %>
               <% }%>
-
+              <script>
+                function espera(){
+                  window.setTimeout(console.log("object"), 5000)         }
+                      </script>
+                <script>
+                  espera();
+                </script>
 
  <div class="row mt-5">
  <div class="row">

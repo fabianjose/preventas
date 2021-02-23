@@ -1,0 +1,198 @@
+<%if(user[0].rol==0){%>
+    <%- include ('partials/header')  %>
+    <% }%>
+    <%if(user[0].rol==1){%>
+        <%- include ('partials/header1')  %>
+        <% }%>
+        <%if(user[0].rol==2){%>
+            <%- include ('partials/header2')  %>
+            <% }%>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+          <% console.log(usuarios[0].rol); %> 
+              
+
+            <div class="row">
+              <div class="col col-sm-6"><canvas id="doughnut-chart" width="800" height="450"></canvas></div>
+              <div class="col col-sm-6"><canvas id="doughnut-chart2" width="800" height="450"></canvas></div>
+            </div>
+
+            <div class="row">
+              <div class="col col-sm-6"><canvas id="myChart" width="400" height="400"></canvas>
+              </canvas></div>
+              <div class="col col-sm-6"></div>
+            </div>
+
+
+            
+            
+            <% var  pt=dato.length  %>
+            <% var  pc=0  %>
+            <% var  pp=0  %>
+            <% var  dt=0  %>
+            <% var  dc=0  %>
+            <% var  dp=0  %>
+            <% var  info = []  %>
+            <% var  fl = []  %>
+
+            <% for(var i = 0; i< usuarios.length; i ++) { %>
+                 
+                <% if(usuarios[i].rol==0){ %>
+                  
+                 <%   fl.push(usuarios[i].nombre)%>
+                
+                                       <%}%>
+                                                       
+
+                                           
+                                                  <%  } %> 
+           
+            <% for(var i = 0; i< dato.length; i ++) { %>
+
+              <% info.push(i+1);%>
+             
+           <%dt = dt+parseInt(dato[i].tarifa)%>
+             
+             <% if(dato[i].estatus==3){
+                pc++;
+                dc = dc+ parseInt(dato[i].tarifa)
+              
+              } %>
+              
+
+
+
+              <% if(dato[i].estatus!=3){
+                pp++;
+                dp = dp+ parseInt(dato[i].tarifa)
+                } %>
+
+
+
+
+              <% } %>
+
+<% var  a = dato[0].estatus %>
+
+
+
+
+
+
+
+<script>
+
+  
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels:[ 'a', 'b', 'c' ],
+          datasets: [{
+              label: '# of Votes',
+              data: [<%=info%>],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)'
+               
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)'
+                
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+new Chart(document.getElementById("doughnut-chart"), {
+ type: 'pie',
+ data: {
+   labels: [ "Preventas Cerradas-Ganadas = "+"<%=pc%>","Preventas Pendientes = "+"<%=pp%>", "TOTAL = "+"<%=pt%>"],
+   datasets: [
+     {
+       label: "Population (millions)",
+       backgroundColor: ["#3cba9f","#e8c3b9","#c45850" , "#3e95cd"],
+       data: [<%=pc%>,<%=pp%>,0]
+     }
+   ]
+ },
+ options: {
+   title: {
+     display: true,
+     text: 'TOTAL DE PREVENTAS',
+     
+   }
+ }
+});
+  
+</script>
+  
+<script>
+
+  new Chart(document.getElementById("doughnut-chart2"), {
+   type: 'doughnut',
+   data: {
+     labels: [ "DINERO COMPLETADO = "+"<%=dc%>","DINERO PENDIENTE = "+"<%=dp%>", "DINERO TOTAL = "+"<%=dt%>"],
+     datasets: [
+       {
+         label: "Population (millions)",
+         backgroundColor: [ "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+         data: [<%=dc%>,<%=dp%>,0]
+       }
+     ]
+   },
+   options: {
+     title: {
+       display: true,
+       text: 'TOTAL DE INGRESOS'
+     }
+   }
+  });
+    
+  </script>
+
+
+
+
+
+           
+       
+          
+           
+
+
+            
+
+  
+
+ 
+ 
+ 
+ 
+ <%- include('partials/footer') %>

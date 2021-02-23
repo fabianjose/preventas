@@ -539,7 +539,28 @@ router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
 
 
 
+router.get('/dashboard',(req, res)=>{
 
+
+	var users
+	pool.query('SELECT * FROM usuarios ',[idLogin], (err, usuarios)=>{
+		if(err){
+			res.json(err);                    
+		}
+		users = usuarios
+
+})
+	pool.query('SELECT * FROM preventa ',[idLogin], (err, preventas)=>{
+		if(err){
+			res.json(err);                    
+		}
+
+	res.render('dashboard',{
+			dato:preventas,
+			usuarios:users
+		})
+
+}) })
 
 			  
 passport.use(new PassportLocal(function(username, password, done){
