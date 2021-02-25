@@ -1,0 +1,117 @@
+
+<%- include ('partials/header2')  %>
+                               
+
+
+
+
+ <div class="row">
+     <div class="col">
+        <div class="row">
+            <h1>Crear meta</h1>        
+        </div>
+      
+
+        <div class="container">
+            <div class="row col-sm-8 card  text-center">
+                <div class="container" id="formContainer">
+        
+                  <form class="form-signin" id="login" role="form">
+                    <h5 class="form-signin-heading">Nombre de la meta</h5>
+                    <a href="#" id="flipToRecover" class="flipLink">
+                      <div id="triangle-topright"></div>
+                    </a>
+                    <input type="email" class="form-control" name="loginEmail" id="loginEmail" placeholder="nombre" required autofocus>
+                    <h5 class="form-signin-heading">Valor de la meta</h5>
+
+                    <input type="password" class="form-control" name="loginPass" id="loginPass" placeholder="Valor" required>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="form-signin-heading">mes de la meta</h5>
+                                <select name="" id="">
+                                    <option value="">enero</option>
+                                    <option value="">febrero</option>
+                                    <option value="">marzo</option>
+                                </select>
+                        </div>
+                        <div class="col">
+                            <h5 class="form-signin-heading btn-secundary">año de la meta</h5>
+                            <select name="" id="">
+                                <option value="">2021</option>
+                                <option value="">2022</option>
+                                <option value="">2023</option>
+                            </select>                          
+                        </div>
+                    </div>
+                  
+                  <br><br>
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Crear</button>
+               
+               
+                </form>
+            
+        
+                </div> <!-- /container -->
+            </div>
+        </div>
+
+     </div>
+     <div class="col">
+        <div class="row">
+            <h1>Asignar meta</h1>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="">Seleccione una categoria</label>
+                <!-- Example single danger button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      TIPO USUARIOS
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">in-house</a></li>
+      <li><a class="dropdown-item" href="#">Alejandra</a></li>
+     
+    </ul>
+  </div>
+<br><br>
+  <div class="form-group">
+     
+    <select  class="form-control" name="" >
+        <option>Camilo</option>
+        <option>Ricardo</option>
+        <option>Sofia</option>
+        <option>Cristhian</option>
+    </select>
+</div>
+<br><br><br>
+
+<div class="form-group">
+     <label for="">Asigna un presupuesto </label>
+    <select  class="form-control" name="" >
+        <option>febrero - Hogar -  5.000.000</option>
+        <option>febrero - pymes -  5.000.000</option>
+        <option>febrero - avanzados -  5.000.000</option>
+        <option>Marzo - Hogar -  5.000.000</option>
+        <option>Marzo - pyme -  5.000.000</option>
+        <option>Marzo - avanzado -  5.000.0000</option>
+    </select>
+    <br>
+    <button class="btn btn-success" type="submit">Asignar</button>
+</div>
+
+
+
+            </div>
+        </div>
+
+     </div>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ <%- include('partials/footer') %>

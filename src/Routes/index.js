@@ -537,8 +537,6 @@ router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
 
 })
 
-
-
 router.get('/dashboard',(req, res)=>{
 
 
@@ -561,6 +559,11 @@ router.get('/dashboard',(req, res)=>{
 		})
 
 }) })
+
+router.get('/meta',	(req,res)=>{
+
+	res.render('meta')
+})
 
 			  
 passport.use(new PassportLocal(function(username, password, done){
@@ -606,7 +609,17 @@ router.get('/prueba', function(req, res){
 })
 
 
+router.get('/fecha',(req,res)=>{
+var a=2021-02-19,b=2021-02-15;
 
+	pool.query('SELECT * FROM preventa  WHERE creacion BETWEEN ? AND ?',[a,b], (err, info)=>{
+			
+		console.log(info);
+		}) 
+
+	
+
+})
 
 //serializar
 
