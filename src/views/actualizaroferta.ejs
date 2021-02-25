@@ -5,19 +5,16 @@
  
  
  
- <%if(user[0].rol==0){%>
+ <%if(user[0].rol==1||user[0].rol==2){%>
     <%- include ('partials/header')  %>
     <% }%>
-    <%if(user[0].rol==1){%>
+    <%if(user[0].rol==3){%>
         <%- include ('partials/header1')  %>
         <% }%>
-        <%if(user[0].rol==2){%>
+        <%if(user[0].rol==4||user[0].rol==5){%>
             <%- include ('partials/header2')  %>
             <% }%>
-            <%if(user[0].rol==3){%>
-                <%- include ('partials/header3')  %>
-                <% }%>
-  
+
         <script src="https://smtpjs.com/v3/smtp.js">
 
         </script> 

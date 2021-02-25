@@ -610,11 +610,12 @@ router.get('/prueba', function(req, res){
 
 
 router.get('/fecha',(req,res)=>{
-var a=2021-02-19,b=2021-02-15;
+var a='2021-02-19';
+var b='2021-02-24';
 
-	pool.query('SELECT * FROM preventa  WHERE creacion BETWEEN ? AND ?',[a,b], (err, info)=>{
+	pool.query('SELECT * FROM preventa  WHERE creacion BETWEEN ? AND ?',[a,b], (err, datos)=>{
 			
-		console.log(info);
+		console.log(datos);
 		}) 
 
 	

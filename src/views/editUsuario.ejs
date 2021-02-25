@@ -1,14 +1,15 @@
 
 
-    <%if(user[0].rol==0){%>
-        <%- include ('partials/header')  %>
+ <%if(user[0].rol==1||user[0].rol==2){%>
+    <%- include ('partials/header')  %>
+    <% }%>
+    <%if(user[0].rol==3){%>
+        <%- include ('partials/header1')  %>
         <% }%>
-        <%if(user[0].rol==1){%>
-            <%- include ('partials/header1')  %>
+        <%if(user[0].rol==4||user[0].rol==5){%>
+            <%- include ('partials/header2')  %>
             <% }%>
-            <%if(user[0].rol==2){%>
-                <%- include ('partials/header2')  %>
-                <% }%>
+
 
               
             
@@ -40,11 +41,11 @@
                         <label for=""><p> <b>Selecciona un tipo <br> ROL</b> </p></label>
                         <select class="form-select" name="rol" aria-label="Default select example">
                             <option selected value="<%= data.rol %>"><%= data.rol %></option>
-                            <option value="0">Comercial</option>
-                            <option value="1">Supervisor</option>
-                            <option value="2">Administrador</option>
-                      
-                            <option value="No Residencial">No Residencial</option>
+                            <option value="1">Freelance</option>
+                            <option value="2">inhouse</option>
+                            <option value="3">Coordinador</option>
+                            <option value="4">Admin</option>
+                            <option value="5">Super Admin</option>
                           </select>
                     </div>
                     <div class="form-group">
