@@ -1,0 +1,37 @@
+
+<%- include ('partials/header2')  %>
+       
+<div class="container mt-4">
+<h2>Asignar usuarios a <%= meta.descripcion %> [<%= meta.mes %>/<%= meta.año %> ] </h2>
+<form class="row" method="post">
+	<div class="col-md-5">
+		<label>Usuarios</label>
+		<select name="usuarios" class="custom-select  form-control" multiple="">
+			   <% users.forEach(function(user){ %>
+			   <option value="<%= user.id %>" ><%= user.nombre %></option>
+			   <% }); %>
+		</select>
+		<input type="hidden" name="meta" value="<%= meta.id %>">
+	</div>
+	<div class="col-md-2 h-100 text-center">
+		<button href="#" class="btn btn-primary m-2 w-100 mt-5">
+			ASIGNAR >>
+		</button>
+		<a href="#" class="btn btn-danger w-100 m-2">
+			 << QUITAR META 
+		</a>
+	</div>
+
+	<div class="col-md-5">
+		<label>Usuarios Asinados a esta meta</label>
+		<select  class="custom-select form-control"  multiple="">
+			<% usuariosAgregados.forEach(function(user){ %>
+			   <option value="<%= user.id %>" ><%= user.nombre %></option>
+			   <% }); %>
+		</select>
+	</div>
+</form>
+
+</div>                        
+
+ <%- include('partials/footer') %>

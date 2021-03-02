@@ -72,7 +72,7 @@ router.get("/",(req, res, next)=>{
 
 router.get("/usuarios",(req, res, next)=>{
 	if(req.isAuthenticated()) return next()
-	res.redirect('login')
+	res.redirect('/login')
 }, (req, res)=>{
 
     
@@ -109,7 +109,7 @@ router.get('/logout', function(req, res){
 
   router.get("/verOfertas",(req, res, next)=>{
 	if(req.isAuthenticated()) return next()
-	res.redirect('login')
+	res.redirect('/login')
 }, (req, res)=>{
 
     
@@ -230,7 +230,7 @@ router.get('/logout', function(req, res){
 	}, async (req,res)=>{
 	
 		
-	 await		pool.query('SELECT * FROM preventa WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
+	 await		pool.query('SELECT preventa.*, preventa_estatus.descripcion as pdescripcion FROM preventa inner join preventa_estatus on preventa.estatus  = preventa_estatus.id WHERE usuario_ID= ?',[idLogin], (err, preventa)=>{
 			if(err){
 				res.json(err);                    
 			}
@@ -352,9 +352,6 @@ router.get('/logout', function(req, res){
 	
 
 router.post('/addbitacora/:id',(req,res)=>{
-    console.log("lo que debveria ser el id ")
-      
-    console.log(req.params.id)
     const id = req.params.id;
     console.log("acavoy ")
     const nuevaBitacora = [[ req.body.detalle , id] ]
@@ -421,6 +418,80 @@ router.get('/descargar/:id', (req, res, next)=>{
 })
 
 
+router.get('/meta',(req, res, next)=>{
+	console.log(req)
+	sql = "select * from metas"
+	pool.query(sql ,(err,metas)=>{
+		if(err){
+			res.json(err);                    
+		}
+		console.log(metas)
+		res.render('meta',
+		 {metas: metas})
+	})
+})
+
+
+router.post('/meta',(req,res,next)=>{
+})
+
+router.get('/asignaMeta/:id', (req, res,next)=>{
+	var users
+	sql0 = "select * from metas where id = ?"
+	sql = "SELECT usuarios.* FROM usuario_meta RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ? where usuario_meta.meta is null ; select usuarios.* from usuarios inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;"
+	pool.query(sql0,[req.params.id],(error,meta)=>{
+		meta = meta[0]
+	pool.query(sql, [meta.categoria, meta.mes,req.params.id], (err, usuarios)=>{
+		
+		if(err){
+			res.json(err);                    
+		}
+		console.log(meta)
+		//nsole.log(err.sqlMessage)
+		console.log(usuarios)
+		users = usuarios[0]
+		usuariosAgregados = usuarios[1]
+		res.render('asignaMeta',
+			{users:users, usuariosAgregados: usuariosAgregados ,meta : meta})
+
+		 })})
+	
+	
+
+})
+
+router.post('/asignaMeta/:id', (req, res,next)=>{
+	var users
+	sql0 = "select * from metas where id = ?"
+	sql = "SELECT usuarios.* FROM usuario_meta RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario left join metas on metas.id = usuario_meta.id and metas.categoria = ? and metas.mes = ? where usuario_meta.meta is null ; select usuarios.* from usuarios inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;"
+	
+	let rr = Array.isArray(req.body.usuarios)? req.body.usuarios : [req.body.usuarios]
+	let  meta = req.body.meta 
+	let arg =  rr.map(u=> [u,meta])
+	console.log(arg)
+    pool.query('insert into usuario_meta (usuario, meta)  values ?  ',[arg],(err,ff)=>{
+          if (err) throw err;
+	console.log("Number of records inserted: " + ff.affectedRows);     
+//	pool.query(sql0, )
+pool.query(sql0,[req.params.id],(error,meta)=>{
+		meta = meta[0]
+	pool.query(sql, [meta.categoria, meta.mes,req.params.id], (err, usuarios)=>{
+		
+		if(err){
+			res.json(err);                    
+		}
+		console.log(meta)
+		//nsole.log(err.sqlMessage)
+		console.log(usuarios)
+		users = usuarios[0]
+		usuariosAgregados = usuarios[1]
+		res.render('asignaMeta',{users:users, usuariosAgregados: usuariosAgregados ,meta : meta})
+
+		 })})})
+	
+
+	
+})
 router.post ('/foto1/:id', upload.single('foto1'), (req, res, next)=>{
 	if(req.isAuthenticated()) return next()
 	res.redirect('login')
@@ -515,7 +586,7 @@ router.post ('/foto4/:id', upload.single('foto4'), (req, res, next)=>{
 })
 router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
 	if(req.isAuthenticated()) return next()
-	res.redirect('login')
+	res.redirect('/login')
 }, (req, res)=>{
 	
 	const id=req.params.id;	
@@ -537,15 +608,33 @@ router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
 
 })
 
-router.get('/dashboard',(req, res)=>{
 
+
+router.get('/dashboard/:id',(req,res)=>{
+	/*sql = `select * from usuario_meta inner join  usuarios on usuario_meta.usuario =  usuario.id
+	 inner join preventas  on usuario`
+	pool.query*/
+})
+
+
+router.get('/dashboard',(req, res)=>{
+	console.log(new Date().getMonth())
 
 	var users
-	pool.query('SELECT * FROM usuarios ',[idLogin], (err, usuarios)=>{
+	var subadmins
+	sql  = "SELECT * FROM usuarios inner join where usuarios.rol  ; "
+	pool.query('SELECT * FROM usuarios  where usuarios.rol = 6 ',[], (err, usuarios)=>{
 		if(err){
 			res.json(err);                    
 		}
-		users = usuarios
+		users_in_home = usuarios
+
+})
+	pool.query('SELECT * FROM usuarios  where usuarios.rol = 2 ',[], (err, usuarios)=>{
+		if(err){
+			res.json(err);                    
+		}
+		subadmins = usuarios
 
 })
 	pool.query('SELECT * FROM preventa ',[idLogin], (err, preventas)=>{
@@ -555,15 +644,11 @@ router.get('/dashboard',(req, res)=>{
 
 	res.render('dashboard',{
 			dato:preventas,
-			usuarios:users
+			subadmins: subadmins,
+			usuarios:users_in_home
 		})
 
 }) })
-
-router.get('/meta',	(req,res)=>{
-
-	res.render('meta')
-})
 
 			  
 passport.use(new PassportLocal(function(username, password, done){
@@ -572,7 +657,9 @@ passport.use(new PassportLocal(function(username, password, done){
 var nombre =username
 var clave = password
 	pool.query('SELECT * FROM usuarios WHERE nombre= ?',[nombre],(err,usuarios)=>{
-			if(err){req . flash ( 'mensaje' , 'datos incorrectos' ) }
+			if(err){ console.log(err )
+				return
+				 }
 			if(usuarios.length>0){
 				if (usuarios[0].password==clave){
 					var user=usuarios[0]

@@ -5,48 +5,60 @@
 
 
 
- <div class="row">
+ <div class="row mt-4">
      <div class="col">
-        <div class="row">
-            <h1>Crear meta</h1>        
+        <div class="row pt-2">
+            <h2>Crear meta</h2>        
         </div>
       
 
         <div class="container">
             <div class="row col-sm-8 card  text-center">
-                <div class="container" id="formContainer">
+                <div class="container card-body pt-4" id="formContainer">
         
-                  <form class="form-signin" id="login" role="form">
-                    <h5 class="form-signin-heading">Nombre de la meta</h5>
+                  <form class="form"  role="form" method="post">
+                    <div class="form-group mt-2" >
+                    <label>Nombre de la meta</label>
                     <a href="#" id="flipToRecover" class="flipLink">
                       <div id="triangle-topright"></div>
                     </a>
                     <input type="email" class="form-control" name="loginEmail" id="loginEmail" placeholder="nombre" required autofocus>
-                    <h5 class="form-signin-heading">Valor de la meta</h5>
+                    </div>
+                    <div class="form-group pt-2">
+                    <label>Tarifa de la meta</label>
 
                     <input type="password" class="form-control" name="loginPass" id="loginPass" placeholder="Valor" required>
-                    <div class="row">
+                </div>
+                    <div class="row pt-4">
                         <div class="col">
-                            <h5 class="form-signin-heading">mes de la meta</h5>
-                                <select name="" id="">
-                                    <option value="">enero</option>
-                                    <option value="">febrero</option>
-                                    <option value="">marzo</option>
+                            <label>Mes de la meta</label>
+                                <select class="custom-select form-control" name="" id="">
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
                                 </select>
                         </div>
                         <div class="col">
-                            <h5 class="form-signin-heading btn-secundary">año de la meta</h5>
-                            <select name="" id="">
-                                <option value="">2021</option>
-                                <option value="">2022</option>
-                                <option value="">2023</option>
+                            <label>Año</label>
+                            <select class="form-control custom-select" name="" id="">
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
                             </select>                          
                         </div>
                     </div>
                   
-                  <br><br>
-                    <button class="btn btn-lg btn-success btn-block" type="submit">Crear</button>
-               
+                    <button class="btn btn-success btn-block mt-4" type="submit">Crear</button>
+                    
                
                 </form>
             
@@ -56,62 +68,37 @@
         </div>
 
      </div>
-     <div class="col">
+     <div class="col pt-2">
         <div class="row">
-            <h1>Asignar meta</h1>
+            <h4>Lista de Metas</h4>
+            <table class="table table-striped">
+                <thead>
+                    <th>
+                        <tr>
+                        <td>Descripción</td>
+                        <td>Mes</td>
+                        <td>Tarifa</td>
+                        <td>Categoría</td>
+                         <td>Tipo Usuario</td>
+                        </tr>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <% 
+                         metas.forEach( meta  =>  { %>
+                        
+                        <td><a href="/asignaMeta/<%= meta.id %>"><%= meta.descripcion %></a></td>
+                        <td><%= meta.mes %></td>
+                        <td><%= meta.tarifa %></td>
+                        <td><%= meta.categoria %></td>
+
+                        <td><%= meta.tipo_usuario %></td>
+                        <% }) %>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <label for="">Seleccione una categoria</label>
-                <!-- Example single danger button -->
-<div class="btn-group">
-    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      TIPO USUARIOS
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">in-house</a></li>
-      <li><a class="dropdown-item" href="#">Alejandra</a></li>
-     
-    </ul>
-  </div>
-<br><br>
-  <div class="form-group">
-     
-    <select  class="form-control" name="" >
-        <option>Camilo</option>
-        <option>Ricardo</option>
-        <option>Sofia</option>
-        <option>Cristhian</option>
-    </select>
-</div>
-<br><br><br>
-
-<div class="form-group">
-     <label for="">Asigna un presupuesto </label>
-    <select  class="form-control" name="" >
-        <option>febrero - Hogar -  5.000.000</option>
-        <option>febrero - pymes -  5.000.000</option>
-        <option>febrero - avanzados -  5.000.000</option>
-        <option>Marzo - Hogar -  5.000.000</option>
-        <option>Marzo - pyme -  5.000.000</option>
-        <option>Marzo - avanzado -  5.000.0000</option>
-    </select>
-    <br>
-    <button class="btn btn-success" type="submit">Asignar</button>
-</div>
-
-
-
-            </div>
-        </div>
-
      </div>
  </div>
- 
- 
- 
- 
- 
- 
  <%- include('partials/footer') %>
