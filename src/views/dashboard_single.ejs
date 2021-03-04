@@ -1,31 +1,24 @@
 
- <%if(user[0].rol==1||user[0].rol==2){%>
   <%- include ('partials/header')  %>
-  <% }%>
-  <%if(user[0].rol==3){%>
-      <%- include ('partials/header1')  %>
-      <% }%>
-      <%if(user[0].rol==4||user[0].rol==5){%>
-          <%- include ('partials/header2')  %>
-          <% }%>
+
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
             <div class="container row">
-               <h2>Campaña: <%= campaña %></h2>
+               <h2>Campaña: <%= data_hogar[0].nombre %></h2>
               <h2>Estadística del mes: <%= mes+1 %></h2>
            <div class="col-md-3"> <canvas  id="myChartHogar" width="400" height="300"></canvas></div>
             <div class="col-md-3"> <canvas  id="myChartPyme" width="400" height="300"></canvas></div>
             <div class="col-md-3"> <canvas  id="myChartAvanzado" width="400" height="300"></canvas></div>
-</div>
+          </div>
 <script>
 var ctx = document.getElementById('myChartHogar').getContext('2d');
 var ctx1 = document.getElementById('myChartPyme').getContext('2d');
 var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
 var myChart = new Chart(ctx, {
-     type: 'pie',
+     type: 'doughnut',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
@@ -38,62 +31,74 @@ var myChart = new Chart(ctx, {
                 
             ],
             borderColor: [
-                'black',
-                  'black',
-  'black'
+               'rgba(0, 255, 50,1)',
+                   'rgba(0, 255, 50,1)',
+   'rgba(0, 255, 50, 1)'
                
             ],
             borderWidth: 1
         }]
-    }
+    },
+  options:{
+    circumference:  Math.PI,
+    rotation : -Math.PI 
+  }
     
 });
 var myChart1 = new Chart(ctx1, {
-     type: 'pie',
+     type: 'doughnut',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
             label: 'Pyme',
             data: [12, 15, 20],
             backgroundColor: [
-                'rgba(0, 255, 50, 0.6)',
-                'rgba(0, 255, 50, 0.3)',
+                'rgba(0, 50, 255, 0.6)',
+                'rgba(0, 50, 255, 0.3)',
                 'rgba(255, 255,255, 0.2)'
                 
             ],
             borderColor: [
-                'black',
-                  'black',
-  'black'
+                'rgba(0, 50, 255, 0.7)',
+                  'rgba(0, 50, 255, 0.7)',
+  'rgba(0, 50, 255, 0.7)'
                
             ],
             borderWidth: 1
         }]
-    }
+    },
+  options:{
+    circumference:  Math.PI,
+    rotation : -Math.PI 
+  }
     
 });
 var myChart2 = new Chart(ctx2, {
-     type: 'pie',
+     type: 'doughnut',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
             label: 'Avanzado',
             data: [12, 15, 20],
             backgroundColor: [
-                'rgba(0, 255, 50, 0.6)',
-                'rgba(0, 255, 50, 0.3)',
+                'rgba(255, 50, 0, 0.6)',
+                'rgba(255, 50, 0, 0.3)',
                 'rgba(255, 255,255, 0.2)'
                 
             ],
             borderColor: [
-                'black',
-                  'black',
-  'black'
+                'rgba(255, 50, 0, 0.8)',
+                  'rgba(255, 50, 0, 0.8)',
+  'rgba(255, 50, 0, 0.8)'
                
             ],
             borderWidth: 1
         }]
-    }
+    },
+  options:{
+    circumference:  Math.PI,
+    rotation : -Math.PI 
+  }
     
 });
 </script>

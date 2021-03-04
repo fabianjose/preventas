@@ -369,7 +369,7 @@ router.post('/addbitacora/:id',(req,res)=>{
 
   router.get('/descargar',(req, res, next)=>{
 	if(req.isAuthenticated()) return next()
-	res.redirect('login')
+	res.redirect('/login')
 }, function(req, res) {
   
 	
@@ -418,7 +418,11 @@ router.get('/descargar/:id', (req, res, next)=>{
 })
 
 
-router.get('/meta',(req, res, next)=>{
+router.get('/meta',(req,res,next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('/login')
+},(req, res, next)=>{
+	
 	console.log(req)
 	sql = `select * from usuario_tipos where usuario_tipos.id > 2 and usuario_tipos.id <> 4;
 	select *  from categorias;
@@ -439,7 +443,10 @@ router.get('/meta',(req, res, next)=>{
 })
 
 
-router.get("/dash2", (req,res,next)=>{
+router.get("/dash2",(req,res,next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('/login')
+}, (req,res,next)=>{
 	
 	pool.query("select usuarios.* from usuarios where id = ? ", [idLogin], (err, usuario)=>{
 
@@ -457,8 +464,12 @@ router.get("/dash2", (req,res,next)=>{
 
 
  router.get("/dash2/:camp",(req,res,next)=>{
+	if(req.isAuthenticated()) return next()
+	res.redirect('/login')
+},(req,res,next)=>{
  	mes_actual = new Date().getMonth()
- 	sql0  = `select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	año_actual = new Date().getFullYear()
+ 	sql0  = `select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
  	 MONTH(fecha_agenda) as mes from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '1'
@@ -466,7 +477,7 @@ router.get("/dash2", (req,res,next)=>{
  	
  	group by MONTH(fecha_agenda) 
  	;
- 	select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
  	 MONTH(fecha_agenda) as mes from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '2'
@@ -474,23 +485,34 @@ router.get("/dash2", (req,res,next)=>{
  	
  	group by MONTH(fecha_agenda) 
  	;
- 	select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
  	 MONTH(fecha_agenda) as mes from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '3'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
  	
- 	group by MONTH(fecha_agenda) 
- 	;
- 	select metas.* from metas where mes  = ?
+ 	group by MONTH(fecha_agenda);
+ 	select  metas.*,categorias.id as categoriaid from usuario_meta
+ 	inner join metas on metas.id = usuario_meta.meta  and mes  = ? and año  = ?
+ 	right join categorias on categorias.id = metas.categoria
+ 	group by categorias.id order by categoriaid asc;
+
  	`;
  	console.log("dash2/:id")
- 	pool.query(sql0, [req.params.camp,idLogin ,mes_actual,req.params.camp,idLogin ,mes_actual,req.params.camp,idLogin ,mes_actual], (err,result)=>{
+ 	pool.query(sql0, [req.params.camp,idLogin ,
+ 		req.params.camp,idLogin ,
+ 		req.params.camp,idLogin ,
+ 		mes_actual, año_actual
+ 		], (err,result)=>{
  		if(err)console.log(err)
  		console.log(result)
  		res.render("dashboard_single",{
  			mes: mes_actual,
- 			datos:result[0],
+ 			data_hogar: result[0],
+ 			data_pyme: result[1],
+ 			data_avanzado: result[2],
+ 			data_metas:result[3],
+ 			datos:result,
  			'campaña' : result[0].nombre
  		})
  	})
@@ -503,7 +525,6 @@ router.post('/meta',(req,res,next)=>{
 	ll = [req.body.categoria,  req.body.nombre, req.body.valor,req.body.mes,
 	 req.body.tipo_usuario,req.body.año, req.body.campaña]
 	ll = [ll]	
-	 console.log(ll)
 	 pool.query(sql0, [ll],(err,result0) =>{
 	 	if (err) { console.log(err)}
 	 	else console.log(result0)
@@ -545,9 +566,6 @@ router.get('/asignaMeta/:id', (req, res,next)=>{
 			{users:users, usuariosAgregados: usuariosAgregados ,meta : meta})
 
 		 })})
-	
-	
-
 })
 
 router.post('/asignaMeta/:id', (req, res,next)=>{
