@@ -13,19 +13,71 @@
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
-            <div class="container">
+            <div class="container row">
                <h2>Campaña: <%= campaña %></h2>
               <h2>Estadística del mes: <%= mes+1 %></h2>
-            <canvas style="max-width: 50%" id="myChart" width="400" height="300"></canvas>
+           <div class="col-md-3"> <canvas  id="myChartHogar" width="400" height="300"></canvas></div>
+            <div class="col-md-3"> <canvas  id="myChartPyme" width="400" height="300"></canvas></div>
+            <div class="col-md-3"> <canvas  id="myChartAvanzado" width="400" height="300"></canvas></div>
 </div>
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('myChartHogar').getContext('2d');
+var ctx1 = document.getElementById('myChartPyme').getContext('2d');
+var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
 var myChart = new Chart(ctx, {
      type: 'pie',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
-            label: '# of Votes',
+            label: 'Hogar',
+            data: [12, 15, 20],
+            backgroundColor: [
+                'rgba(0, 255, 50, 0.6)',
+                'rgba(0, 255, 50, 0.3)',
+                'rgba(255, 255,255, 0.2)'
+                
+            ],
+            borderColor: [
+                'black',
+                  'black',
+  'black'
+               
+            ],
+            borderWidth: 1
+        }]
+    }
+    
+});
+var myChart1 = new Chart(ctx1, {
+     type: 'pie',
+    data: {
+        labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
+        datasets: [{
+            label: 'Pyme',
+            data: [12, 15, 20],
+            backgroundColor: [
+                'rgba(0, 255, 50, 0.6)',
+                'rgba(0, 255, 50, 0.3)',
+                'rgba(255, 255,255, 0.2)'
+                
+            ],
+            borderColor: [
+                'black',
+                  'black',
+  'black'
+               
+            ],
+            borderWidth: 1
+        }]
+    }
+    
+});
+var myChart2 = new Chart(ctx2, {
+     type: 'pie',
+    data: {
+        labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
+        datasets: [{
+            label: 'Avanzado',
             data: [12, 15, 20],
             backgroundColor: [
                 'rgba(0, 255, 50, 0.6)',
@@ -48,8 +100,7 @@ var myChart = new Chart(ctx, {
 
             <div class="row">
               <div class="col col-sm-6">
-                <%- JSON.stringify(datos) %>
-                <canvas id="myChart" width="400" height="400"></canvas>          
+                <%- JSON.stringify(datos) %>       
             </div>
 
 

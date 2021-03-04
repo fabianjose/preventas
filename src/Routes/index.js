@@ -461,20 +461,37 @@ router.get("/dash2", (req,res,next)=>{
  	sql0  = `select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
  	 MONTH(fecha_agenda) as mes from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
+ 	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '1'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
- 	inner join categorias on preventa.categoria  = categorias.id and categorias.id = 1
+ 	
+ 	group by MONTH(fecha_agenda) 
+ 	;
+ 	select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	 MONTH(fecha_agenda) as mes from  campañas
+ 	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
+ 	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '2'
+ 	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
+ 	
+ 	group by MONTH(fecha_agenda) 
+ 	;
+ 	select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	 MONTH(fecha_agenda) as mes from  campañas
+ 	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
+ 	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '3'
+ 	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
+ 	
  	group by MONTH(fecha_agenda) 
  	;
  	select metas.* from metas where mes  = ?
  	`;
  	console.log("dash2/:id")
- 	pool.query(sql0, [req.params.camp,idLogin ,mes_actual], (err,result)=>{
+ 	pool.query(sql0, [req.params.camp,idLogin ,mes_actual,req.params.camp,idLogin ,mes_actual,req.params.camp,idLogin ,mes_actual], (err,result)=>{
  		if(err)console.log(err)
  		console.log(result)
  		res.render("dashboard_single",{
  			mes: mes_actual,
  			datos:result[0],
- 			campaña : result[0].nombre
+ 			'campaña' : result[0].nombre
  		})
  	})
  	
