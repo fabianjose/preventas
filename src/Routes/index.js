@@ -469,29 +469,29 @@ router.get("/dash2",(req,res,next)=>{
 },(req,res,next)=>{
  	mes_actual = new Date().getMonth()
  	año_actual = new Date().getFullYear()
- 	sql0  = `select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
- 	 MONTH(fecha_agenda) as mes from  campañas
+ 	sql0  = `select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa) as monto,
+ 	 MONTH(fecha_agenda) as mes, preventa.estatus from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '1'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
  	
- 	group by MONTH(fecha_agenda) 
+ 	group by MONTH(fecha_agenda), preventa.estatus
  	;
- 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
- 	 MONTH(fecha_agenda) as mes from  campañas
+ 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa) as monto,
+ 	 MONTH(fecha_agenda) as mes, preventa.estatus from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '2'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
  	
- 	group by MONTH(fecha_agenda) 
+ 	group by MONTH(fecha_agenda) , preventa.estatus
  	;
- 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
- 	 MONTH(fecha_agenda) as mes from  campañas
+ 	select distinct campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa) as monto,
+ 	 MONTH(fecha_agenda) as mes, preventa.estatus from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '3'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
  	
- 	group by MONTH(fecha_agenda);
+ 	group by MONTH(fecha_agenda), prevetan.estatus;
  	select  metas.*,categorias.id as categoriaid from usuario_meta
  	inner join metas on metas.id = usuario_meta.meta  and mes  = ? and año  = ?
  	right join categorias on categorias.id = metas.categoria
