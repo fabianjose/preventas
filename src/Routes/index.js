@@ -470,13 +470,18 @@ router.get("/dash2", (req,res,next)=>{
  	pool.query(sql0, [req.params.camp,idLogin ,mes_actual], (err,result)=>{
  		if(err)console.log(err)
  		console.log(result)
- 		res.render("dashboard_single",{mes: mes_actual,datos:result})
+ 		res.render("dashboard_single",{
+ 			mes: mes_actual,
+ 			datos:result[0],
+ 			campaña : result[0].nombre
+ 		})
  	})
  	
  })
 router.post('/meta',(req,res,next)=>{
 	sql = "select * from usuario_tipos where usuario_tipos; select * from preventas_categoria;";
-	req.body
+	console.log(req.body)
+	next();
 })
 
 router.get('/asignaMeta/:id', (req, res,next)=>{
