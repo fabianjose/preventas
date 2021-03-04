@@ -462,6 +462,7 @@ router.get("/dash2", (req,res,next)=>{
  	 MONTH(fecha_agenda) as mes from  campañas
  	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
+ 	inner join categorias on preventa.categoria  = categorias.id and categorias.id = 1
  	group by MONTH(fecha_agenda) 
  	;
  	select metas.* from metas where mes  = ?
@@ -481,7 +482,30 @@ router.get("/dash2", (req,res,next)=>{
 router.post('/meta',(req,res,next)=>{
 	sql = "select * from usuario_tipos where usuario_tipos; select * from preventas_categoria;";
 	console.log(req.body)
-	next();
+	sql0 = "INSERT INTO `metas`( `categoria`, `descripcion`, `tarifa`, `mes`, `tipo_usuario`, `año`, `campaña`) VALUES  ?"
+	ll = [req.body.categoria,  req.body.nombre, req.body.valor,req.body.mes,
+	 req.body.tipo_usuario,req.body.año, req.body.campaña]
+	ll = [ll]	
+	 console.log(ll)
+	 pool.query(sql0, [ll],(err,result0) =>{
+	 	if (err) { console.log(err)}
+	 	else console.log(result0)
+	 		sql = `select * from usuario_tipos where usuario_tipos.id > 2 and usuario_tipos.id <> 4;
+	select *  from categorias;
+	 select * from metas;
+	 select * from campañas`
+	pool.query(sql ,(err,result)=>{
+		if(err){
+			res.json(err);                    
+		}
+		res.render('meta',
+		 { usuario_tipos:result[0],
+		 	categorias: result[1],
+		 	metas: result[2],
+		 	campañas : result[3]
+		 })
+	})
+	 })
 })
 
 router.get('/asignaMeta/:id', (req, res,next)=>{
