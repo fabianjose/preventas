@@ -456,12 +456,23 @@ router.get("/dash2", (req,res,next)=>{
 })
 
 
- router.get("/dash2/:id",(req,res,next)=>{
+ router.get("/dash2/:camp",(req,res,next)=>{
  	mes_actual = new Date().getMonth()
- 	sql0  = `select campañas.*, usuarios.* from  campañas
- 	inner join preventa on preventa.campaña  = campañas.id and preventa.usuario_ID = ? 
- 	inner join usuarios on usuario.id =  ?`;
- 	next()
+ 	sql0  = `select campañas.nombre, usuarios.nombre as usuario, sum(preventa.tarifa),
+ 	 MONTH(fecha_agenda) as mes from  campañas
+ 	inner join preventa on preventa.campaña  = campañas.id  and campañas.id = ?
+ 	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
+ 	group by MONTH(fecha_agenda) 
+ 	;
+ 	select metas.* from metas where mes  = ?
+ 	`;
+ 	console.log("dash2/:id")
+ 	pool.query(sql0, [req.params.camp,idLogin ,mes_actual], (err,result)=>{
+ 		if(err)console.log(err)
+ 		console.log(result)
+ 		res.render("dashboard_single",{mes: mes_actual,datos:result})
+ 	})
+ 	
  })
 router.post('/meta',(req,res,next)=>{
 	sql = "select * from usuario_tipos where usuario_tipos; select * from preventas_categoria;";
