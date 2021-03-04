@@ -16,7 +16,6 @@ var perfil
 
 app.use(flash())
 //CONEXION A BDD
-
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());

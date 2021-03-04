@@ -1,0 +1,253 @@
+
+ <%if(user[0].rol==1||user[0].rol==2){%>
+  <%- include ('partials/header')  %>
+  <% }%>
+  <%if(user[0].rol==3){%>
+      <%- include ('partials/header1')  %>
+      <% }%>
+      <%if(user[0].rol==4||user[0].rol==5){%>
+          <%- include ('partials/header2')  %>
+          <% }%>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<style>
+  body{
+    background-color: thistle;
+  }
+</style>
+ 
+          <% var  total=0 %> 
+          <%  var valorGanado=0 %> 
+          <%  var valorPendiente=0 %> 
+          <%  var total=0 %> 
+
+
+            <div class="row">
+              <div class="col col-sm-6"><canvas id="doughnut-chart" width="800" height="450"></canvas></div>
+              <div class="col col-sm-6"><canvas id="doughnut-chart2" width="800" height="450"></canvas></div>
+            </div>
+
+            <div class="row">
+              <div class="col col-sm-6"><canvas id="myChart" width="400" height="400"></canvas>
+              </canvas></div>
+              <div class="col col-sm-6">
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">FreeLance</th>
+                      <th scope="col">Presupuesto</th>
+                      <th scope="col">Valor Ganado</th>
+                      <th scope="col">Valor Pendiente</th>
+                      <th scope="col">Por Cumplir</th>
+                      <th scope="col">Cumplido</th>
+                     
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% for(var i=0; i<usuarios.length; i++){  %> 
+                      <%   valorGanado=0 %> 
+                      <%   valorPendiente=0 %> 
+                      <%   total=0 %> 
+                      <tr>
+
+                        <th> <%=usuarios[i].nombre  %>  </th>
+
+
+                        <% for(var j=0; j<dato.length; j++){  %> 
+
+                          <% if(usuarios[i].id==dato[j].usuario_ID){  %> 
+                        
+                            <% total = total +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%>  
+                          
+                          
+                           <% if(usuarios[i].id==dato[j].usuario_ID && dato[j].estatus==3 ){  %> 
+                        
+                            <% valorGanado = valorGanado +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%> 
+                                                                     
+                           <% if(usuarios[i].id==dato[j].usuario_ID && dato[j].estatus!=3 ){  %> 
+                        
+                            <% valorPendiente = valorPendiente +parseFloat( dato[j].tarifa)%>
+                                                                     <%}%>  
+                                                                     
+
+
+                                                          <%}%>
+
+
+
+                             <th> <%=new Intl.NumberFormat().format(usuarios[i].meta)  %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(valorGanado ) %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(valorPendiente)  %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format(usuarios[i].meta-valorGanado ) %>  </th> 
+                             <th> <%=new Intl.NumberFormat().format((valorGanado * 100) / usuarios[i].meta)  %> %    </th>
+
+                                                           
+
+                      </tr>
+   
+                       <%}%>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+
+
+            
+            
+            <% var  pt=dato.length  %>
+            <% var  pc=0  %>
+            <% var  pp=0  %>
+            <% var  dt=0  %>
+            <% var  dc=0  %>
+            <% var  dp=0  %>
+            <% var  info = []  %>
+            <% var  fl = []  %>
+
+            <% for(var i = 0; i< usuarios.length; i ++) { %>
+                 
+                <% if(usuarios[i].rol==0){ %>
+                  
+                 <%   fl.push(usuarios[i].nombre)%>
+                
+                                       <%}%>
+                                                       
+
+                                           
+                                                  <%  } %> 
+           
+            <% for(var i = 0; i< dato.length; i ++) { %>
+
+              <% info.push(i+1);%>
+             
+           <%dt = dt+parseInt(dato[i].tarifa)%>
+             
+             <% if(dato[i].estatus==3){
+                pc++;
+                dc = dc+ parseInt(dato[i].tarifa)
+              
+              } %>
+              
+
+
+
+              <% if(dato[i].estatus!=3){
+                pp++;
+                dp = dp+ parseInt(dato[i].tarifa)
+                } %>
+
+
+
+
+              <% } %>
+
+<% var  a = dato[0].estatus %>
+
+
+
+
+
+
+
+<script>
+
+  
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels:[<%- usuarios.map(a => "'" + a.nombre + "'") %>],
+          datasets: [{
+              label: '# of Votes',
+              data: [<%=info%>],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)'
+               
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)'
+                
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+new Chart(document.getElementById("doughnut-chart"), {
+ type: 'pie',
+ data: {
+   labels: [ "Preventas Cerradas-Ganadas = "+"<%=new Intl.NumberFormat().format(pc) %>","Preventas Pendientes = "+"<%=new Intl.NumberFormat().format(pp) %>", "TOTAL = "+"<%=new Intl.NumberFormat().format(pt) %>"],
+   datasets: [
+     {
+       label: "Population (millions)",
+       backgroundColor: ["#3cba9f","#e8c3b9","#c45850" , "#3e95cd"],
+       data: [<%=pc%>,<%=pp%>,0]
+     }
+   ]
+ },
+ options: {
+   title: {
+     display: true,
+     text: 'TOTAL DE PREVENTAS',
+     
+   }
+ }
+});
+  
+</script>
+  
+<script>
+
+  new Chart(document.getElementById("doughnut-chart2"), {
+   type: 'doughnut',
+   data: {
+     labels: [ "VALOR COMPLETADO = "+"<%=new Intl.NumberFormat().format(dc) %>","VALOR PENDIENTE = "+"<%=new Intl.NumberFormat().format(dp) %>", "VALOR TOTAL = "+"<%=new Intl.NumberFormat().format(dt) %>"],
+     datasets: [
+       {
+         label: "Population (millions)",
+         backgroundColor: [ "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+         data: [<%=dc%>,<%=dp%>,0]
+       }
+     ]
+   },
+   options: {
+     title: {
+       display: true,
+       text: 'TOTAL DE INGRESOS'
+     }
+   }
+  });
+    
+  </script>
+ 
+ <%- include('partials/footer') %>

@@ -420,19 +420,52 @@ router.get('/descargar/:id', (req, res, next)=>{
 
 router.get('/meta',(req, res, next)=>{
 	console.log(req)
-	sql = "select * from metas"
-	pool.query(sql ,(err,metas)=>{
+	sql = `select * from usuario_tipos where usuario_tipos.id > 2 and usuario_tipos.id <> 4;
+	select *  from categorias;
+	 select * from metas;
+	 select * from campañas`
+	pool.query(sql ,(err,result)=>{
 		if(err){
 			res.json(err);                    
 		}
-		console.log(metas)
+		console.log(result)
 		res.render('meta',
-		 {metas: metas})
+		 { usuario_tipos:result[0],
+		 	categorias: result[1],
+		 	metas: result[2],
+		 	campañas : result[3]
+		 })
 	})
 })
 
 
+router.get("/dash2", (req,res,next)=>{
+	
+	pool.query("select usuarios.* from usuarios where id = ? ", [idLogin], (err, usuario)=>{
+
+		sql  = `select distinct campañas.* from campañas 
+		inner join preventa on preventa.campaña = campañas.id
+		inner join usuarios on usuarios.id = preventa.usuario_ID
+		where usuarios.id = ?  `
+		pool.query(sql,[idLogin],(err,result)=>{
+			res.render('dash2',{campañas : result})
+		} )
+
+	})
+
+})
+
+
+ router.get("/dash2/:id",(req,res,next)=>{
+ 	mes_actual = new Date().getMonth()
+ 	sql0  = `select campañas.*, usuarios.* from  campañas
+ 	inner join preventa on preventa.campaña  = campañas.id and preventa.usuario_ID = ? 
+ 	inner join usuarios on usuario.id =  ?`;
+ 	next()
+ })
 router.post('/meta',(req,res,next)=>{
+	sql = "select * from usuario_tipos where usuario_tipos; select * from preventas_categoria;";
+	req.body
 })
 
 router.get('/asignaMeta/:id', (req, res,next)=>{
@@ -611,9 +644,10 @@ router.post ('/foto5/:id', upload.single('foto5'), (req, res, next)=>{
 
 
 router.get('/dashboard/:id',(req,res)=>{
-	/*sql = `select * from usuario_meta inner join  usuarios on usuario_meta.usuario =  usuario.id
-	 inner join preventas  on usuario`
-	pool.query*/
+	pool.query("select * from campañas where campañas.id =  ? ", [req.params.id],(err,campaña)=>{
+		res.render("dashboard_single", {campaña: campaña})
+	})
+
 })
 
 
@@ -622,6 +656,7 @@ router.get('/dashboard',(req, res)=>{
 
 	var users
 	var subadmins
+	sql1 = "select * from usuarios where usuarios.rol"
 	sql  = "SELECT * FROM usuarios inner join where usuarios.rol  ; "
 	pool.query('SELECT * FROM usuarios  where usuarios.rol = 6 ',[], (err, usuarios)=>{
 		if(err){
@@ -651,8 +686,7 @@ router.get('/dashboard',(req, res)=>{
 }) })
 
 			  
-passport.use(new PassportLocal(function(username, password, done){
-	//			
+passport.use(new PassportLocal(function(username, password, done){	
 	
 var nombre =username
 var clave = password
@@ -681,17 +715,6 @@ var clave = password
 
 
 router.get('/prueba', function(req, res){
-
-	//'SELECT usuarios.nombre, preventa.tipo_instalacion FROM  usuarios inner join preventa on usuarios.id = preventa.usuario_ID
-	/*pool.query('SELECT preventa.usuario_ID  , usuarios.correo  FROM preventa inner join usuarios on preventa.usuario_ID = usuarios.id WHERE preventa.usuario_ID = ? ',[id],(err,rows)=>{
-		if(err){
-			console.log(err);
-		}
-	console.log(rows);
-	res.render("prueba",{
-		data:rows
-	})
-  })*/
   res.render("prueba")
 })
 
