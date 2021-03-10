@@ -436,7 +436,7 @@ router.get("/estadistica/:id", (req, res, next)=>{
 			case 2:
 				console.log("Usuario Admin")
 				sql = `select sum(tarifa) as monto,
-				MONTH(fecha_agenda) as mes,
+				MONTH(fecha_agenda) - 1 as mes,
 				 estatus, categorias.id as categoria,
 				 YEAR(fecha_agenda) as year
 				 from preventa 

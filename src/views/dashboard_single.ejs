@@ -7,7 +7,6 @@
           
 
             <div class="container row">
-            
                <h2>Campaña: <%- JSON.stringify(usuario) %></h2>
                <p><%- JSON.stringify(data_hogar) %></p>
                 <p><%- JSON.stringify(hijos) %></p>
@@ -44,13 +43,18 @@ $.get("/estadistica/1", a =>{
     meses = a.ventas.map(m =>{
      return m.reduce((ac, v)=>{ return ac + v.reduce((acu, u)=>{ return acu +  u },0) },0)
     })
+    console.log(a.ventas)
    meta_hogar = a.metas[<%= mes %>][1]
+   console.log(meta_hogar)
    meta_lograda = a.ventas[<%= mes %>][1][3]
    meta_en_proceso = a.ventas[<%= mes %>][1][1]
-   meta_en_proceso -= meta_lograda
+//   meta_en_proceso -= meta_lograda
    meta_hogar = meta_hogar - meta_lograda - meta_en_proceso
+   console.log(meta_lograda)
+   console.log(meta_en_proceso)
+   console.log(meta_hogar)
     var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+    var myChart = new Chart(ctx, {
     type: 'radar',
     data: {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -129,26 +133,19 @@ var myChart = new Chart(ctx, {
   }
     
 });
-
-
-
-
-})
-
-</script>
-          </div>
-<script>
+meta_pyme = a.metas[<%= mes %>][2]
+   meta_lograda = a.ventas[<%= mes %>][2][3]
+   meta_en_proceso = a.ventas[<%= mes %>][2][1]
+   meta_pyme = meta_pyme - meta_lograda - meta_en_proceso
 
 var ctx1 = document.getElementById('myChartPyme').getContext('2d');
-var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
-
 var myChart1 = new Chart(ctx1, {
      type: 'doughnut',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
             label: 'Pyme',
-            data: [12, 15, 20],
+            data: [meta_lograda, meta_en_proceso, meta_pyme],
             backgroundColor: [
                 'rgba(0, 50, 255, 0.9)',
                 'rgba(0, 50, 255, 0.5)',
@@ -170,13 +167,20 @@ var myChart1 = new Chart(ctx1, {
   }
     
 });
+var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
+
+meta_avanzado = a.metas[<%= mes %>][3]
+   meta_lograda = a.ventas[<%= mes %>][3][3]
+   meta_en_proceso = a.ventas[<%= mes %>][3][1]
+   meta_pyme = meta_pyme - meta_lograda - meta_en_proceso
+
 var myChart2 = new Chart(ctx2, {
      type: 'doughnut',
     data: {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
             label: 'Avanzado',
-            data: [12, 15, 20],
+            data: [meta_lograda, meta_en_proceso, meta],
             backgroundColor: [
                 'rgba(255, 50, 0, 0.9)',
                 'rgba(255, 50, 0, 0.5)',
@@ -195,7 +199,12 @@ var myChart2 = new Chart(ctx2, {
  
     
 });
+
+})
+
 </script>
+          </div>
+
 
             <div class="row">
               <div class="col col-sm-6">
