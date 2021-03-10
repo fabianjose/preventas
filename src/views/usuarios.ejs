@@ -5,6 +5,10 @@
   
  
 
+<<<<<<< HEAD
+=======
+ <%if(user[0].rol < 5){%>
+>>>>>>> d0a6d37f5d0926a572d860f0d4122bfac9271fcb
 
 <div class="row mt-5">
     <div class="col-7">
@@ -33,6 +37,7 @@
                           
                             
                                  <% if(data[i].rol==1){ %> 
+<<<<<<< HEAD
                                     <td> SUPERADMIN </td>
                                      <% } %> 
                                      <% if(data[i].rol==2){ %> 
@@ -51,6 +56,25 @@
                                                  <% if(data[i].rol==6){ %> 
                                                     <td> IN-HOUSE </td>
                                                      <% } %>  
+=======
+                                    <td> Super-Admin </td>
+                                     <% } %> 
+                                     <% if(data[i].rol==2){ %> 
+                                        <td> Admin </td>
+                                         <% } %> 
+                                         <% if(data[i].rol==3){ %> 
+                                            <td> Sub-Admin </td>
+                                             <% } %> 
+                                             <% if(data[i].rol==4){ %> 
+                                                <td> Gestor </td>
+                                                 <% } %> 
+                                                 <% if(data[i].rol==5){ %> 
+                                                    <td> Freelance </td>
+                                                     <% } %> 
+                                                     <% if(data[i].rol==6){ %> 
+                                                        <td> In-House </td>
+                                                         <% } %> 
+>>>>>>> d0a6d37f5d0926a572d860f0d4122bfac9271fcb
                                 
                                 
                              <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
@@ -101,11 +125,12 @@
                     <div class="form-group card">
                         <label for=""><p> <b>Dale un Rol </b> </b> </p></label>
                             <select class="form-select" name="rol" aria-label="Default select example">
-                            <option value="1">Freelance</option> 
-                            <option value="2">inhouse</option>
-                            <option value="3">Coordinador</option>
-                            <option value="4">admin</option>
-                            <option value="5">Super Admin</option>
+                            <option value="1">Super Admin</option>
+                            <option value="2">Admin</option>
+                            <option value="3">Sub Admin</option>
+                            <option value="4">Gestor</option>
+                            <option value="5">Freelance</option> 
+                            <option value="6">In-House</option>
 
 
                        

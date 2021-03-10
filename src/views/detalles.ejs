@@ -1,14 +1,9 @@
 
- <%if(user[0].rol==1||user[0].rol==2){%>
-  <%- include ('partials/header')  %>
-  <% }%>
-  <%if(user[0].rol==3){%>
-      <%- include ('partials/header1')  %>
-      <% }%>
-      <%if(user[0].rol==4||user[0].rol==5){%>
-          <%- include ('partials/header2')  %>
-          <% }%>
 
+ <%if(user[0].rol < 5){%>
+  <%- include ('partials/header')  %>
+
+  <% } %> 
               <script>
                 function espera(){
                   window.setTimeout(console.log("object"), 5000)         }
