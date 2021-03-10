@@ -14,15 +14,9 @@ controller.login =  (req, res, next)=>{
 
 
 
-
-
-
-
-
-
-
-
-
+controller.dashboard = (req,res,next) =>{
+	console.log("hola")
+}
 
 
 module.exports= controller;                  

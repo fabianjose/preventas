@@ -1,17 +1,10 @@
-
-<%- include ('partials/header2')  %>
-                               
-
-
-
-
+<%- include ('partials/header')  %>         
  <div class="row mt-4">
      <div class="col">
         <div class="row pt-2">
             <h2>Crear meta</h2>        
         </div>
       
-
         <div class="container">
             <div class="row col-sm-8 card  text-center">
                 <div class="container card-body pt-4" id="formContainer">
@@ -113,8 +106,7 @@
                         <td><%= meta.mes %></td>
                         <td><%= meta.tarifa %></td>
                         <td><%= meta.categoria %></td>
-
-                        <td><%= meta.tipo_usuario %></td>
+                        <td><%= meta.tipo %></td>
                         </tr>
                         <% }) %>
                     

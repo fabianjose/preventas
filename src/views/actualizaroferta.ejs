@@ -1,19 +1,4 @@
 
- 
-
-
- 
- 
- 
- <%if(user[0].rol==1||user[0].rol==2){%>
-    <%- include ('partials/header')  %>
-    <% }%>
-    <%if(user[0].rol==3){%>
-        <%- include ('partials/header1')  %>
-        <% }%>
-        <%if(user[0].rol==4||user[0].rol==5){%>
-            <%- include ('partials/header2')  %>
-            <% }%>
 
         <script src="https://smtpjs.com/v3/smtp.js">
 
@@ -21,11 +6,6 @@
   
 
       <h2><%=data[0].id%> </h2> 
-
-        
-
- 
- 
        <div class="row text-center">
            <div class="col">
             <h1>ACTUALIZAR OFERTA</h1>
@@ -659,29 +639,6 @@ body {
 }
 
  </style>
- 
- 
- 
- 
-
- 
- 
-    
- 
-
- 
-
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  <%- include('partials/footer') %>
  
