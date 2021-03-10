@@ -13,8 +13,7 @@
 
 
 
-                <%if(user[0].rol==3||user[0].rol==4||user[0].rol==5){%>
-
+          <%if(user[0].rol < 5){%>
               
               <div>
                 <h5>descargar todos los reportes en CSV</h5>
@@ -24,7 +23,7 @@
 
 
 <%= console.log(user[0].rol); %>
- <%if(user[0].rol==3||user[0].rol==4||user[0].rol==5){%>
+<%if(user[0].rol < 5){%>
 
 <div class="row mt-5">
 
@@ -45,8 +44,7 @@
                      
                      
                 
-                    <%if(user[0].rol==3||user[0].rol==4||user[0].rol==5){%>
-                        <th>Borar</th>
+                <%if(user[0].rol < 5){%>                        <th>Borar</th>
                         <th>Actualizar</th>
                         <th>Detalles</th>
                         <th>Descargar</th>
@@ -91,8 +89,7 @@
                      
                           
                            
-                            <%if(user[0].rol==3||user[0].rol==4||user[0].rol==5){%>
-                               
+                                               <%if(user[0].rol < 5){%>                               
                             <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
                             <td> <a href="/ofertasupdate/<%=data[i].id%>" class="btn btn-warning">Actualizar</a> </td>
                             <td> <a href="/detalles/<%=data[i].id%>" class="btn btn-success">Detalles</a> </td>
