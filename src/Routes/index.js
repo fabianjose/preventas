@@ -387,7 +387,7 @@ router.get('/meta', (req, res, next) => {
 	sql = `select * from usuario_tipos where usuario_tipos.id > 2 and usuario_tipos.id <> 4;
 	select *  from categorias;
 	 select metas.descripcion as descripcion,categorias.descripcion as categoria, metas.mes,metas.tarifa,
-	 usuario_tipos.descripcion as tipo from metas
+	 usuario_tipos.descripcion as tipo , metas.id  from metas
 	 inner join usuario_tipos on metas.tipo_usuario = usuario_tipos.id
 	 inner join categorias on categorias.id = metas.categoria;
 	 select * from campañas`
