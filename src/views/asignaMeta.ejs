@@ -1,6 +1,18 @@
  <%- include ('partials/header')  %>
        
 <div class="container mt-4">
+
+
+<h2>META</h2>
+
+<form class="row" method="post">
+<div class="col-md-5">
+		<label>Nombre: </label>
+		<input type="text" name="">
+		<input type="hidden" name="meta" value="<%= meta.id %>">
+	</div>
+
+</form>
 <h2>Asignar usuarios a <%= meta.descripcion %> [<%= meta.mes+1 %>/<%= meta.año %> ] </h2>
 
 

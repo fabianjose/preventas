@@ -19,6 +19,11 @@
         </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <% if (user[0].rol < 3) { -%>
+          <li class="nav-item">
+            <a class="nav-link" href="/usuarios">Usuarios</a>
+          </li>
+        <% } -%>
         <% if (user[0].rol < 5) { -%>
           <li class="nav-item">
             <a class="nav-link" href="/meta">Metas</a>
