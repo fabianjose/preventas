@@ -33,20 +33,24 @@
                           
                             
                                  <% if(data[i].rol==1){ %> 
-                                    <td> Freelance </td>
+                                    <td> SUPERADMIN </td>
                                      <% } %> 
                                      <% if(data[i].rol==2){ %> 
-                                        <td> in-house </td>
+                                        <td> ADMIN </td>
                                          <% } %> 
                                          <% if(data[i].rol==3){ %> 
-                                            <td> Coordinador </td>
+                                            <td> SUBADMIN </td>
                                              <% } %> 
                                              <% if(data[i].rol==4){ %> 
-                                                <td> Admin </td>
+                                                <td> GESTOR </td>
                                                  <% } %> 
                                                  <% if(data[i].rol==5){ %> 
-                                                    <td> Super Admin </td>
-                                                     <% } %> 
+                                                    <td> FREELANCE </td>
+                                                     <% } %>
+
+                                                 <% if(data[i].rol==6){ %> 
+                                                    <td> IN-HOUSE </td>
+                                                     <% } %>  
                                 
                                 
                              <td> <a  href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=i%>" >borrar</a> </td>
