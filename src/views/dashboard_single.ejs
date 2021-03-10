@@ -168,8 +168,8 @@ var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
 
 meta_avanzado = a.metas[<%= mes %>][3]
    meta_lograda = a.ventas[<%= mes %>][3][3]
-   meta_en_proceso = a.ventas[<%= mes %>][3][1]
-   meta_pyme = meta_pyme - meta_lograda - meta_en_proceso
+   meta_en_proceso = a.ventas[<%= mes %>][3][0]
+   meta_avanzado = meta_avanzado - meta_lograda - meta_en_proceso
 
 var myChart2 = new Chart(ctx2, {
      type: 'doughnut',
@@ -177,7 +177,7 @@ var myChart2 = new Chart(ctx2, {
         labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
         datasets: [{
             label: 'Avanzado',
-            data: [meta_lograda, meta_en_proceso, meta],
+            data: [meta_lograda, meta_en_proceso, meta_avanzado],
             backgroundColor: [
                 'rgba(255, 50, 0, 0.9)',
                 'rgba(255, 50, 0, 0.5)',
@@ -192,7 +192,10 @@ var myChart2 = new Chart(ctx2, {
             ],
             borderWidth: 1
         }]
-    },
+    },  options:{
+    circumference:  Math.PI,
+    rotation : -Math.PI 
+  }
  
     
 });
