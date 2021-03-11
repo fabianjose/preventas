@@ -12,9 +12,9 @@
               <h2>Estadística del mes: <%= mes+1 %></h2>
               <% if( usuario.rol  = 2 ){ %>
               <div class="col-md-5 form-group">
-              <label>Usuarios</label>
+              <label class="label">Usuarios: </label>
               <select>
-                 <option>Todos</option>
+                 <option selected="">Todos</option>
                 <% hijos.forEach(hijo =>  { %>
                     <option value="<%- hijo.id %>"><%=  hijo.nombre %></option>
                 <% }) %>
@@ -24,16 +24,20 @@
                 }
               %>
               <div class="col-md-5 form-group">
-              <label>Mes</label>
+              <label>Mes: </label>
               <select>
-                 <option>Enero</option>
-                 <option>Febrero</option>
-                 <option>Marzo</option>
-                 <option>Abril</option>
-                 <option>Mayo</option>
-                 <option>Junio</option>
-                 <option>Julio</option>
-                 <option>Agosto</option>
+                 <option value="0" <%= (mes == 0)?"selected":"" %>>Enero</option>
+                 <option value="1"  <%= (mes == 1)?"selected":"" %>>Febrero</option>
+                 <option value="2"  <%= (mes == 2)?"selected":"" %>>Marzo</option>
+                 <option value="3"  <%= (mes == 3)?"selected":"" %>>Abril</option>
+                 <option value="4" <%= (mes == 4)?"selected":"" %>>Mayo</option>
+                 <option value="5"  <%= (mes == 5)?"selected":"" %>>Junio</option>
+                 <option value="6" <%= (mes == 6)?"selected":"" %>>Julio</option>
+                 <option value="7" <%= (mes == 7)?"selected":"" %>>Agosto</option>
+                 <option value="8" <%= (mes == 8)?"selected":"" %>>Septiembre</option>
+                 <option value="9" <%= (mes == 9)?"selected":"" %>>Octubre</option>
+                 <option value="10" <%= (mes == 10)?"selected":"" %>>Noviembre</option>
+                 <option value="11" <%= (mes == 11)?"selected":"" %>>Diciembre</option>
               </select>
               </div>
             </div>
@@ -54,7 +58,7 @@
 <script>
 
 var data
-function actualizar(mes = <%= mes %>, idhijo){
+function actualizar(mes = <%= mes %>, id = <%= usuario.id %>){
 $.get("/estadistica/1", a =>{
     meses = a.ventas.map(m =>{
      return m.reduce((ac, v)=>{ return ac + v.reduce((acu, u)=>{ return acu +  u },0) },0)
