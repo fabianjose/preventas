@@ -563,6 +563,10 @@ router.get("/dash2/:camp", (req, res, next) => {
 	if (req.isAuthenticated()) return next()
 	res.redirect('/login')
 }, (req, res, next) => {
+
+	sql00 = "select * from usuarios where id = ?"
+	pool.query(sql00, [idLogin],(err, usuario) =>{
+		
 	mes_actual = new Date().getMonth()
 	año_actual = new Date().getFullYear()
 
@@ -586,15 +590,26 @@ router.get("/dash2/:camp", (req, res, next) => {
  	inner join categorias on preventa.categoria  = categorias.id and categorias.id = '3'
  	inner join usuarios on usuarios.id =  preventa.usuario_ID where usuarios.id = ?
  	group by MONTH(fecha_agenda), preventa.estatus;
+
+
  	select  metas.*,categorias.id as categoriaid from usuario_meta
  	inner join metas on metas.id = usuario_meta.meta  and mes  = ? and año  = ?
  	right join categorias on categorias.id = metas.categoria
  	group by categorias.id order by categoriaid asc;
  	select * from usuarios where id = ?;
- 	select * from usuarios where parent = ? ;
  	`;
-
-
+ 	switch(usuario[0].rol){
+ 		case 1:
+ 			sql03 = "select * from usuarios where rol  = 3 or rol = 6"
+ 			break
+ 		case 2:
+ 			sql03 = "select * from usuarios where rol = 6"
+ 		case 3:
+ 		case 4:
+ 		case 5:
+ 		case 6:
+ 	}
+ 	sql0+=sql03
 
  //	console.log(user)
 	pool.query(sql0, [req.params.camp, idLogin,
@@ -617,6 +632,7 @@ router.get("/dash2/:camp", (req, res, next) => {
 			hijos:result[5]
 		})
 	})
+})
 
 })
 router.post('/meta',(req, res, next) => {
