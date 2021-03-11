@@ -57,6 +57,18 @@ router.get("/", (req, res, next) => {
 })
 
 
+router.get("/campaigns",(req, res, next) => {
+	if (req.isAuthenticated()) return next()
+	res.redirect('/login')
+}, (req, res)=>{
+	sql = "select * from campañas";
+	pool.query(sql,[], (err, cam)=>{
+		res.render("campaigns", {"cams" : cam})
+	})
+})
+
+
+
 router.get("/usuarios", (req, res, next) => {
 	if (req.isAuthenticated()) return next()
 	res.redirect('/login')
@@ -481,18 +493,52 @@ router.get("/estadistica/:id", (req, res, next)=>{
 				})
 				break;
 			case 3:
+				console.log("Usuario sub-Admin")
 				sql = `select sum(tarifa) as monto,
-				MONTH(fecha_agenda) as mes,
-				 estatus,
+				MONTH(fecha_agenda) - 1 as mes,
+				 estatus, categorias.id as categoria,
 				 YEAR(fecha_agenda) as year
 				 from preventa 
 				 inner join usuarios on preventa.usuario_ID = usuarios.id and usuarios.rol = 5 and usuarios.parent = ?
-				 group by MONTH(fecha_agenda) , YEAR(fecha_agenda),preventa.estatus`
-				pool.query(sql, [usuario[0].id],(err, result)=>{
+				 inner join campañas on campañas.id = preventa.campaña  and campañas.id = ?
+				 inner join categorias on categorias.id = preventa.categoria
+				 group by MONTH(fecha_agenda) ,categorias.id, YEAR(fecha_agenda),preventa.estatus;
+				SELECT DISTINCT sum(metas.tarifa) as monto, 
+				metas.categoria as categoria,
+				metas.mes as mes
+				FROM usuario_meta inner join metas on metas.id = usuario_meta.meta
+				inner join usuarios on usuario_meta.usuario = usuarios.id and parent = ?
+				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
+				GROUP by mes, metas.categoria
+
+				 `
+				pool.query(sql, [usuario[0].id, req.params.id,usuario[0].id, req.params.id],(err, result)=>{
+					arreglo = []
+					if (err) {
+						console.log(err)
+					}
 					console.log(result)
-					res.json(result)
+					arreglo2 = []
+					for (i = 0; i < 12; i++) {
+						arreglo[i] = []
+						arreglo2[i] = []
+						for(z = 0; z <= 3; z++){
+							arreglo2[i][z] = 0
+							arreglo[i][z] = []
+							for (j = 0; j < 6; j++) {
+								arreglo[i][z][j] = 0;
+							}
+						}
+					}			
+					result[0].forEach(r =>{
+						arreglo[r.mes][r.categoria][r.estatus] = r.monto
+					})
+					result[1].forEach(r=>{ arreglo2[r.mes][r.categoria] = r.monto })
+					respuesta  = { metas: arreglo2 , ventas:arreglo}
+					console.log(respuesta)
+					res.json(respuesta)
 				})
-				 break
+				break;
 			case 6: //
 				sql = `select sum(tarifa) as monto,
 				MONTH(fecha_agenda) as mes,
@@ -647,7 +693,12 @@ router.get('/asignaMeta/:id',(req, res, next) => {
 router.post('/asignaMeta/:id', (req, res, next) => {
 	var users
 	sql0 = "select * from metas where id = ?"
-	sql = "SELECT usuarios.* FROM usuario_meta RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario left join metas on metas.id = usuario_meta.id and metas.categoria = ? and metas.mes = ? where usuario_meta.meta is null ; select usuarios.* from usuarios inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;"
+	sql = `SELECT usuarios.* FROM usuario_meta RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario
+	left join metas on metas.id = usuario_meta.id and metas.categoria = ? and metas.mes = ? 
+	where usuario_meta.meta is null ; 
+
+	select usuarios.* from usuarios 
+	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
 
 	let rr = Array.isArray(req.body.usuarios) ? req.body.usuarios : [req.body.usuarios]
 	let meta = req.body.meta
@@ -656,7 +707,6 @@ router.post('/asignaMeta/:id', (req, res, next) => {
 	pool.query('insert into usuario_meta (usuario, meta)  values ?  ', [arg], (err, ff) => {
 		if (err) throw err;
 		console.log("Number of records inserted: " + ff.affectedRows);
-		//	pool.query(sql0, )
 		pool.query(sql0, [req.params.id], (error, meta) => {
 			meta = meta[0]
 			pool.query(sql, [meta.categoria, meta.mes, req.params.id], (err, usuarios) => {
