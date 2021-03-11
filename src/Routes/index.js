@@ -600,10 +600,10 @@ router.get("/dash2/:camp", (req, res, next) => {
  	`;
  	switch(usuario[0].rol){
  		case 1:
- 			sql03 = "select * from usuarios where rol  = 3 or rol = 6"
+ 			sql03 = "select * from usuarios where rol  = 3 or rol = 6;"
  			break
  		case 2:
- 			sql03 = "select * from usuarios where rol = 6"
+ 			sql03 = "select * from usuarios where rol = 6;"
  		case 3:
  		case 4:
  		case 5:

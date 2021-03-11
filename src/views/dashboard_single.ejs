@@ -7,8 +7,11 @@
           
 
             <div class="container row">
+
+              <div class="row mb-3 mt-3">
               <h2>Estadística del mes: <%= mes+1 %></h2>
               <% if( usuario.rol  = 2 ){ %>
+              <div class="col-md-5 form-group">
               <label>Usuarios</label>
               <select>
                  <option>Todos</option>
@@ -16,9 +19,24 @@
                     <option value="<%- hijo.id %>"><%=  hijo.nombre %></option>
                 <% }) %>
               </select>
+              </div>
               <%
                 }
               %>
+              <div class="col-md-5 form-group">
+              <label>Mes</label>
+              <select>
+                 <option>Enero</option>
+                 <option>Febrero</option>
+                 <option>Marzo</option>
+                 <option>Abril</option>
+                 <option>Mayo</option>
+                 <option>Junio</option>
+                 <option>Julio</option>
+                 <option>Agosto</option>
+              </select>
+              </div>
+            </div>
            <div class="col-md-4 text-center">
             <h4>Hogar</h4>
             <canvas  id="myChartHogar" width="400" height="300"></canvas></div>
@@ -36,6 +54,7 @@
 <script>
 
 var data
+function actualizar(mes = <%= mes %>, idhijo){
 $.get("/estadistica/1", a =>{
     meses = a.ventas.map(m =>{
      return m.reduce((ac, v)=>{ return ac + v.reduce((acu, u)=>{ return acu +  u },0) },0)
@@ -166,9 +185,9 @@ var myChart1 = new Chart(ctx1, {
 });
 var ctx2 = document.getElementById('myChartAvanzado').getContext('2d');
 
-meta_avanzado = a.metas[<%= mes %>][3]
-   meta_lograda = a.ventas[<%= mes %>][3][3]
-   meta_en_proceso = a.ventas[<%= mes %>][3][0]
+meta_avanzado = a.metas[mes][3]
+   meta_lograda = a.ventas[mes][3][3]
+   meta_en_proceso = a.ventas[mes][3][0]
    meta_avanzado = meta_avanzado - meta_lograda - meta_en_proceso
 
 var myChart2 = new Chart(ctx2, {
@@ -198,10 +217,13 @@ var myChart2 = new Chart(ctx2, {
   }
  
     
-});
+});})
 
-})
-
+}
+$("select").change(()=>{
+    actualizar()
+  }
+)
 </script>
           </div>
 
