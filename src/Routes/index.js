@@ -440,10 +440,11 @@ router.get("/dash2", (req, res, next) => {
 })
 
 
-router.get("/estadistica/:id/:hijo/:mes", (req, res, next)=>{
+router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 	sql0 = "select * from usuarios where id = ?"
 	hijo = req.params.hijo
 	mes = req.params.mes
+	year = req.params.year
 	pool.query(sql0, [idLogin],(err, usuario) =>{
 		if(usuario[0])
 		switch(usuario[0].rol){

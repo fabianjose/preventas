@@ -13,7 +13,7 @@
               <% if( usuario.rol  = 2 ){ %>
               <div class="col-md-5 form-group">
               <label class="label">Usuarios: </label>
-              <select>
+              <select  class="form-control custom-select select-id">
                  <option selected="">Todos</option>
                 <% hijos.forEach(hijo =>  { %>
                     <option value="<%- hijo.id %>"><%=  hijo.nombre %></option>
@@ -25,7 +25,7 @@
               %>
               <div class="col-md-5 form-group">
               <label>Mes: </label>
-              <select>
+              <select class="form-control custom-select select-mes">
                  <option value="0" <%= (mes == 0)?"selected":"" %>>Enero</option>
                  <option value="1"  <%= (mes == 1)?"selected":"" %>>Febrero</option>
                  <option value="2"  <%= (mes == 2)?"selected":"" %>>Marzo</option>
@@ -38,6 +38,16 @@
                  <option value="9" <%= (mes == 9)?"selected":"" %>>Octubre</option>
                  <option value="10" <%= (mes == 10)?"selected":"" %>>Noviembre</option>
                  <option value="11" <%= (mes == 11)?"selected":"" %>>Diciembre</option>
+              </select>
+              </div>
+              <div class="col-md-2 form-group">
+              <label>Año: </label>
+              <select  class="form-control custom-select select-year">
+                 <option value="0" <%= (mes == 0)?"selected":"" %>>2019</option>
+                 <option value="1"  <%= (mes == 1)?"selected":"" %>>2020</option>
+                 <option value="2"  <%= (mes == 2)?"selected":"" %>>2021</option>
+                 <option value="3"  <%= (mes == 3)?"selected":"" %>>2022</option>
+                 <option value="4" <%= (mes == 4)?"selected":"" %>>2023</option>
               </select>
               </div>
             </div>
@@ -59,7 +69,11 @@
 
 var data
 function actualizar(mes = <%= mes %>, id = 1){
-$.get("/estadistica/1/"+id+"/"+mes, a =>{
+  mes =  $(".select-mes").val()
+  year = $(".select-year").val()
+  id = $(".select-id").val()
+$.get("/estadistica/1/"+id+"/"+mes+"/"+year, a =>{
+    console.log(a)
     meses = a.ventas.map(m =>{
      return m.reduce((ac, v)=>{ return ac + v.reduce((acu, u)=>{ return acu +  u },0) },0)
     })
@@ -68,7 +82,6 @@ $.get("/estadistica/1/"+id+"/"+mes, a =>{
    console.log(meta_hogar)
    meta_lograda = a.ventas[<%= mes %>][1][3]
    meta_en_proceso = a.ventas[<%= mes %>][1][1]
-//   meta_en_proceso -= meta_lograda
    meta_hogar = meta_hogar - meta_lograda - meta_en_proceso
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -125,7 +138,7 @@ var ctx = document.getElementById('myChartHogar').getContext('2d');
 var myChart = new Chart(ctx, {
      type: 'doughnut',
     data: {
-        labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
+        labels: ['Cerrado Ganado', 'Agendado', 'Falta Meta'],
         datasets: [{
             label: 'Hogar',
             data: [meta_lograda,meta_en_proceso ,meta_hogar],
@@ -150,16 +163,16 @@ var myChart = new Chart(ctx, {
   }
     
 });
-meta_pyme = a.metas[<%= mes %>][2]
-   meta_lograda = a.ventas[<%= mes %>][2][3]
-   meta_en_proceso = a.ventas[<%= mes %>][2][1]
+meta_pyme = a.metas[mes][2]
+   meta_lograda = a.ventas[mes][2][3]
+   meta_en_proceso = a.ventas[mes][2][1]
    meta_pyme = meta_pyme - meta_lograda - meta_en_proceso
 
 var ctx1 = document.getElementById('myChartPyme').getContext('2d');
 var myChart1 = new Chart(ctx1, {
      type: 'doughnut',
     data: {
-        labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
+        labels: ['Cerrado Ganado', 'Agendado', 'Falta Meta'],
         datasets: [{
             label: 'Pyme',
             data: [meta_lograda, meta_en_proceso, meta_pyme],
@@ -194,7 +207,7 @@ meta_avanzado = a.metas[mes][3]
 var myChart2 = new Chart(ctx2, {
      type: 'doughnut',
     data: {
-        labels: ['Cerrado Ganado', 'Agendado', 'Meta'],
+        labels: ['Cerrado Ganado', 'Agendado', 'Falta Meta'],
         datasets: [{
             label: 'Avanzado',
             data: [meta_lograda, meta_en_proceso, meta_avanzado],
@@ -223,8 +236,8 @@ var myChart2 = new Chart(ctx2, {
 }
 $("select").change(()=>{
     actualizar()
-  }
-)
+  })
+actualizar()
 </script>
           </div>
 
