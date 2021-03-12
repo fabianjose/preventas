@@ -626,6 +626,7 @@ router.get("/dash2/:camp", (req, res, next) => {
 		res.render("dashboard_single", {
 			usuario: result[4],
 			mes: mes_actual,
+			year: año_actual,
 			data_hogar: result[0],
 			data_pyme: result[1],
 			data_avanzado: result[2],
@@ -681,22 +682,22 @@ router.get('/asignaMeta/:id',(req, res, next) => {
 	console.log(idLogin)
 	var users
 	sql0 = "select * from metas where id = ?"
-	sql = `SELECT usuarios.* FROM usuario_meta 
-	RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario 
-	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?
-	 where usuario_meta.meta is null and (usuarios.rol = 6 or usuarios.rol = 3) ; 
-	 select usuarios.*, usuario_tipos.descripcion as tipo from usuarios 
-	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ?
-	inner join usuario_tipos on usuarios.rol  = usuario_tipos.id
-	 ;`
+	sql = `SELECT  usuarios.id, usuarios.nombre FROM  usuarios
+	left join usuario_meta on usuario_meta.usuario = usuarios.id
+	inner join usuarios as u2 on usuarios.id = u2.id and ( u2.rol = 3 or u2.rol = 6)
+	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
+	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
+	
+	select usuarios.* from usuarios 
+	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
 	pool.query(sql0, [req.params.id], (error, meta) => {
 		meta = meta[0]
-		pool.query(sql, [meta.categoria, meta.mes, req.params.id], (err, usuarios) => {
+		pool.query(sql, [meta.categoria, meta.mes,meta.año, req.params.id], (err, usuarios) => {
 
 			if (err) {
 				res.json(err);
 			}
-			console.log(usuarios)
+			console.log(err)
 			users = usuarios[0]
 			usuariosAgregados = usuarios[1]
 			res.render('asignaMeta', {
