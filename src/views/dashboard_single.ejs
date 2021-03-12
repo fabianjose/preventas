@@ -58,8 +58,8 @@
 <script>
 
 var data
-function actualizar(mes = <%= mes %>, id = <%= usuario.id %>){
-$.get("/estadistica/1", a =>{
+function actualizar(mes = <%= mes %>, id = 1){
+$.get("/estadistica/1/"+id+"/"+mes, a =>{
     meses = a.ventas.map(m =>{
      return m.reduce((ac, v)=>{ return ac + v.reduce((acu, u)=>{ return acu +  u },0) },0)
     })
@@ -70,9 +70,6 @@ $.get("/estadistica/1", a =>{
    meta_en_proceso = a.ventas[<%= mes %>][1][1]
 //   meta_en_proceso -= meta_lograda
    meta_hogar = meta_hogar - meta_lograda - meta_en_proceso
-   console.log(meta_lograda)
-   console.log(meta_en_proceso)
-   console.log(meta_hogar)
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
     type: 'radar',
