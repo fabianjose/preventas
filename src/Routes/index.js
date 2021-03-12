@@ -396,7 +396,7 @@ router.get('/meta', (req, res, next) => {
 }, (req, res, next) => {
 
 	console.log(req)
-	sql = `select * from usuario_tipos where usuario_tipos.id > 2 and usuario_tipos.id <> 4;
+	sql = `select * from usuario_tipos where usuario_tipos.id = 3 or usuario_tipos.id = 6;
 	select *  from categorias;
 	 select metas.descripcion as descripcion,categorias.descripcion as categoria, metas.mes,metas.tarifa,
 	 usuario_tipos.descripcion as tipo , metas.id  from metas
@@ -416,6 +416,8 @@ router.get('/meta', (req, res, next) => {
 		})
 	})
 })
+
+
 
 
 router.get("/dash2", (req, res, next) => {
@@ -710,6 +712,9 @@ router.get('/asignaMeta/:id',(req, res, next) => {
 	})
 })
 
+
+
+
 router.post('/asignaMeta/:id', (req, res, next) => {
 	var users
 	sql0 = "select * from metas where id = ?"
@@ -752,6 +757,15 @@ router.post('/asignaMeta/:id', (req, res, next) => {
 	})
 
 
+})
+
+router.post("/desasignaMeta",(req, res, next) => {
+	if (req.isAuthenticated()) return next()
+	res.redirect('/login')
+}, (req, res, next) => {
+	id = req.body.id
+	sql = "delete from usuario_meta where id = ?"
+	res.send("ok")
 })
 router.post('/foto1/:id', upload.single('foto1'), (req, res, next) => {
 	if (req.isAuthenticated()) return next()
