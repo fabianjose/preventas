@@ -713,9 +713,11 @@ router.get('/asignaMeta/:id',(req, res, next) => {
 router.post('/asignaMeta/:id', (req, res, next) => {
 	var users
 	sql0 = "select * from metas where id = ?"
-	sql = `SELECT usuarios.* FROM usuario_meta RIGHT JOIN usuarios on usuarios.id = usuario_meta.usuario
-	left join metas on metas.id = usuario_meta.id and metas.categoria = ? and metas.mes = ? 
-	where usuario_meta.meta is null ; 
+	sql = `SELECT  usuarios.id, usuarios.nombre FROM  usuarios
+	left join usuario_meta on usuario_meta.usuario = usuarios.id
+	inner join usuarios as u2 on usuarios.id = u2.id and ( u2.rol = 3 or u2.rol = 6)
+	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
+	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
 
 	select usuarios.* from usuarios 
 	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
@@ -729,7 +731,7 @@ router.post('/asignaMeta/:id', (req, res, next) => {
 		console.log("Number of records inserted: " + ff.affectedRows);
 		pool.query(sql0, [req.params.id], (error, meta) => {
 			meta = meta[0]
-			pool.query(sql, [meta.categoria, meta.mes, req.params.id], (err, usuarios) => {
+			pool.query(sql, [meta.categoria, meta.mes,meta.año, req.params.id], (err, usuarios) => {
 
 				if (err) {
 					res.json(err);
