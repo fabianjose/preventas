@@ -727,7 +727,7 @@ router.get('/asignaMeta/:id',(req, res, next) => {
 	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
 	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
 	
-	select usuarios.* from usuarios 
+	select distinct usuarios.*, usuario_meta.id as idMeta  from usuarios 
 	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
 	pool.query(sql0, [req.params.id], (error, meta) => {
 		meta = meta[0]
@@ -761,9 +761,8 @@ router.post('/asignaMeta/:id', (req, res, next) => {
 	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
 	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
 
-	select usuarios.* from usuarios 
+	select distinct usuarios.*, usuario_meta.id as idMeta from usuarios 
 	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
-
 	let rr = Array.isArray(req.body.usuarios) ? req.body.usuarios : [req.body.usuarios]
 	let meta = req.body.meta
 	let arg = rr.map(u => [u, meta])
@@ -802,7 +801,12 @@ router.post("/desasignaMeta",(req, res, next) => {
 }, (req, res, next) => {
 	id = req.body.id
 	sql = "delete from usuario_meta where id = ?"
-	res.send("ok")
+	console.log(id)
+	pool.query(sql,[id],(err,result)=>{
+		if(err){
+			res.send(0)
+		}else res.send("ok")
+	})
 })
 router.post('/foto1/:id', upload.single('foto1'), (req, res, next) => {
 	if (req.isAuthenticated()) return next()

@@ -5,7 +5,7 @@
 
 <h2>META</h2>
 
-<form class="row" method="post">
+<form class="row">
 <div class="col-md-5 mb-4">
 	<div class="form-group">
 		<label>Nombre: </label>
@@ -31,14 +31,10 @@
 <hr>
 <h2>Asignar usuarios a <%= meta.descripcion %> [<%= meta.mes+1 %>/<%= meta.año %> ] </h2>
 
-
-
-
-
 <form class="row" method="post">
 	<div class="col-md-5">
 		<label>Usuarios</label>
-		<select name="usuarios" class="custom-select  form-control" multiple="">
+		<select name="usuarios" id="select-usuarios" class="custom-select  form-control" multiple="">
 			   <% users.forEach(function(user){ %>
 			   <option value="<%= user.id %>" ><%= user.nombre %></option>
 			   <% }); %>
@@ -46,10 +42,10 @@
 		<input type="hidden" name="meta" value="<%= meta.id %>">
 	</div>
 	<div class="col-md-2 h-100 text-center">
-		<button href="#" class="btn btn-primary m-2 w-100 mt-5">
+		<a class="btn btn-primary m-2 w-100 mt-5  btn-asigna">
 			ASIGNAR >>
-		</button>
-		<a href="#"  class="btn btn-danger w-100 m-2">
+		</a>
+		<a   class="btn btn-danger w-100 m-2 btn-quita">
 			 << QUITAR META 
 		</a>
 	</div>
@@ -59,7 +55,7 @@
 
 		<select id="seleccionados"  class="custom-select form-control"  multiple="">
 			<% usuariosAgregados.forEach(function(user){ %>
-			   <option value="<%= user.id %>" ><%= user.nombre %></option>
+			   <option value="<%= user.idMeta %>" ><%=user.nombre%></option>
 			   <% }); %>
 		</select>
 	</div>
@@ -67,6 +63,24 @@
 
 </div>                        
 <script type="text/javascript">
-	
+
+$(".btn-asigna").click(e =>{
+	e.preventDefault()
+	alert("asignar ")
+	valores = $("#select-usuarios").val()
+	$.post("/asignaMeta/<%= meta.id %>",{usuarios: valores, meta:  '<%= meta.id %>' },
+		e=>{
+			location.reload()
+		}
+	)
+})
+$(".btn-quita").click(e=>{
+	e.preventDefault()
+	alert($("#seleccionados").val())
+	id = $("#seleccionados").val()
+	$.post("/desasignaMeta",{id:id},data=>{
+		if(data == "ok")location.reload()
+	})
+})
 </script>
  <%- include('partials/footer') %>
