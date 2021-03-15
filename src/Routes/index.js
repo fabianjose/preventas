@@ -7,7 +7,7 @@ const pool = require('../database')
 const Json2csvParser = require('json2csv').Parser;
 const multer = require('multer')
 const mimeTypes = require("mime-types")
-
+const controllerInhouse =  require('../controller/inhouse')
 
 var idLogin
 
@@ -23,6 +23,10 @@ const router = express.Router();
 
 
 var a, b
+
+
+router.get("/inhouse",controllerInhouse.all)
+
 const storage = multer.diskStorage({
 	destination: './src/public/images',
 	filename: function (req, file, next) {
@@ -91,6 +95,7 @@ router.get("/usuarios", (req, res, next) => {
 router.get("/login", (req, res) => {
 	res.render("login")
 })
+
 
 
 router.post("/login", passport.authenticate('local', {
@@ -778,7 +783,6 @@ router.post('/asignaMeta/:id', (req, res, next) => {
 					res.json(err);
 				}
 				console.log(meta)
-				//nsole.log(err.sqlMessage)
 				console.log(usuarios)
 				users = usuarios[0]
 				usuariosAgregados = usuarios[1]
