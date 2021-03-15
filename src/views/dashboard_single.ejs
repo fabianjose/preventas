@@ -9,7 +9,7 @@
             <div class="container row">
 
               <div class="row mb-3 mt-3">
-              <h2>Estadística del mes: <%= mes+1 %></h2>
+              <h2>Estadística del mes: <span class="mes-number"><%= mes+1 %></span></h2>
               <% if( usuario.rol  = 2 ){ %>
               <div class="col-md-5 form-group">
               <label class="label">Usuarios: </label>
@@ -236,6 +236,7 @@ var myChart2 = new Chart(ctx2, {
 }
 $("select").change(()=>{
     actualizar()
+    $('.mes-number').text(parseInt( $('.select-mes').val()) + 1)
   })
 actualizar()
 </script>
