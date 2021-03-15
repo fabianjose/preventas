@@ -8,7 +8,8 @@ const Json2csvParser = require('json2csv').Parser;
 const multer = require('multer')
 const mimeTypes = require("mime-types")
 const controllerInhouse =  require('../controller/inhouse')
-
+const controllerMetas = require('../controller/metas')
+const controllerLogin = require('../controller/login')
 var idLogin
 
 
@@ -719,99 +720,23 @@ router.post('/meta',(req, res, next) => {
 	})
 })
 
-router.get('/asignaMeta/:id',(req, res, next) => {
-	if (req.isAuthenticated()) return next()
-	res.redirect('/login')
-}, (req, res, next) => {
-	console.log(idLogin)
-	var users
-	sql0 = "select * from metas where id = ?"
-	sql = `SELECT  usuarios.id, usuarios.nombre FROM  usuarios
-	left join usuario_meta on usuario_meta.usuario = usuarios.id
-	inner join usuarios as u2 on usuarios.id = u2.id and ( u2.rol = 3 or u2.rol = 6)
-	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
-	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
-	
-	select distinct usuarios.*, usuario_meta.id as idMeta  from usuarios 
-	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
-	pool.query(sql0, [req.params.id], (error, meta) => {
-		meta = meta[0]
-		pool.query(sql, [meta.categoria, meta.mes,meta.año, req.params.id], (err, usuarios) => {
-
-			if (err) {
-				res.json(err);
-			}
-			console.log(err)
-			users = usuarios[0]
-			usuariosAgregados = usuarios[1]
-			res.render('asignaMeta', {
-				users: users,
-				usuariosAgregados: usuariosAgregados,
-				meta: meta
-			})
-
-		})
-	})
-})
+router.get('/asignaMeta/:id',controllerLogin.check, controllerMetas.asignaMetaView)
 
 
 
 
-router.post('/asignaMeta/:id', (req, res, next) => {
-	var users
-	sql0 = "select * from metas where id = ?"
-	sql = `SELECT  usuarios.id, usuarios.nombre FROM  usuarios
-	left join usuario_meta on usuario_meta.usuario = usuarios.id
-	inner join usuarios as u2 on usuarios.id = u2.id and ( u2.rol = 3 or u2.rol = 6)
-	left join metas on metas.id = usuario_meta.meta and metas.categoria = ? and metas.mes = ?  and metas.año = ?
-	group by usuarios.id, usuarios.nombre having (count(metas.id)  = 0) ;
+router.post('/asignaMeta/:id', 
+	controllerLogin.check,
+	controllerMetas.asignaMeta, 
+	controllerMetas.asignaMetaView
+	)
 
-	select distinct usuarios.*, usuario_meta.id as idMeta from usuarios 
-	inner join usuario_meta on usuario_meta.usuario = usuarios.id and usuario_meta.meta = ? ;`
-	let rr = Array.isArray(req.body.usuarios) ? req.body.usuarios : [req.body.usuarios]
-	let meta = req.body.meta
-	let arg = rr.map(u => [u, meta])
-	console.log(arg)
-	pool.query('insert into usuario_meta (usuario, meta)  values ?  ', [arg], (err, ff) => {
-		if (err) throw err;
-		console.log("Number of records inserted: " + ff.affectedRows);
-		pool.query(sql0, [req.params.id], (error, meta) => {
-			meta = meta[0]
-			pool.query(sql, [meta.categoria, meta.mes,meta.año, req.params.id], (err, usuarios) => {
-
-				if (err) {
-					res.json(err);
-				}
-				console.log(meta)
-				console.log(usuarios)
-				users = usuarios[0]
-				usuariosAgregados = usuarios[1]
-				res.render('asignaMeta', {
-					users: users,
-					usuariosAgregados: usuariosAgregados,
-					meta: meta
-				})
-
-			})
-		})
-	})
+router.post("/desasignaMeta",
+	controllerLogin.check
+	, controllerMetas.desasignaMeta)
 
 
-})
 
-router.post("/desasignaMeta",(req, res, next) => {
-	if (req.isAuthenticated()) return next()
-	res.redirect('/login')
-}, (req, res, next) => {
-	id = req.body.id
-	sql = "delete from usuario_meta where id = ?"
-	console.log(id)
-	pool.query(sql,[id],(err,result)=>{
-		if(err){
-			res.send(0)
-		}else res.send("ok")
-	})
-})
 router.post('/foto1/:id', upload.single('foto1'), (req, res, next) => {
 	if (req.isAuthenticated()) return next()
 	res.redirect('login')
@@ -869,8 +794,6 @@ router.post('/foto3/:id', upload.single('foto3'), (req, res, next) => {
 		if (err) {
 			console.log(err);
 		}
-
-
 		res.redirect('/detalles/' + id)
 	})
 
@@ -896,17 +819,13 @@ router.post('/foto4/:id', upload.single('foto4'), (req, res, next) => {
 	})
 
 })
-router.post('/foto5/:id', upload.single('foto5'), (req, res, next) => {
-	if (req.isAuthenticated()) return next()
-	res.redirect('/login')
-}, (req, res) => {
-
+router.post('/foto5/:id', upload.single('foto5'), 
+	controllerLogin.check,
+ 	(req, res) => {
 	const id = req.params.id;
 	console.log(id);
 	var url_img = b
 	console.log(url_img);
-
-
 	pool.query('UPDATE preventa set preventa.foto5 = ? WHERE id= ? ', [url_img, id], (err, rows) => {
 		if (err) {
 			console.log(err);
@@ -986,19 +905,14 @@ router.get('/fecha', (req, res) => {
 	var b = '2021-02-24';
 
 	pool.query('SELECT * FROM preventa  WHERE creacion BETWEEN ? AND ?', [a, b], (err, datos) => {
-
 		console.log(datos);
 	})
-
-
 })
 
 //serializar
 
 passport.serializeUser(function (user, done) {
 	done(null, user.id)
-
-
 })
 
 //deserializar
@@ -1007,7 +921,6 @@ passport.deserializeUser(function (id, done) {
 		done(null, usuario)
 		perfil = usuario
 	})
-
-
 })
+
 module.exports = router;
