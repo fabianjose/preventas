@@ -55,6 +55,41 @@ metas.asignaMetaView = (req, res, next) => {
 	})
 }
 
+metas.metasView = (req, res, next) => {
+	console.log(req)
+	sql = `select * from usuario_tipos where usuario_tipos.id = 3 or usuario_tipos.id = 6;
+	select *  from categorias;
+	 select metas.descripcion as descripcion,categorias.descripcion as categoria, metas.mes,metas.tarifa,
+	 usuario_tipos.descripcion as tipo , metas.id  from metas
+	 inner join usuario_tipos on metas.tipo_usuario = usuario_tipos.id
+	 inner join categorias on categorias.id = metas.categoria;
+	 select * from campañas`
+	pool.query(sql, (err, result) => {
+		if (err) {
+			res.json(err);
+		}
+		console.log(result)
+		res.render('meta', {
+			usuario_tipos: result[0],
+			categorias: result[1],
+			metas: result[2],
+			campañas: result[3]
+		})
+	})
+}
+
+metas.nuevaMeta = (req, res, next) => {
+	sql0 = "INSERT INTO `metas`( `categoria`, `descripcion`, `tarifa`, `mes`, `tipo_usuario`, `año`, `campaña`) VALUES  ?"
+	ll = [req.body.categoria, req.body.nombre, req.body.valor, req.body.mes,
+		req.body.tipo_usuario, req.body.año, req.body.campaña
+	]
+	ll = [ll]
+	pool.query(sql0, [ll], (err, result0) => {
+		next()
+	})
+}
+
+
 
 metas.desasignaMeta = (req, res, next) => {
 	id = req.body.id

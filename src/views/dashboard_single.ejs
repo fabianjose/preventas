@@ -1,29 +1,23 @@
-
-  <%- include ('partials/header')  %>
-
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-          
-
-            <div class="container row">
-
-              <div class="row mb-3 mt-3">
-              <h2>Estadística del mes: <span class="mes-number"><%= mes+1 %></span></h2>
-              <% if( usuario.rol  = 2 ){ %>
-              <div class="col-md-5 form-group">
-              <label class="label">Usuarios: </label>
-              <select  class="form-control custom-select select-id">
-                 <option  value="<%= usuario[0].id %>" selected="">Todos</option>
-                <% hijos.forEach(hijo =>  { %>
-                    <option value="<%- hijo.id %>"><%=  hijo.nombre %></option>
+<%- include ('partials/header')  %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <div class="container row">
+    <div class="row mb-3 mt-3">
+      <h2>Estadística del mes: <span class="mes-number"><%= mes+1 %></span></h2>
+      <% if( usuario.rol  = 2 ){ %>
+    <div class="col-md-5 form-group">
+    <label class="label">Usuarios: </label>
+    <select  class="form-control custom-select select-id">
+      <option  value="<%= usuario[0].id %>" selected="">Todos</option>
+      <% hijos.forEach(hijo =>  { %>
+      <option value="<%- hijo.id %>"><%=  hijo.nombre %></option>
                 <% }) %>
-              </select>
-              </div>
-              <%
-                }
-              %>
-              <div class="col-md-5 form-group">
+      </select>
+    </div>
+<%
+  }
+%>
+    <div class="col-md-5 form-group">
               <label>Mes: </label>
               <select class="form-control custom-select select-mes">
                  <option value="0" <%= (mes == 0)?"selected":"" %>>Enero</option>
@@ -123,12 +117,10 @@ $.get("/estadistica/1/"+id+"/"+mes+"/"+year, a =>{
         }]
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+        scale: {
+          ticks: {
+            beginAtZero: true
+          }
         }
     }
 });
