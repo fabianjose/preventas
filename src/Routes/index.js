@@ -10,6 +10,7 @@ const mimeTypes = require("mime-types")
 const controllerInhouse =  require('../controller/inhouse')
 const controllerMetas = require('../controller/metas')
 const controllerLogin = require('../controller/login')
+const controllerOfertas = require('../controller/ofertas')
 var idLogin
 
 
@@ -43,23 +44,7 @@ const upload = multer({
 })
 
 
-router.get("/", (req, res, next) => {
-	if (req.isAuthenticated()) return next()
-	res.redirect('/login')
-}, (req, res) => {
-
-
-	pool.query('SELECT * FROM preventa WHERE usuario_ID= ?', [idLogin], (err, preventa) => {
-		if (err) {
-			res.json(err);
-		}
-
-		res.render('perfil', {
-			data: preventa
-		})
-	})
-
-})
+router.get("/", controllerLogin.check, controllerOfertas.crearOfertaView)
 
 
 router.get("/campaigns",(req, res, next) => {

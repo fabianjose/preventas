@@ -1,45 +1,27 @@
-
-  
-   <%if(user[0].rol < 5){%>
-    <%- include ('partials/header')  %>
-
-
-    <% } %> 
-
-        <script src="https://smtpjs.com/v3/smtp.js">
-
-        </script> 
-
-  
-
-
-
-
- 
- 
-       
+<%- include ('partials/header')  %>
+<script src="https://smtpjs.com/v3/smtp.js"></script> 
     
-        <h1>Crear una oferta</h1>
+        <h3>Crear una oferta</h3>
      
 
 
-            <h1>INFORMACION DEL SUSCRIPTOR</h1>
+            <h2 >INFORMACION DEL SUSCRIPTOR</h2>
             <form action="/crearOferta" method="post">
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Nombre Completo suscriptor <br><br> </b> </p></label>
+                <div class="container mt-3">
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Nombre Completo suscriptor   </label>
                                 <input required  type="text" name="nombre_completo" id="" placeholder="Nombre Completo Suscriptor" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Selecciona un tipo <br> de documento</b> </p></label>
-                                <select class="form-select" name="tipo_documento" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Selecciona un tipo  de documento </label>
+                                <select class="custom-select form-control " name="tipo_documento" aria-label="Default select example">
                                     <option selected>Selecciona un tipo de documento</option>
                                     <option value="Cedula Ciudadania">Cedula Ciudadania</option>
                                     <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
@@ -48,45 +30,45 @@
                                   </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Ingresa el Numero <br> de documento</b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Número  de documento </label>
     
                                 <input required type="text" name="numero_documento" id="" placeholder="Numero de documento" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Ingresa la fecha de<br> expedicion del documento</b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for="">Fecha de expedicion del documento </label>
     
                                 <input required type="text" name="fecha_expedicion" id="fechas" placeholder="Fecha de Expedicion" class="form-control">
                             </div>
                         </div>
 
                     </div>
-                    <br><br>
-                    <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Numero de telefono Celular <br><br> </b> </p></label>
+                    
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Número de telefono Celular   </label>
                                 <input required type="text" name="telefono_celular" id="" placeholder="ingrese celular" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Numero de telefono fijo <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Número de telefono fijo   </label>
                                 <input required type="text" name="telefono_fijo" id="" placeholder="ingrese telefono fijo" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Selecciona un tipo <br> de estrato</b> </p></label>
-                                <select class="form-select" name="estrato" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Selecciona un tipo  de estrato </label>
+                                <select class="custom-select form-control " name="estrato" aria-label="Default select example">
                                     <option selected>Selecciona un estrato</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -98,141 +80,131 @@
                                   </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                             </div>
-                        </div>
+                       
 
                     </div>
-                    <br><br>
+                    
 
-                    <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Ingrese Correo <br><br> </b> </p></label>
-                                <input required type="text" name="correo" id="" placeholder="ingrese correo " class="form-control">
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Ingrese Correo   </label>
+                                <input required type="email" name="correo" id="" placeholder="ingrese correo " class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Ciudad <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Ciudad   </label>
                                 <input required type="text" name="ciudad" id="" placeholder="ingrese la ciudad" class="form-control">
                             </div>
                         </div>
                       
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Municipio <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Municipio   </label>
                                 <input required type="text" name="municipio" id="" placeholder="ingrese el municipio" class="form-control">
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Direccion Cliente <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Direccion Cliente   </label>
                                 <input required type="text" name="direccion" id="" placeholder="ingrese la Direccion" class="form-control">
                             </div>
                         </div>
 
                     </div>
-                    <br><br>
-
-
-                        
+                    
+                    <hr>
+                    
                      <h1>INFORMACION DEL CONTACTO</h1>
-                     <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Nombre Contacto <br><br> </b> </p></label>
+                     <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Nombre Contacto   </label>
                                 <input required type="text" name="nombre_contacto" id="" placeholder="Nombre Contacto" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Cedula Contacto <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Cedula Contacto   </label>
                                 <input required type="text" name="cedula_contacto" id="" placeholder="Cedula Contacto" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Telefono fijo Contacto <br><br> </b> </p></label>
-                                <input required type="text" name="telefono_fijo_contacto" id="" placeholder="Telefono fijo" class="form-control">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Telefono fijo Contacto   </label>
+                                <input required type="tel" name="telefono_fijo_contacto" id="" placeholder="Telefono fijo" class="form-control">
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Telefono movil Contacto <br><br> </b> </p></label>
-                                <input required type="text" name="telefono_movil_contacto" id="" placeholder="Telefono movil" class="form-control">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Telefono movil Contacto   </label>
+                                <input required type="tel" name="telefono_movil_contacto" id="" placeholder="Telefono movil" class="form-control">
                             </div>
                         </div>
-                     
-
                     </div>
-                    <br><br>
+                    
 
-                    <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Autoriza <br> compartir datos? </b> </p></label>
-                                <select class="form-select" name="autoriza" aria-label="Default select example">
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Autoriza  compartir datos?  </label>
+                                <select class="custom-select form-control " name="autoriza" aria-label="Default select example">
                                     <option selected value="SI">SI</option>
                                     <option value="NO">NO</option>
                                   
                                   </select>                            </div>
                         </div>
 
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Correo Contacto <br><br> </b> </p></label>
-                                <input required type="text" name="correo_contacto" id="" placeholder="Correo Contacto" class="form-control">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Correo Contacto   </label>
+                                <input required type="email" name="correo_contacto" id="" placeholder="Correo Contacto" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-5 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Direccion Contacto <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-5 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Direccion Contacto   </label>
                                 <input required type="text" name="direccion_contacto" id="" placeholder="Direccion Contacto" class="form-control">
                             </div>
                         </div>
                        
                          
                         </div>
-                        <div class="col-12 col-sm-1 text-center">
-                            <br>
-                         
-                        </div>
-
                     </div>
-                    <br><br>
+                    
+                    <hr>
+                    
 
 
                     <h1>CONDICIONES COMERCIALES</h1>
 
-                    <div class="row">
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Nombre de Asesor <br><br> </b> </p></label>
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Nombre de Asesor   </label>
                                 <input required type="text" name="asesor" id="" placeholder="nombre de asesor" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Tipo de <br> Servicio</b> </p></label>
-                                <select class="form-select" name="tipo_servicio" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Tipo de  Servicio </label>
+                                <select class="custom-select form-control " name="tipo_servicio" aria-label="Default select example">
                                     <option selected>tipo de servicio</option>
                                     <option value="Oferta Comercial">Oferta Comercial</option>
                                     <option value="Oferta Residencial">Oferta Residencial</option>                                  
@@ -240,11 +212,11 @@
                             </div>
                         </div>
                       
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Tipo de <br> Tecnologia</b> </p></label>
-                                <select class="form-select" name="tecnologia" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Tipo de  Tecnologia </label>
+                                <select class="custom-select form-control " name="tecnologia" aria-label="Default select example">
                                     <option selected>tipo de Tecnologia</option>
                                     <option value="Cobre">Cobre</option>
                                     <option value="Fibra">Fibra</option>                                  
@@ -253,11 +225,11 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Tipo de Instalacion <br><br> </b> </p></label>
-                                <select class="form-select"  name="tipo_instalacion" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Tipo de Instalacion   </label>
+                                <select class="custom-select form-control "  name="tipo_instalacion" aria-label="Default select example">
                                     <option selected>tipo de Instalacion</option>
                                     <option value="1 play">1 play</option>
                                     <option value="2 play">2 play</option>                                  
@@ -267,84 +239,73 @@
                         </div>
 
                     </div>
-                    <br><br>
-
-                    <div class="row"
                     
-                    
-                    >  <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Caracteristicas <br> del Plan</b> </p></label>
-                                <select class="form-select" name="plan_caracteristicas" aria-label="Default select example">
-                                    <option selected>tipo de servicio</option>
-                                    <option value="INTERNET">INTERNET</option>
-                                    <option value="LINEA + INTERNET">LINEA + INTERNET</option>
-                                    <option value="LINEA + INTERNET + TV">LINEA + INTERNET + TV</option>
-                                    <option value="MIGRACION + INTERNET">MIGRACION + INTERNET</option>
-                                    <option value="MIGRACION + DUO + TV">MIGRACION + DUO + TV</option>
 
+                    <div class="row pb-4">  
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Caracteristicas  del Plan </label>
+                                <select class="custom-select form-control " name="plan_caracteristicas" aria-label="Default select example">
+                                    <option selected value="">Tipo de servicio</option>
+                                    <option value="1">HOGAR</option>
+                                    <option value="2">PYME</option>
+                                     <option value="3">AVANZADO</option>
 
-                                   
-                
                                   </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Linea Telefonica <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Linea Telefonica   </label>
                                 <input required type="text" name="linea_telefonica" id="" placeholder="Line Telefonica" class="form-control">
                             </div>
                         </div>
                       
                       
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Velocidad <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Velocidad   </label>
                                 <input required type="text" name="Velocidad" id="" placeholder="Velocidad" class="form-control">
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Tarifa <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Tarifa   </label>
                                 <input required type="text" name="tarifa" id="" placeholder="Valor" class="form-control">
                             </div>
                         </div>
 
                     </div>
-                    <br><br>
-
-
-
-                    <div class="row"
                     
-                    
-                    >  <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Fecha de  <br> Agendamiento</b> </p></label>
+
+                    <div class="row pb-4">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Fecha de   Agendamiento </label>
                                 <input required type="text" id="fecha2" name="fecha_agenda"  placeholder="fecha agendamiento" class="form-control">
 
                             </div>
                         </div>
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Direccion Final <br><br> </b> </p></label>
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Direccion Final   </label>
                                 <input required type="text" name="direccion_final" id="" placeholder="Direccion Final" class="form-control">
                             </div>
                         </div>
                       
                       
-                        <div class="col-12 col-sm-3 text-center">
-                            <br>
-                            <div class="form-group card">
-                                <label for=""><p> <b>Estrato Final <br><br> </b> </p></label>
-                                <select class="form-select" name="estrato_final" aria-label="Default select example">
+                        <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for=""> Estrato Final   </label>
+                                <select class="custom-select form-control " name="estrato_final" aria-label="Default select example">
                                    
                                     <option selected value="1">1</option>
                                     <option value="2">2</option>
@@ -359,11 +320,11 @@
                       
 
                     </div>
-                    <div class="col-12 col-sm-3 text-center">
-                        <br>
-                        <div class="form-group card">
-                            <label for=""><p> <b>Seleccion un sector <br><br> </b> </p></label>
-                            <select class="form-select" name="sector" aria-label="Default select example">
+                    <div class="col-12 col-sm-3 ">
+                        
+                        <div class="form-group ">
+                            <label for=""> Seleccion un sector   </label>
+                            <select class="custom-select form-control " name="sector" aria-label="Default select example">
                                
                                 <option selected value="">Seleccione un Sector</option>
                                 <option value="NINGUNO">NINGUNO</option>
@@ -391,11 +352,7 @@
                               </select>  
                         </div>
                     </div>
-                    <br><br>
-
-
-                
-
+                    
 
                 </div>
 
@@ -407,10 +364,10 @@
 
               
                 
-    <br><br>
-                    <div class="row text-center">
-                          <button type="submit" onclick="correo1()" class="btn btn-success btn-lg">
-                        guardar datos
+    
+                    <div class="row ">
+                          <button type="submit" onclick="correo1()" class="btn btn-primary btn-block">
+                       GUARDAR DATOS
                     </button>
                     </div>
                   
@@ -434,37 +391,6 @@ Email.send({
           Body : "El Nuevo Cliente Fue Creado por   <%=user[0].nombre%> " 
 }).then(
  alert("enviado")
-);
-               
-      
-      
-
-          
-             
-              
-              } 
-            </script>
-       
-   
-
-
- 
- 
-    
- 
-
- 
-
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+); } 
+</script>
  <%- include('partials/footer') %>
