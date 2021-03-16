@@ -685,10 +685,7 @@ router.post('/foto1/:id', upload.single('foto1'), (req, res, next) => {
 	})
 
 })
-router.post('/foto2/:id', upload.single('foto2'), (req, res, next) => {
-	if (req.isAuthenticated()) return next()
-	res.redirect('login')
-}, (req, res) => {
+router.post('/foto2/:id', upload.single('foto2'), controllerLogin.check, (req, res) => {
 
 	const id = req.params.id;
 	console.log(id);
