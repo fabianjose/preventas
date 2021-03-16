@@ -4,6 +4,7 @@ const ofertas = {}
 
 
 ofertas.crearOfertaView = (req, res) => {
+	var idLogin
 	pool.query('SELECT * FROM preventa WHERE usuario_ID= ?', [idLogin], (err, preventa) => {
 		if (err) {
 			res.json(err);
