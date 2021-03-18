@@ -5,12 +5,13 @@ const ofertas = {}
 
 ofertas.crearOfertaView = (req, res) => {
 	var idLogin
-	pool.query('SELECT * FROM preventa WHERE usuario_ID= ?', [idLogin], (err, preventa) => {
+	pool.query('SELECT * FROM campañas; SELECT * FROM categorias',[], (err, r) => {
 		if (err) {
 			res.json(err);
 		}
 		res.render('perfil', {
-			data: preventa
+			camps: r[0],
+			categorias: r[1]
 		})
 	})
 

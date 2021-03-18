@@ -116,6 +116,8 @@ router.get("/verOfertas", (req, res, next) => {
 router.post('/add', (req, res) => {
 
 	const datos = req.body;
+	if(datos.rol == 5)datos.parent = 32
+	if(datos.rol == 6)datos.parent = 33
 	pool.query('INSERT INTO usuarios set ?', [datos], (err, usuarioss) => {
 		res.redirect('usuarios')
 	})
@@ -486,7 +488,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 			 	group by MONTH(preventa.fecha_agenda);
 
 				 `
-				pool.query(sql, [usuario[0].id, req.params.id,usuario[0].id, req.params.id,-1,5,-1,year],(err, result)=>{
+				pool.query(sql, [req.params.hijo, req.params.id,req.params.hijo, req.params.id,-1,5,-1,year],(err, result)=>{
 					arreglo = []
 					if (err) {
 						console.log(err)

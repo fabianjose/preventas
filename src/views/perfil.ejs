@@ -11,7 +11,6 @@
                 <div class="container mt-3">
                     <div class="row pb-4">
                         <div class="col-12 col-sm-3 ">
-                            
                             <div class="form-group ">
                                 <label for=""> Nombre Completo suscriptor   </label>
                                 <input required  type="text" name="nombre_completo" id="" placeholder="Nombre Completo Suscriptor" class="form-control">
@@ -246,8 +245,9 @@
                             
                             <div class="form-group ">
                                 <label for=""> Caracteristicas  del Plan </label>
-                                <select class="custom-select form-control " name="plan_caracteristicas" aria-label="Default select example">
+                                <select class="custom-select form-control " name="categoria" aria-label="Default select example" required="">
                                     <option selected value="">Tipo de servicio</option>
+
                                     <option value="1">HOGAR</option>
                                     <option value="2">PYME</option>
                                      <option value="3">AVANZADO</option>
@@ -317,9 +317,20 @@
                                   </select>  
                             </div>
 
-                      
 
                     </div>
+                   <div class="col-12 col-sm-3 ">
+                            
+                            <div class="form-group ">
+                                <label for="">Campaña </label>
+                                <select  name="campaña"  class="custom-select form-control">
+                                    <%camps.forEach(c=>{%>
+                                        <option value="<%= c.id %>"><%= c.descripcion %></option>
+                                    <% })%>
+                                </select>
+                            </div>
+                        </div>
+                      
                     <div class="col-12 col-sm-3 ">
                         
                         <div class="form-group ">
