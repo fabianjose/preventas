@@ -478,7 +478,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 				FROM usuario_meta inner join metas on metas.id = usuario_meta.meta
 				inner join usuarios on usuario_meta.usuario = usuarios.id and parent = ?
 				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
-				GROUP by mes, metas.categoria
+				GROUP by mes, metas.categoria;
 
 			 	select sum(preventa.tarifa) from preventa 
 			 	inner join usuarios on usuario_ID = ? or usuarios.rol = ? or usuarios.rol = ?
@@ -531,7 +531,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 				FROM usuario_meta inner join metas on metas.id = usuario_meta.meta
 				inner join usuarios on usuario_meta.usuario = usuarios.id and  usuarios.id = ?
 				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
-				GROUP by mes, metas.categoria
+				GROUP by mes, metas.categoria;
 
 
 			 	select sum(preventa.tarifa) from preventa 
