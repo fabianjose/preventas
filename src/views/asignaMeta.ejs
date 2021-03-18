@@ -5,28 +5,45 @@
 
 <h2>META</h2>
 
-<form class="row">
-<div class="col-md-5 mb-4">
+<form class="row" action="/metas/edit/<%= meta.id %>" method="post">
+<div class="col-md-5 mb-4 p-2">
 	<div class="form-group">
 		<label>Nombre: </label>
-		<input class="form-control" type="text" name="" value="<%= meta.descripcion %>">
-		<input type="hidden" name="meta" value="<%= meta.id %>">
+		<input class="form-control" type="text" name="descripcion" value="<%= meta.descripcion %>">
 	</div>
-	<div class="form-group">
+	<div class="form-group mt-3">
 		<label>Monto: </label>
-		<input class="form-control" type="text" name="" value="<%= meta.tarifa %>">
+		<input class="form-control" type="text" name="tarifa" value="<%= meta.tarifa %>">
 	</div>
 </div>
-<div class="col-md-5">
+<div class="col-md-5 p-2">
 	<div class="form-group">
 		<label>Mes: </label>
-		<input class="form-control" type="text" name="" value="<%= meta.mes %>">
+		<select class="custom-select form-control" name="mes" id="">
+                                    <option value="0" <%= meta.mes == 0? "selected":"" %>>Enero</option>
+                                    <option value="1" <%= meta.mes == 1? "selected":"" %>>Febrero</option>
+                                    <option value="2" <%= meta.mes == 2? "selected":"" %>>Marzo</option>
+                                    <option value="3" <%= meta.mes == 3? "selected":"" %>>Abril</option>
+                                    <option value="4" <%= meta.mes == 4? "selected":"" %>>Mayo</option>
+                                    <option value="5" <%= meta.mes == 5? "selected":"" %>>Junio</option>
+                                    <option value="6"<%= meta.mes == 6? "selected":"" %>>Julio</option>
+                                    <option value="7" <%= meta.mes == 7? "selected":"" %>>Agosto</option>
+                                    <option value="8" <%= meta.mes == 8? "selected":"" %>>Septiembre</option>
+                                    <option value="9" <%= meta.mes == 9? "selected":"" %>>Octubre</option>
+                                    <option value="10" <%= meta.mes == 10? "selected":"" %>>Noviembre</option>
+                                    <option value="11" <%= meta.mes == 11? "selected":"" %>>Diciembre</option>
+                                </select>
 	</div>
-	<div class="form-group">
+	<div class="form-group mt-3">
 		<label>Año: </label>
-		<input class="form-control" type="text" name="" value="<%= meta.año %>">
+		<input class="form-control" type="text" name="year" value="<%= meta.año %>">
 	</div>
+
 </div>
+
+	<div class="form-group mt-3 ">
+		<input type="submit" class=" btn btn-primary"   value="Guardar">
+	</div>
 </form>
 <hr>
 <h2>Asignar usuarios a <%= meta.descripcion %> [<%= meta.mes+1 %>/<%= meta.año %> ] </h2>

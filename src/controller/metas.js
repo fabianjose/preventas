@@ -78,6 +78,15 @@ metas.metasView = (req, res, next) => {
 	})
 }
 
+metas.editar = (req,res,next) =>{
+	sql = "update metas set descripcion = ?, tarifa = ? , mes  = ? , año = ? where id = ?";
+	argumentos = [req.body.descripcion,req.body.tarifa,req.body.mes, req.body.year, req.params.id]
+	pool.query(sql, argumentos,(err, result)=>{
+		console.log("meta editada")
+		res.redirect("/asignaMeta/" + req.params.id)
+	})
+}
+
 metas.nuevaMeta = (req, res, next) => {
 	sql0 = "INSERT INTO `metas`( `categoria`, `descripcion`, `tarifa`, `mes`, `tipo_usuario`, `año`, `campaña`) VALUES  ?"
 	ll = [req.body.categoria, req.body.nombre, req.body.valor, req.body.mes,

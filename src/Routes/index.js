@@ -405,6 +405,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 	pool.query(sql0, [hijo],(err, usuario) =>{
 		if(usuario[0])
 		switch(usuario[0].rol){
+			case 1:
 			case 2:
 				console.log("Usuario Admin")
 				sql = `select sum(tarifa) as monto,
@@ -419,14 +420,21 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 
 				SELECT DISTINCT sum(metas.tarifa) as monto, 
 				metas.categoria as categoria,
-				metas.mes as mes
+				metas.mes as mes,
+				metas.año as year
 				FROM usuario_meta inner join metas on metas.id = usuario_meta.meta
 				inner join usuarios on usuario_meta.usuario = usuarios.id and parent = ?
 				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
-				GROUP by mes, metas.categoria
+				GROUP by mes, metas.categoria, metas.año;
+
+
+			 	select sum(preventa.tarifa) from preventa 
+			 	inner join usuarios on usuario_ID = ? or usuarios.rol = ? or usuarios.rol = ?
+			 	inner join preventa as pp on preventa.id = pp.id and year(preventa.fecha_agenda) = ?
+			 	group by MONTH(preventa.fecha_agenda);
 
 				 `
-				pool.query(sql, [year,usuario[0].id, req.params.id,usuario[0].id, req.params.id],(err, result)=>{
+				pool.query(sql, [year,usuario[0].id, req.params.id,usuario[0].id, req.params.id,-1,6,6,year],(err, result)=>{
 					arreglo = []
 					if (err) {
 						console.log(err)
@@ -448,7 +456,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 						arreglo[r.mes][r.categoria][r.estatus] = r.monto
 					})
 					result[1].forEach(r=>{ arreglo2[r.mes][r.categoria] = r.monto })
-					respuesta  = { metas: arreglo2 , ventas:arreglo}
+					respuesta  = { metas: arreglo2 , ventas:arreglo,ventas_meses:result[2]}
 					console.log(respuesta)
 					res.json(respuesta)
 				})
@@ -472,8 +480,13 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
 				GROUP by mes, metas.categoria
 
+			 	select sum(preventa.tarifa) from preventa 
+			 	inner join usuarios on usuario_ID = ? or usuarios.rol = ? or usuarios.rol = ?
+			 	inner join preventa as pp on preventa.id = pp.id and year(preventa.fecha_agenda) = ?
+			 	group by MONTH(preventa.fecha_agenda);
+
 				 `
-				pool.query(sql, [usuario[0].id, req.params.id,usuario[0].id, req.params.id],(err, result)=>{
+				pool.query(sql, [usuario[0].id, req.params.id,usuario[0].id, req.params.id,-1,5,-1,year],(err, result)=>{
 					arreglo = []
 					if (err) {
 						console.log(err)
@@ -495,7 +508,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 						arreglo[r.mes][r.categoria][r.estatus] = r.monto
 					})
 					result[1].forEach(r=>{ arreglo2[r.mes][r.categoria] = r.monto })
-					respuesta  = { metas: arreglo2 , ventas:arreglo}
+					respuesta  = { metas: arreglo2 , ventas:arreglo,ventas_meses:result[2]}
 					console.log(respuesta)
 					res.json(respuesta)
 				})
@@ -520,8 +533,14 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 				inner join campañas on campañas.id = metas.campaña  and campaña = ? 
 				GROUP by mes, metas.categoria
 
+
+			 	select sum(preventa.tarifa) from preventa 
+			 	inner join usuarios on usuario_ID = ? or usuarios.rol = ? or usuarios.rol = ?
+			 	inner join preventa as pp on preventa.id = pp.id and year(preventa.fecha_agenda) = ?
+			 	group by MONTH(preventa.fecha_agenda);
+
 				 `
-				pool.query(sql, [year,usuario[0].id, req.params.id,usuario[0].id, req.params.id],(err, result)=>{
+				pool.query(sql, [year,usuario[0].id, req.params.id,usuario[0].id, req.params.id,usuario[0].id,-1,-1,year],(err, result)=>{
 					arreglo = []
 					if (err) {
 						console.log(err)
@@ -553,6 +572,7 @@ router.get("/estadistica/:id/:hijo/:mes/:year", (req, res, next)=>{
 	
 })
 
+router.post("/metas/edit/:id", controllerLogin.check,controllerMetas.editar, controllerMetas.asignaMetaView)
 
 
 router.get("/dash2/:camp", controllerLogin.check, (req, res, next) => {
@@ -590,26 +610,44 @@ router.get("/dash2/:camp", controllerLogin.check, (req, res, next) => {
  	right join categorias on categorias.id = metas.categoria
  	group by categorias.id order by categoriaid asc;
  	select * from usuarios where id = ?;
+
+ 	select sum(preventa.tarifa) from preventa 
+ 	inner join usuarios on usuario_ID = ? or usuarios.rol = ?
+ 	inner join preventa as pp on preventa.id = pp.id and year(preventa.fecha_agenda) = ?
+ 	group by MONTH(preventa.fecha_agenda);
  	`;
+ 	var a = idLogin
+ 	var b = -1 
+ 	console.log(usuario)
  	switch(usuario[0].rol){
  		case 1:
  			sql03 = "select * from usuarios where rol  = 3 or rol = 6 or rol = 2;"
+ 			a  = -1
+ 			b =  6
  			break
  		case 2:
  			sql03 = "select * from usuarios where rol = 6 or rol = 3;"
+ 			a  = -1
+ 			b =  6
+ 			break;
  		case 3:
+ 			a  = -1
+ 			b =  5
+ 			break
  		case 4:
  		case 5:
- 		case 6:
+ 		case 6: 
+
  	}
  	sql0+=sql03
-
- //	console.log(user)
+ 	
 	pool.query(sql0, [req.params.camp, idLogin,
 		req.params.camp, idLogin,
 		req.params.camp, idLogin,
 		mes_actual, año_actual,
-		idLogin, idLogin
+		idLogin, idLogin, 
+		a,b,año_actual
+
 	], (err, result) => {
 		if (err) console.log(err)
 		console.log(result)
@@ -623,7 +661,8 @@ router.get("/dash2/:camp", controllerLogin.check, (req, res, next) => {
 			data_metas: result[3],
 			datos: result,
 			'campaña': result[0].nombre,
-			hijos:result[5]
+			hijos:result[6], 
+			ventas_meses : result[5]
 		})
 	})
 })
